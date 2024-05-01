@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+<entry key="deleteAllMarathon">
+DELETE FROM MARATHON_INFO
+</entry>
+<entry key="insertMarathon">
+INSERT INTO MARATHON_INFO(MARATHON_NO
+					,MARATHON_NAME
+					,LOCATION
+					,REGION
+					,MARATHON_DATE
+					,APPLICATION_DATE
+					,OTHER_INTRODUCTION
+					,ORGANIZER
+					,ORGANIZER_HOST
+					,ORGANIZER_PHONE
+					,MARATHON_SITE)
+VALUES(SEQ_MIF.NEXTVAL,?,?,?,?,?,?,?,?,?,?)
+</entry>
+
+</properties>
