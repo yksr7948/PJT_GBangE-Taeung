@@ -4,10 +4,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.kh.common.JDBCTemplate;
@@ -59,6 +61,35 @@ public class MarathonDao{
 			e.printStackTrace();
 		}		
 		return result;
+	}
+	public JSONArray selectMarathon(Connection conn) {
+		JSONArray MarathonArr = new JSONArray();
+		Statement stmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectMarathon");
+		try {
+			stmt=conn.createStatement();
+			rset = stmt.executeQuery(sql);
+			while(rset.next()) {
+				JSONObject jobj = new JSONObject();
+				jobj.put("marathonNo",rset.getString("MARATHON_NO"));
+				jobj.put("marathonName",rset.getString("MARATHON_NAME"));
+				jobj.put("location",rset.getString("LOCATION"));
+				jobj.put("region",rset.getString("REGION"));
+				jobj.put("marathonDate",rset.getString("MARATHON_DATE").substring(0, rset.getString("MARATHON_DATE").indexOf(" ")));
+				jobj.put("marathonSite",rset.getString("MARATHON_SITE"));
+				jobj.put("organizer", rset.getString("ORGANIZER"));
+				jobj.put("otherIntroduction", rset.getString("OTHER_INTRODUCTION"));
+				MarathonArr.add(jobj);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(stmt);
+		}
+		return MarathonArr;
 	}
 
 }
