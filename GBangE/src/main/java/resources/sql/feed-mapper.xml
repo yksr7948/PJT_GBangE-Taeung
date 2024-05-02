@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+<entry key = "selectFeedList">
+	SELECT FEED_NO
+		      ,FEED_TITLE
+		      ,MEMBER_ID
+		      ,COUNT
+		      ,CREATE_DATE
+		FROM FEED F
+		JOIN MEMBER M USING (MEMBER_NO)
+		WHERE F.STATUS = 'Y'
+</entry>
+
+</properties>
