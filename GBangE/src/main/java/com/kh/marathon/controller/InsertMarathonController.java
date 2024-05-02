@@ -34,7 +34,7 @@ public class InsertMarathonController extends HttpServlet {
 		result = new MarathonService().deleteAllMarathon();
 		if(result<0) {
 			request.getSession().setAttribute("msg", "초기화 실패");
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect("views/marathon/marathonMain.jsp");
 		}else {
 			result = new MarathonService().insertMarthon();
 			if(result>0) {
@@ -42,7 +42,7 @@ public class InsertMarathonController extends HttpServlet {
 			}else {
 				request.getSession().setAttribute("msg", "초기화 실패");
 			}
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect("views/marathon/marathonMain.jsp");
 		}
 	}
 
