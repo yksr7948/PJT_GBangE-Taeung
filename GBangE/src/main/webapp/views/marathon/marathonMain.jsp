@@ -40,7 +40,7 @@
                             <a href="#" class="btn-hover btn text-white py-2 px-4">참가신청</a>
                         </div>
                         <div class="col-6 text-end px-0">
-                            <a href="#" class="btn-hover btn text-white py-2 px-4">더보기</a>
+                            <a href="${contextPath }/detail.ma?marathonNo=${m.marathonNo }" target="_blank" class="btn-hover btn text-white py-2 px-4">더보기</a>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
 						<c:forEach var="m" items="${marathonArr}">
 							<tr class="marathonInfo" style="border-bottom: 1px solid #999;" >
 								<td>${m.marathonNo}</td>
-								<td><a href="${contextPath }/detail.ma?marathonNo=${m.marathonNo }" style="color:black; font-size:12px;">${m.marathonName}</a></td>
+								<td><a href="${contextPath }/detail.ma?marathonNo=${m.marathonNo }" target="_blank" style="color:black; font-size:12px;">${m.marathonName}</a></td>
 								<td>${m.location }</td>
 								<td>${m.region }</td>
 								<td>${m.marathonDate }</td>
@@ -120,5 +120,11 @@
 <script src="views/marathon/lib/waypoints/waypoints.min.js"></script>
 <script src="views/marathon/lib/owlcarousel/owl.carousel.min.js"></script>
 <script src="views/marathon/js/main.js"></script>
-
+<script type="text/javascript">
+$(function(){
+	if(${msg}!=""){
+		alert(${msg});	
+	}
+});
+</script>
 </html>
