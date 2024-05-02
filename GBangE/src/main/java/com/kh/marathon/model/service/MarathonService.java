@@ -106,4 +106,11 @@ public class MarathonService {
         JDBCTemplate.close(conn);
 		return result;
 	}
+
+	public JSONArray selectMarathon() {
+		Connection conn = JDBCTemplate.getConnection();
+		JSONArray MarathonArr = new MarathonDao().selectMarathon(conn);
+		JDBCTemplate.close(conn);
+		return MarathonArr;
+	}
 }
