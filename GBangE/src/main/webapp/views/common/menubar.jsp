@@ -14,7 +14,8 @@
 </head>
 <style>
 *{
-    padding: 0;;margin: 0;
+    padding: 0;
+    margin: 0;
 }
 ul,ol{
     list-style:none
