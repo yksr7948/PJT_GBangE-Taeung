@@ -1,29 +1,28 @@
 package com.kh.notice.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.kh.notice.model.service.NoticeService;
 import com.kh.notice.model.vo.Notice;
 
-
-
 /**
- * Servlet implementation class InsertNoticeController
+ * Servlet implementation class ListNoticeController
  */
-@WebServlet("/insert.no")
-public class InsertNoticeController extends HttpServlet {
+@WebServlet("/list.no")
+public class ListNoticeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertNoticeController() {
+    public ListNoticeController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,39 +32,19 @@ public class InsertNoticeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
-		request.getRequestDispatcher("views/notice/noticeInsertView.jsp").forward(request, response);
+		ArrayList<Notice> list = new NoticeService().selectNoticeList();
+		
+		request.setAttribute("noticeList", list);
+		
+		request.getRequestDispatcher("views/notice/noticeListView.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String title = request.getParameter("title");
-		 
-		String content = request.getParameter("content");
-		
-		String memberName = request.getParameter("memberName");
-		HttpSession session = request.getSession();
-		Notice n = new Notice();
-		n.setNoticeTitle(title);
-		n.setMemberName(memberName);
-		n.setNoticeContent(content);
-		
-		int result = new NoticeService().insertNotice(n);
-		
-		
-		if(result>0) { 
-			session.setAttribute("alertMsg", "공지 작성 완료");
-			response.sendRedirect(request.getContextPath()+"/list.no");
-		}else {
-			
-			request.setAttribute("errorMsg", "공지 작성 실패");
-		
-	
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
-
-}
 
 }
