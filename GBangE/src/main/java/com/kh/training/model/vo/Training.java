@@ -3,8 +3,9 @@ package com.kh.training.model.vo;
 import java.sql.Date;
 
 public class Training {
+	private String trainingTitle;
 //	TRAINING_NO
-	private int training;
+	private int trainingNo;
 //	MEMBER_NO
 	private int memberNo;
 //	TRAINING_KEY
@@ -29,17 +30,18 @@ public class Training {
 	private String trainingContent;
 //	BOARD_ID
 	private int boardId;
-	
+
 	public Training() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Training(int training, int memberNo, int trainingKey, int shoesNo, Date trainingDate, Date recordDate,
-			String trainingPlace, double trainingTime, String trainingGoal, double trainingDistance, double weight,
-			String trainingContent, int boardId) {
+	public Training(String trainingTitle, int training, int memberNo, int trainingKey, int shoesNo, Date trainingDate,
+			Date recordDate, String trainingPlace, double trainingTime, String trainingGoal, double trainingDistance,
+			double weight, String trainingContent, int boardId) {
 		super();
-		this.training = training;
+		this.trainingTitle = trainingTitle;
+		this.trainingNo = training;
 		this.memberNo = memberNo;
 		this.trainingKey = trainingKey;
 		this.shoesNo = shoesNo;
@@ -54,12 +56,20 @@ public class Training {
 		this.boardId = boardId;
 	}
 
+	public String getTrainingTitle() {
+		return trainingTitle;
+	}
+
+	public void setTrainingTitle(String trainingTitle) {
+		this.trainingTitle = trainingTitle;
+	}
+
 	public int getTraining() {
-		return training;
+		return trainingNo;
 	}
 
 	public void setTraining(int training) {
-		this.training = training;
+		this.trainingNo = training;
 	}
 
 	public int getMemberNo() {
@@ -160,12 +170,11 @@ public class Training {
 
 	@Override
 	public String toString() {
-		return "Training [training=" + training + ", memberNo=" + memberNo + ", trainingKey=" + trainingKey
+		return "Training [trainingNo=" + trainingNo + ", memberNo=" + memberNo + ", trainingKey=" + trainingKey
 				+ ", shoesNo=" + shoesNo + ", trainingDate=" + trainingDate + ", recordDate=" + recordDate
 				+ ", trainingPlace=" + trainingPlace + ", trainingTime=" + trainingTime + ", trainingGoal="
 				+ trainingGoal + ", trainingDistance=" + trainingDistance + ", weight=" + weight + ", trainingContent="
 				+ trainingContent + ", boardId=" + boardId + "]";
 	}
-	
-	
+
 }

@@ -1,4 +1,4 @@
-package com.kh.trainingCategory.model.vo;
+package com.kh.training.model.vo;
 
 public class TrainingCategory {
 //	TRAINING_KEY
