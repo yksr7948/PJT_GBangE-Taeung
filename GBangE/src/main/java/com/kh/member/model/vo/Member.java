@@ -10,20 +10,16 @@ public class Member {
 	private String memberPwd;
 	private String gender;
 	private String address;
-	private Date birthDate;
+	private String birthDate;
 	private double mileage;
 	private String shoes;
 	private double weight;
 	private Date enrollDate;
 	private String status;
 	
-	public Member() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	public Member(int memberNo, String memberName, String memberId, String memberPwd, String gender, String address,
-			Date birthDate, double mileage, String shoes, double weight, Date enrollDate, String status) {
+			String birthDate, double mileage, String shoes, double weight, Date enrollDate, String status) {
 		super();
 		this.memberNo = memberNo;
 		this.memberName = memberName;
@@ -38,6 +34,7 @@ public class Member {
 		this.enrollDate = enrollDate;
 		this.status = status;
 	}
+
 
 	public int getMemberNo() {
 		return memberNo;
@@ -87,11 +84,11 @@ public class Member {
 		this.address = address;
 	}
 
-	public Date getBirthDate() {
+	public String getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 

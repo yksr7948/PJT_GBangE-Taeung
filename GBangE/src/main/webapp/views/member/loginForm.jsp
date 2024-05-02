@@ -7,41 +7,59 @@
 <title>Insert title here</title>
 <style>
 	* {
-		padding: 0;
-		margin: 0;
-		border: none;
+		box-sizing: border-box;
+		font-family: "Noto Sans CJK KR";
+		font-style: normal;
 	}
 	
 	body {
-		font-size: 14px;
+		display: flex;
+  		flex-direction: row;
+  		justify-content: center;
+
 	}
 	
-	.login-wrapper {
-		width: 600px;
-		height: 600px;
-		padding: 60px;
-		box-sizing: border-box;
+	.login-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 670px;
+		height: 960px;
+		margin-top: 60px;
+		margin-bottom: 60px;
+		background: #ffffff;
 		border: 1px solid black;
-		position: absolute;
-		left: 50%;
-		margin-left: -200px;
-		margin-top: 10%;
-        box-shadow: 5px 5px 5px 5px gray;
-        border-radius: 100px;
+		box-shadow: 5px 5px 5px gray;
+		border-radius: 20px;
+	}
+
+	.container{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 470px;
+		height: 818px;
+		margin-top: 72px;
+		margin-bottom: 70px;
 	}
 	
-	.login-wrapper>h2 {
-		font-size: 36px;
+	.header {
+		width: 466px;
+		height: 94px;
+		font-weight: 700;
+		font-size: 32px;
+		line-height: 47px;
+		margin-bottom: 50px;
 		color: black;
-		margin-bottom: 15%;
 	}
 	
 	#login-form>input {
+		
 		width: 100%;
 		height: 60px;
 		padding: 0 10px;
 		box-sizing: border-box;
-		margin-bottom: 32px;
+		margin-bottom: 50px;
 		border-radius: 6px;
 		background-color: light;
         border: 1px solid gray;
@@ -67,8 +85,17 @@
 	}
 
     #login-btn{
-        background-color: gray;
-        color: white;
+		margin-top: 30px;
+		width: 470px;
+		height: 75px;
+		font-weight: 400;
+		font-size: 18px;
+		line-height: 27px;
+		text-align: center;
+		color: black;
+		background: #ffffff;
+		border: 1px solid gray;
+		border-radius: 10px;
     }
 	
 	a {
@@ -79,21 +106,25 @@
 </style>
 </head>
 <body>
-	<div class="login-wrapper">
-		<h2 align="center">로그인</h2>
-		<form action="" method="post" id="login-form">
-			<input type="text" name="userId" placeholder="아이디"> <input
-				type="password" name="userPwd" placeholder="비밀번호"> <label
-				for="remember-check"> <input type="checkbox"
-				id="remember-check">아이디 저장
-			</label> <br>
+	<div class="login-container">
+		<div class="container">
+			<div class="header">
+				<h1 align="center">로그인</h1>
+			</div>
+		<form action="/gbange/insert.me" method="post" id="login-form">
+				<input type="text" name="userId" placeholder="아이디"> 
+				<input type="password" name="userPwd" placeholder="비밀번호"> 
+			<label for="remember-check"><input type="checkbox" id="remember-check">아이디 저장</label> 
+			<br>
 			<br>
 			<br> <input type="submit" id="login-btn" value="Login">
 			<div align="center">
-				<a href="">아이디 찾기</a> / <a href="">비밀번호 찾기</a> / <a href="enrollCheck.me">회원가입</a>
+				<a href="">아이디 찾기</a> / <a href="">비밀번호 찾기</a> / <a href="/gbange/enrollCheck.me">회원가입</a>
 			</div>
+		</div>
 
 		</form>
 	</div>
 </body>
+</html>
 </html>
