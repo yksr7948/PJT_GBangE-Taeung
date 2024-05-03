@@ -35,5 +35,16 @@ public class MemberService {
 		return result;
 	}
 
+	public boolean checkId(String inputId) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		
+		boolean flag = new MemberDao().checkId(conn,inputId);
+		
+		JDBCTemplate.close(conn);
+		
+		return flag;
+	}
+
 	
 }

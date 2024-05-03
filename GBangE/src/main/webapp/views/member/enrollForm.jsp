@@ -4,7 +4,7 @@
 <html lang="ko">
   <head>
     <title>회원가입</title>
-    <link rel="stylesheet" href="./02-signup.css" />
+  
     
 <style>
 
@@ -13,7 +13,7 @@
   flex-direction: column;
   align-items: center;
   width: 670px;
-  height: 1200px;
+  height: 1300px;
   margin: auto;
   margin-top: 60px;
   margin-bottom: 60px;
@@ -57,11 +57,29 @@
   border: none;
   border-bottom: 1px solid #cfcfcf;
   width: 466px;
+  height: 40px;
   margin-top: 21px;
 }
+.user-info-id{
+	position: relative;
+}
 
-.user-info-id input {
+.user-info-id>input {
   border-bottom: 1px solid #d2d2d2;
+  
+}
+
+.user-info-id>button{
+  position: absolute;
+  width: 90px;
+  height: 40px;
+  top: 0;
+  bottom: 0;
+  right: 5px;
+  margin: auto;
+  margin-bottom: 0px;
+  margin-right: -5px;
+  border-radius: 3px;
 }
 
 .gender {
@@ -105,7 +123,7 @@
   border-top: 1px solid #e6e6e6;
 }
 
-button {
+#enroll-btn {
   margin-top: 30px;
   width: 470px;
   height: 75px;
@@ -118,6 +136,11 @@ button {
   border: 1px solid gray;
   border-radius: 10px;
 }
+
+#hidden-area{
+display: none;
+}
+
     </style>
   </head>
   <body>
@@ -130,35 +153,42 @@ button {
 	          <h1>회원가입</h1>
 	        </div>
 	        <div class="user-info">
+	        
 	          <div class="user-info-id">
-	            <div>* 아이디</div>
-	            <input type="text" name="userId" required/>
+	            <div>* 아이디 </div>
+	            <input type="text" name="userId" id="userId" required/>
+	            <button type="button" onclick="idCheck();">중복확인</button>
 	          </div>
+	            <div id="hidden-area"></div>
+	          
 	          <div class="user-info-name">
 	            <div>* 이름</div>
-	            <input type="text" name="userName" required/>
+	            <input type="text" name="userName" id="userName" required/>
 	          </div>
+	          
 	          <div class="user-info-pw">
 	            <div>* 비밀번호</div>
-	            <input type="password" name="userPwd" required/>
+	            <input type="password" name="userPwd" id="userPwd" required/>
 	          </div>
+	          
 	          <div class="user-info-pw-check">
 	            <div>* 비밀번호 확인</div>
-	            <input type="password" required/>
+	            <input type="password" id="checkPwd" required/>
 	          </div>
+	          
 	          <div class="user-info-birth">
 	            <div>* 생년월일 (8자리)</div>
-	            <input type="text" name="birthDate" required>
+	            <input type="text" name="birthDate" id="user-birth" required>
 	          </div>
 	
 	          <div class="user-info-address">
 	            <div>  주소</div>
-	            <input type="text" name="address">
+	            <input type="text" name="address" id="address">
 	          </div>
 	
 	          <div class="user-info-weight">
 	            <div> 몸무게 (소수점 2자리)</div>
-	            <input type="number" step="0.02" name="weight">
+	            <input type="number" step="0.02" name="weight" id="weight">
 	          </div>
 	
 	          <div class="user-info-shoes">
@@ -179,10 +209,59 @@ button {
 	          <input type="radio" name="gender" id="men" value="M" /><label for="men">남성</label>
 	        </div>
 	        <div class="btn">
-	          <button type="submit">가입하기</button>
+	          <button id="enroll-btn" type="submit" disabeld>가입하기</button>
+	          <br>
+	          <button type="button" onclick="enroll();">확인버튼</button>
 	        </div>
 	      </div>
 	    </div>
     </form>
+    
+    <script>
+    	
+    	//회원가입 정규표현식
+    	function enroll(){
+    	var id = $("#userId").val();
+    	var name = $("#userName").val();
+        var pwd = $("#userPwd").val();
+        var checkPwd = $("#checkPwd").val();
+        var birth = $("#user-birth").val();
+        var address = $("#address").val();
+        var weight = $("#weight").val();
+
+    	console.log(id);
+        console.log(name);
+        console.log(pwd);
+        console.log(checkPwd);
+        console.log(birth);
+        console.log(address);
+        console.log(weight);
+    	}
+    
+    	//아이디 중복체크
+    	function idCheck(){
+    		var inputId = $("#userId").val();
+    		
+    		
+    		$.ajax({
+    			url : "/gbange/idCheck.me",
+    			data : {
+    				inputId : inputId
+    			},
+    			success : function(result){
+    				if(result == "NNNNN"){
+    					$("#hidden-area").html("*사용불가능한 아이디입니다.").show();
+    					$("#hidden-area").css({"color":"red"});
+    				}else{
+    					$("#hidden-area").html("*사용가능한 아이디입니다.").show();
+    					$("#hidden-area").css({"color":"green"});
+    				}
+    			},
+    			error : function(){
+    				console.log("오류");
+    			}
+    		});
+    	}
+    </script>
   </body>
 </html>
