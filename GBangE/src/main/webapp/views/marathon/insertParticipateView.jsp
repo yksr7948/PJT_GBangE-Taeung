@@ -8,7 +8,6 @@
 </head>
 <body>
 	<%@include file="/views/common/menubar.jsp"%>
-	${marathonNo }
-	insert.pa post형태로 처리 
+	<input type="text" id="" name="">
 </body>
 </html>

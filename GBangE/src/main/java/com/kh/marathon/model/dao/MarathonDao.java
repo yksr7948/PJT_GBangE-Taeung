@@ -101,13 +101,13 @@ public class MarathonDao{
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("marathonDetail");
-		Marathon m = new Marathon();
+		Marathon mar = new Marathon();
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1,marathonNo);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
-				m = new Marathon(rset.getInt("MARATHON_NO")
+				mar = new Marathon(rset.getInt("MARATHON_NO")
 											,rset.getString("MARATHON_NAME")
 											,rset.getString("LOCATION")
 											,rset.getString("REGION")
@@ -128,7 +128,7 @@ public class MarathonDao{
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
 		}
-		return m;
+		return mar;
 	}
 
 }

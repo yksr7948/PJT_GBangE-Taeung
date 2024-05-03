@@ -33,8 +33,8 @@ public class MarathonDetailController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int marathonNo = Integer.parseInt(request.getParameter("marathonNo"));
-		Marathon m = new MarathonService().marathonDetail(marathonNo);
-		request.setAttribute("m", m);
+		Marathon mar = new MarathonService().marathonDetail(marathonNo);
+		request.setAttribute("mar", mar);
 		request.getRequestDispatcher("views/marathon/marathonDetailView.jsp").forward(request, response);
 	}
 

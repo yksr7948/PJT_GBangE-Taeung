@@ -19,29 +19,30 @@
 					조회된 게시글이 없습니다.
 					</c:when>
 					<c:otherwise>
-					<c:forEach var="m" items="${marathonArr}">
+					<c:forEach var="mar" items="${marathonArr}">
 						<div class="packages-item">
-                	<div class="packages-img" onclick="window.open('${m.marathonSite }')">
+                	<div class="packages-img" onclick="window.open('${mar.marathonSite }')">
                     	<img src="views/marathon/img/500x400-5.jpg" class="img-fluid w-100 rounded-top">
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
-                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>${m.region }</small>
-                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>${m.marathonDate }</small>
-                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>${m.organizer }</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>${mar.region }</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>${mar.marathonDate }</small>
+                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>${mar.organizer }</small>
                     </div>
                 	</div>
                 	<div class="packages-content bg-light">
                     <div class="p-4 pb-0">
-                        <h5 class="mb-0" style="height:68px">${m.marathonName }</h5>
-                        <small class="text-uppercase">대회번호 ${m.marathonNo }</small>
+                        <h5 class="mb-0" style="height:68px">${mar.marathonName }</h5>
+                        <small class="text-uppercase">대회번호 ${mar.marathonNo }</small>
                         <p class="mb-4">상세정보</p>
-                        <p class="mb-4" style="height:48px">${m.otherIntroduction }</p>
+                        <p class="mb-4" style="height:48px">${mar.otherIntroduction }</p>
                     </div>
                     <div class="row bg-primary rounded-bottom mx-0">
                         <div class="col-6 text-start px-0">
-                            <a href="${contextPath }/insert.pa?marathonNo=${m.marathonNo }" class="btn-hover btn text-white py-2 px-4">참가신청</a>
+                        	<!-- 데이터 보낼때 memberNo도 보내야함 -->
+                            <a onclick="checkParticipate();" class="btn-hover btn text-white py-2 px-4">참가신청</a>
                         </div>
                         <div class="col-6 text-end px-0">
-                            <a href="${contextPath }/detail.ma?marathonNo=${m.marathonNo }" target="_blank" class="btn-hover btn text-white py-2 px-4">더보기</a>
+                            <a href="${contextPath }/detail.ma?marathonNo=${mar.marathonNo }" target="_blank" class="btn-hover btn text-white py-2 px-4">더보기</a>
                         </div>
                     </div>
                 </div>
@@ -82,13 +83,13 @@
 						</tr>
 						</c:when>
 						<c:otherwise>
-						<c:forEach var="m" items="${marathonArr}">
-							<tr class="marathonInfo" onclick='window.open("${contextPath }/detail.ma?marathonNo=${m.marathonNo }")' cursor>
-								<td>${m.marathonNo}</td>
-								<td>${m.marathonName}</td>
-								<td>${m.location }</td>
-								<td>${m.region }</td>
-								<td>${m.marathonDate }</td>
+						<c:forEach var="mar" items="${marathonArr}">
+							<tr class="marathonInfo" onclick='window.open("${contextPath }/detail.ma?marathonNo=${mar.marathonNo }")'>
+								<td>${mar.marathonNo}</td>
+								<td>${mar.marathonName}</td>
+								<td>${mar.location }</td>
+								<td>${mar.region }</td>
+								<td>${mar.marathonDate }</td>
 							</tr>
 						</c:forEach>	
 					</c:otherwise>
@@ -97,7 +98,8 @@
 					</table>					
                     </div>
                     <div class="modal-footer">
-                    	<c:if test="${memberNo}==1">
+                    <!-- 관리자전용 기능 -->
+                    	<c:if test="'${memberNo}'==1">
                     		<button onclick='location.href="${contextPath }/insert.ma"' class="btn btn-outline-primary">대회정보 초기화</button>
                     	</c:if>
                       <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">종료</button>
@@ -124,10 +126,14 @@
 <script src="views/marathon/lib/owlcarousel/owl.carousel.min.js"></script>
 <script src="views/marathon/js/main.js"></script>
 <script type="text/javascript">
-$(function(){
-	if(${!empty msg}){
-		alert(${msg});	
+function checkParticipate(){
+	if('${memberNo}'==""){
+		if(confirm("로그인이 필요한 서비스입니다. 로그인페이지로 이동하시겠습니까?")){
+			location.href="${contextPath}/views/member/loginForm.jsp"
+		}
+	}else{
+		location.href="${contextPath}/insert.pa?marathonNo=${mar.marathonNo}&memberNo=${m.memberNo}"	
 	}
-});
+}
 </script>
 </html>

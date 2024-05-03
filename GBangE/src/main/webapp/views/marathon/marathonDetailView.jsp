@@ -38,46 +38,46 @@
     <table class="marathonDetail table">
     <tr>
     	<th>행사명</th>
-    	<td>${m.marathonName }</td>
+    	<td>${mar.marathonName }</td>
     </tr>
     <tr>
     	<th>지역</th>
-    	<td>${m.region }</td>
+    	<td>${mar.region }</td>
     </tr>
     <tr>
     	<th>마라톤 장소</th>
-    	<td>${m.location }</td>
+    	<td>${mar.location }</td>
     </tr>
     <tr>
     	<th>출발일</th>
-    	<td>${m.marathonDate }</td>
+    	<td>${mar.marathonDate }</td>
     </tr>
     <tr>
     	<th>접수기간</th>
-    	<td>${m.applicationDate }</td>
+    	<td>${mar.applicationDate }</td>
     </tr>
 	<tr>
     	<th>주최자</th>
-    	<td>${m.organizer }</td>
+    	<td>${mar.organizer }</td>
     </tr>
     <tr>
     	<th>주최단체</th>
-    	<td>${m.organizerHost }</td>
+    	<td>${mar.organizerHost }</td>
     </tr>
     <tr>
     	<th>번호</th>
-    	<td>${m.organizerPhone }</td>
+    	<td>${mar.organizerPhone }</td>
     </tr>
     <tr>
     	<th>대회 주소</th>
-    	<td><a href="${m.marathonSite }" target="_blank">${m.marathonSite }</a></td>
+    	<td><a href="${mar.marathonSite }" target="_blank">${mar.marathonSite }</a></td>
     </tr>
     <tr>
     	<th style="height:250px">상세 정보</th>
-    	<td>${m.otherIntroduction }</td>
+    	<td>${mar.otherIntroduction }</td>
     </tr>
     <tr>
-    <th style="height:400px"><a href="https://map.kakao.com/link/search/${m.location }" target="_blank">장소 상세</a></th>
+    <th style="height:400px"><a href="https://map.kakao.com/link/search/${mar.location }" target="_blank">장소 상세</a></th>
     <td>
     <div id="map" style="width:500px;height:350px;"></div>    
     </td>
@@ -102,7 +102,7 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 var ps = new kakao.maps.services.Places(); 
 
 // 키워드로 장소를 검색합니다
-ps.keywordSearch('${m.region }${m.location}', placesSearchCB); 
+ps.keywordSearch('${mar.location}', placesSearchCB); 
 
 // 키워드 검색 완료 시 호출되는 콜백함수 입니다
 function placesSearchCB (data, status, pagination) {
@@ -119,7 +119,10 @@ function placesSearchCB (data, status, pagination) {
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds);
-    } 
+    }else{
+    	// 장소 검색 실패시, alert 
+    	alert("장소 검색에 실패했습니다.");
+    }
 }
 
 // 지도에 마커를 표시하는 함수입니다

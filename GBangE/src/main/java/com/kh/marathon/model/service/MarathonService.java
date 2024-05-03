@@ -117,8 +117,8 @@ public class MarathonService {
 
 	public Marathon marathonDetail(int marathonNo) {
 		Connection conn = JDBCTemplate.getConnection();
-		Marathon m = new MarathonDao().marathonDetail(conn,marathonNo);
+		Marathon mar = new MarathonDao().marathonDetail(conn,marathonNo);
 		JDBCTemplate.close(conn);
-		return m;
+		return mar;
 	}
 }
