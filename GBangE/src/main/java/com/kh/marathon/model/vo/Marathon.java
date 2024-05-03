@@ -4,6 +4,7 @@ public class Marathon {
 	private int marathonNo;
 	private String marathonName;
 	private String location;
+	private String region;
 	private String marathonDate;
 	private String applicationDate;
 	private String otherIntroduction;
@@ -85,25 +86,29 @@ public class Marathon {
 	public void setMarathonCourse(String marathonCourse) {
 		this.marathonCourse = marathonCourse;
 	}
+	
+	public String getRegion() {
+		return region;
+	}
+	public void setRegion(String region) {
+		this.region = region;
+	}
 	@Override
 	public String toString() {
 		return "Marathon [marathonNo=" + marathonNo + ", marathonName=" + marathonName + ", location=" + location
-				+ ", marathonDate=" + marathonDate + ", applicationDate=" + applicationDate + ", otherIntroduction="
-				+ otherIntroduction + ", organizer=" + organizer + ", organizerHost=" + organizerHost
-				+ ", organizerPhone=" + organizerPhone + ", marathonSite=" + marathonSite + ", status=" + status
-				+ ", marathonCourse=" + marathonCourse + "]";
+				+ ", region=" + region + ", marathonDate=" + marathonDate + ", applicationDate=" + applicationDate
+				+ ", otherIntroduction=" + otherIntroduction + ", organizer=" + organizer + ", organizerHost="
+				+ organizerHost + ", organizerPhone=" + organizerPhone + ", marathonSite=" + marathonSite + ", status="
+				+ status + ", marathonCourse=" + marathonCourse + "]";
 	}
-	public Marathon() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public Marathon(int marathonNo, String marathonName, String location, String marathonDate, String applicationDate,
-			String otherIntroduction, String organizer, String organizerHost, String organizerPhone,
-			String marathonSite, String status, String marathonCourse) {
+	public Marathon(int marathonNo, String marathonName, String location, String region, String marathonDate,
+			String applicationDate, String otherIntroduction, String organizer, String organizerHost,
+			String organizerPhone, String marathonSite, String status, String marathonCourse) {
 		super();
 		this.marathonNo = marathonNo;
 		this.marathonName = marathonName;
 		this.location = location;
+		this.region = region;
 		this.marathonDate = marathonDate;
 		this.applicationDate = applicationDate;
 		this.otherIntroduction = otherIntroduction;
@@ -113,6 +118,10 @@ public class Marathon {
 		this.marathonSite = marathonSite;
 		this.status = status;
 		this.marathonCourse = marathonCourse;
+	}
+	public Marathon() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
 }

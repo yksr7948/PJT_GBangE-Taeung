@@ -1,11 +1,17 @@
 package com.kh.marathon.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONArray;
+
+import com.kh.marathon.model.service.MarathonService;
+import com.kh.marathon.model.vo.Marathon;
 
 /**
  * Servlet implementation class MarathonDetailController
@@ -27,7 +33,8 @@ public class MarathonDetailController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int marathonNo = Integer.parseInt(request.getParameter("marathonNo"));
-		request.setAttribute("marathonNo", marathonNo);
+		Marathon m = new MarathonService().marathonDetail(marathonNo);
+		request.setAttribute("m", m);
 		request.getRequestDispatcher("views/marathon/marathonDetailView.jsp").forward(request, response);
 	}
 

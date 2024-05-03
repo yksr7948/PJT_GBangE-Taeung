@@ -12,7 +12,9 @@ import java.util.Properties;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.google.gson.Gson;
 import com.kh.common.JDBCTemplate;
+import com.kh.marathon.model.vo.Marathon;
 
 public class MarathonDao{
 	private Properties prop = new Properties();
@@ -79,7 +81,11 @@ public class MarathonDao{
 				jobj.put("marathonDate",rset.getString("MARATHON_DATE").substring(0, rset.getString("MARATHON_DATE").indexOf(" ")));
 				jobj.put("marathonSite",rset.getString("MARATHON_SITE"));
 				jobj.put("organizer", rset.getString("ORGANIZER"));
-				jobj.put("otherIntroduction", rset.getString("OTHER_INTRODUCTION"));
+				String otherIntroduction = rset.getString("OTHER_INTRODUCTION");
+				if(otherIntroduction!=null&&otherIntroduction.length()>50) {
+					otherIntroduction = otherIntroduction.substring(0,50);
+				}
+				jobj.put("otherIntroduction", otherIntroduction);
 				MarathonArr.add(jobj);
 			}
 		} catch (SQLException e) {
@@ -90,6 +96,39 @@ public class MarathonDao{
 			JDBCTemplate.close(stmt);
 		}
 		return MarathonArr;
+	}
+	public Marathon marathonDetail(Connection conn, int marathonNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("marathonDetail");
+		Marathon m = new Marathon();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1,marathonNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				m = new Marathon(rset.getInt("MARATHON_NO")
+											,rset.getString("MARATHON_NAME")
+											,rset.getString("LOCATION")
+											,rset.getString("REGION")
+											,rset.getString("MARATHON_DATE")
+											,rset.getString("APPLICATION_DATE")
+											,rset.getString("OTHER_INTRODUCTION")
+											,rset.getString("ORGANIZER")
+											,rset.getString("ORGANIZER_HOST")
+											,rset.getString("ORGANIZER_PHONE")
+											,rset.getString("MARATHON_SITE")
+											,rset.getString("STATUS")
+											,rset.getString("MARATHON_COURSE"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return m;
 	}
 
 }
