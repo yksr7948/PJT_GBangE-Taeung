@@ -89,7 +89,7 @@
 </head>
 <body>
 <%@include file="/views/common/menubar.jsp"%>
-	<div class="board_wrap">
+	    <div class="board_wrap">
 		<div class="board_title">
 			<h1>러닝일지</h1>
 			<p>러닝일지 페이지입니다.</p>
@@ -115,6 +115,39 @@
 						<dd>32</dd>
 					</dl>
 				</div>
+                <table class="table table-hover">
+                    <tr>
+                        <th>훈련종류</th>
+                        <td><select name="category">
+                        <c:forEach items="${tCList}" var="tc">
+                                <option value="${tc.trainingKey }">${tc.trainingName }</option>
+                        </c:forEach>
+                        </select></td>
+                        <th>착용신발</th>
+                        <td><select name="shoes">
+                        <!-- shoes 조회 기능 구현되면 가져올 것 -->
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <th>훈련장소</th>
+                        <td><input type="text" name="trainingPlace"></td>
+                        <th>운동거리(km)</th>
+                        <td><input type="number" step="0.01" min="1" max="100" name="trainingDistance">km</td>
+                    </tr>
+                    <tr>
+                        <th>운동시간</th>
+                        <td><input type="number" step="0.1" name="trainingTime"></td>
+                        <th>평균페이스</th>
+                        <td><input type="number" readonly value="">/km</td>
+                    </tr>
+                    <tr>
+                        <th>목표</th>
+                        <td><input type="text" name="trainingGoal"></td>
+                        <th>현재 체중(kg)</th>
+                        <td><input type="number" step="0.01" min="20" max="200" name="weight"></td>
+                    </tr>
+                </table>
+                <hr>
 				<div class="cont">
 
 					글 내용이 들어갑니다<br> 글 내용이 들어갑니다<br> 글 내용이 들어갑니다<br> 글
