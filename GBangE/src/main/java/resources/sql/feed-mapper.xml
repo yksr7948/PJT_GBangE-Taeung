@@ -3,14 +3,31 @@
 <properties>
 
 <entry key = "selectFeedList">
-	SELECT FEED_NO
-		      ,FEED_TITLE
-		      ,MEMBER_ID
-		      ,COUNT
-		      ,CREATE_DATE
-		FROM FEED F
-		JOIN MEMBER M USING (MEMBER_NO)
-		WHERE F.STATUS = 'Y'
+		SELECT *
+		FROM (
+                SELECT ROWNUM,S.*
+        		FROM (SELECT FEED_NO
+               ,BOARD_TITLE
+               ,MEMBER_ID
+               ,COUNT
+               ,CREATE_DATE
+                FROM FEED F
+                JOIN MEMBER M USING (MEMBER_NO)
+                WHERE F.STATUS = 'Y'
+                ORDER BY CREATE_DATE DESC) S)
+		WHERE  "ROWNUM" BETWEEN ? AND ?
 </entry>
+
+<entry key = "insertFeed">
+	INSERT INTO FEED(FEED_NO,FEED_TITLE,FEED_CONTENT)
+	VALUES(FEED_FNO.NEXTVAL,?,?)
+</entry>
+<entry key="listCount">
+		SELECT COUNT(*) COUNT
+		FROM FEED
+		WHERE STATUS='Y'
+	</entry>
+
+
 
 </properties>
