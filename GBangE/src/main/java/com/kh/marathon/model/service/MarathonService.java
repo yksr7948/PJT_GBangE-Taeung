@@ -11,6 +11,7 @@ import org.jsoup.nodes.Document;
 
 import com.kh.common.JDBCTemplate;
 import com.kh.marathon.model.dao.MarathonDao;
+import com.kh.marathon.model.vo.Marathon;
 
 public class MarathonService {
 	private String baseURL = "http://www.roadrun.co.kr/schedule/list.php";
@@ -112,5 +113,12 @@ public class MarathonService {
 		JSONArray MarathonArr = new MarathonDao().selectMarathon(conn);
 		JDBCTemplate.close(conn);
 		return MarathonArr;
+	}
+
+	public Marathon marathonDetail(int marathonNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		Marathon m = new MarathonDao().marathonDetail(conn,marathonNo);
+		JDBCTemplate.close(conn);
+		return m;
 	}
 }

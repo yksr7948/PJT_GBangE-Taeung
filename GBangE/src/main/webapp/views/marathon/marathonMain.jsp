@@ -21,7 +21,7 @@
 					<c:otherwise>
 					<c:forEach var="m" items="${marathonArr}">
 						<div class="packages-item">
-                	<div class="packages-img" onclick="location.href='${m.marathonSite }'">
+                	<div class="packages-img" onclick="window.open('${m.marathonSite }')">
                     	<img src="views/marathon/img/500x400-5.jpg" class="img-fluid w-100 rounded-top">
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>${m.region }</small>
@@ -34,10 +34,11 @@
                         <h5 class="mb-0" style="height:68px">${m.marathonName }</h5>
                         <small class="text-uppercase">대회번호 ${m.marathonNo }</small>
                         <p class="mb-4">상세정보</p>
+                        <p class="mb-4" style="height:48px">${m.otherIntroduction }</p>
                     </div>
                     <div class="row bg-primary rounded-bottom mx-0">
                         <div class="col-6 text-start px-0">
-                            <a href="#" class="btn-hover btn text-white py-2 px-4">참가신청</a>
+                            <a href="${contextPath }/insert.pa?marathonNo=${m.marathonNo }" class="btn-hover btn text-white py-2 px-4">참가신청</a>
                         </div>
                         <div class="col-6 text-end px-0">
                             <a href="${contextPath }/detail.ma?marathonNo=${m.marathonNo }" target="_blank" class="btn-hover btn text-white py-2 px-4">더보기</a>
@@ -59,14 +60,13 @@
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                   <div class="modal-content">
                     <div class="modal-header">                    
-                      <h5 class="modal-title" id="staticBackdropLabel">전체 대회정보</h5>
-                      <a href="/${contextPath }/insert.ma">대회정보 초기화</a>
+                      <h5 class="modal-title" id="staticBackdropLabel">전체 대회정보</h5>                      
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                     <table class="marathonclass" style="font-size: 12px">
                     <thead align="center">
-						<tr style="height:40px">
+						<tr>
 							<th width="7%">번호</th>
 							<th width="33%">마라톤 이름</th>
 							<th width="33%">마라톤 장소</th>
@@ -83,9 +83,9 @@
 						</c:when>
 						<c:otherwise>
 						<c:forEach var="m" items="${marathonArr}">
-							<tr class="marathonInfo" style="border-bottom: 1px solid #999;" >
+							<tr class="marathonInfo" onclick='window.open("${contextPath }/detail.ma?marathonNo=${m.marathonNo }")' cursor>
 								<td>${m.marathonNo}</td>
-								<td><a href="${contextPath }/detail.ma?marathonNo=${m.marathonNo }" target="_blank" style="color:black; font-size:12px;">${m.marathonName}</a></td>
+								<td>${m.marathonName}</td>
 								<td>${m.location }</td>
 								<td>${m.region }</td>
 								<td>${m.marathonDate }</td>
@@ -97,6 +97,9 @@
 					</table>					
                     </div>
                     <div class="modal-footer">
+                    	<c:if test="${memberNo}==1">
+                    		<button onclick='location.href="${contextPath }/insert.ma"' class="btn btn-outline-primary">대회정보 초기화</button>
+                    	</c:if>
                       <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">종료</button>
                     </div>
                   </div>
@@ -122,7 +125,7 @@
 <script src="views/marathon/js/main.js"></script>
 <script type="text/javascript">
 $(function(){
-	if(${msg}!=""){
+	if(${!empty msg}){
 		alert(${msg});	
 	}
 });
