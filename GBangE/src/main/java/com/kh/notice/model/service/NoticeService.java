@@ -37,6 +37,37 @@ public class NoticeService {
 		
 		return result;
 	}
+	//조회수 증가
+	public int increaseCount(int nno) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new NoticeDao().increaseCount(conn, nno);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+		
+		
+	}
+	//글 상세보기
+	public Notice selectNotice(int nno) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		Notice n = new NoticeDao().selectNotice(conn,nno);
+		
+		//조회구문은 트랜잭션 처리 필요없음
+		
+		JDBCTemplate.close(conn);
+		
+		
+		return n;
+	}
 
 	}
 

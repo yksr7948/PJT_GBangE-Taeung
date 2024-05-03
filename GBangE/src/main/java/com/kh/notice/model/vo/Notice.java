@@ -41,6 +41,16 @@ public class Notice {
 		this.createDate = createDate;
 		this.count = count;
 	}
+	public Notice(int noticeId, String noticeTitle, String memberName, String noticeContent, Date createDate,
+			int count) {
+		super();
+		this.noticeId = noticeId;
+		this.noticeTitle = noticeTitle;
+		this.memberName = memberName;
+		this.noticeContent = noticeContent;
+		this.createDate = createDate;
+		this.count = count;
+	}
 	public int getNoticeId() {
 		return noticeId;
 	}
