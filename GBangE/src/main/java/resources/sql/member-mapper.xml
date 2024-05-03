@@ -28,4 +28,10 @@
 		   ?,
 		   ?)
 	</entry>
+	
+	<entry key="checkId">
+	SELECT * 
+	FROM MEMBER 
+	WHERE MEMBER_ID = ?
+	</entry>
 </properties>

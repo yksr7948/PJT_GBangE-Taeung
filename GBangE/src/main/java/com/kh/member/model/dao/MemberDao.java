@@ -96,4 +96,31 @@ public class MemberDao {
 		return result;
 		
 	}
+
+	public boolean checkId(Connection conn, String inputId) {
+
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("checkId");
+		boolean flag = false;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, inputId);
+			
+			rset = pstmt.executeQuery();
+			
+			flag = rset.next();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return flag;
+		
+	}
 }
