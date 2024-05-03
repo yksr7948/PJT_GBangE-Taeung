@@ -1,11 +1,16 @@
 package com.kh.member.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.kh.member.model.service.MemberService;
+import com.kh.member.model.vo.Member;
 
 /**
  * Servlet implementation class InsertMemberController
@@ -34,8 +39,35 @@ public class InsertMemberController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
+		//아이디, 이름, 비밀번호, 생년월일, 주소, 몸무게, 러닝화, 성별
+		String userId = request.getParameter("userId");
+		String userName = request.getParameter("userName");
+		String userPwd = request.getParameter("userPwd");
+		String birthDate = request.getParameter("birthDate");
+		String address = request.getParameter("address");
+		double weight = Double.parseDouble(request.getParameter("weight"));
+		String shoes = request.getParameter("shoes");
+		String gender = request.getParameter("gender");
+		
+		Member m = new Member(userName,userId,userPwd,gender,address,birthDate,shoes,weight);
+		
+		System.out.println(m.getWeight());
+		
+		int result = new MemberService().insertMember(m);
+		
+		if(result > 0) {
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("alertMsg", "회원가입에 성공했습니다.");
+			
+			response.sendRedirect(request.getContextPath());
+		}else {
+			
+			request.setAttribute("alertMsg", "회원가입 실패");
+			request.getRequestDispatcher("views/member/enrollForm.jsp").forward(request, response);;
+		}
+		
 	}
 
 }

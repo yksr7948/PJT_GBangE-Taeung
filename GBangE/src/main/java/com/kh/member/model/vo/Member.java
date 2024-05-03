@@ -35,6 +35,18 @@ public class Member {
 		this.status = status;
 	}
 
+	public Member(String memberName, String memberId, String memberPwd, String gender, String address, String birthDate,
+			String shoes, double weight) {
+		super();
+		this.memberName = memberName;
+		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+		this.gender = gender;
+		this.address = address;
+		this.birthDate = birthDate;
+		this.shoes = shoes;
+		this.weight = weight;
+	}
 
 	public int getMemberNo() {
 		return memberNo;

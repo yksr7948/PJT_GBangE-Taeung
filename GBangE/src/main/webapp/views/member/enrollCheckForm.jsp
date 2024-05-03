@@ -12,21 +12,25 @@
   <style>
 
     *{
-      margin: 0px;
-      padding: 0px;
-      border: none;
-      font-family: "Noto Sans CJK KR";
+  box-sizing: border-box;
+  font-family: "Noto Sans CJK KR";
+  font-style: normal;
     }
+    
+    .head{
+	width: 100%;
+	position: absolute;
+	}
 
-    #enroll-form{
+    .enroll-form{
     width: 800px;
-    height: 1200px;
+    height: 1400px;
     padding: 60px;
     box-sizing: border-box;
     border: 1px solid black;
     box-shadow: 5px 5px 5px gray;
     margin: auto;
-    margin-top: 10%;
+    margin-top: 60px;
     border-radius: 20px;
     }
     .header {
@@ -74,8 +78,11 @@
 
 <body>
 
+  	<%@include file="/views/common/menubar.jsp"%>
+  	
   <form action="/gbange/insert.me">
-    <div id="enroll-form">
+	
+    <div class="enroll-form">
         <div class="header" align="center">
             <h1>회원가입</h1>
         </div>
