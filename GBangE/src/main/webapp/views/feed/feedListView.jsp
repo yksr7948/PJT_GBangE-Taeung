@@ -1,5 +1,12 @@
+<%@page import="com.kh.feed.model.vo.Feed"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	ArrayList<Feed> list = (ArrayList<Feed>)request.getAttribute("feedList");
+	
+%>  
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -168,34 +175,58 @@ a {
 <body>
 <body>
 <%@include file="/views/common/menubar.jsp"%>
+    <div class="board_wrap">
+        <div class="board_title">
+            <h1>대회참여인증 게시판</h1>
+            <br>
+            <p>대회참여인증 페이지입니다.</p>
+        </div>
+        <div class="board_list_wrap">
+            <div class="board_list">
+                <div class="top">
+                    <div class="num">글 번호</div>
+                    <div class="title">제목</div>
+                    <div class="writer">작성자</div>
+                    <div class="count">조회</div>
+                    <div class="date">작성일</div>
+                </div>
+                <% if(list == null || list.isEmpty()) { %>
+                    <div>
+                        <div colspan="5">조회된 글이 없습니다.</div>
+                    </div>
+                <% } else { %>
+                    <% for(Feed f : list) { %>
+                        <div class="list-area">
+                            <div class="num"><%= f.getFeedNo() %></div>
+                            <div class="title"><%= f.getMemberNo() %></div>
+                            <div class="writer"><%= f.getFeedTitle() %></div>
+                            <div class="count"><%= f.getCount() %></div>
+                            <div class="date"><%= f.getCreateDate() %></div>
+                            
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+            <div class="board_page">
+                <!-- 페이지 링크는 여기에 들어갑니다 -->
+            </div>
+            <div class="bt_wrap">
+                <!-- 버튼은 여기에 들어갑니다 -->
+            </div>
+        </div>
+    </div>
 
-	<div class="board_wrap">
-		<div class="board_title">
-			<h1>대회참여인증</h1>
-			<p>대회참여인증 페이지입니다.</p>
-		</div>
-		<div class="board_list_wrap">
-			<div class="board_list">
-				<div class="top">
-					<div class="num">글 번호</div>
-					<div class="title">제목</div>
-					<div class="writer">작성자</div>
-					<div class="date">작성일</div>
-					<div class="count">조회수</div>
-				</div>
-		
-			</div>
-			<div class="board_page">
+	<div class="board_page">
 				<a href="#" class="btn frist"> &lt;&lt; </a> <a href="#"
 					class="btn prew"> &lt; </a> <a href="#" class="num selected">1</a>
 				<a href="#" class="num">2</a> <a href="#" class="btn next">&gt;</a>
 				<a href="#" class="btn last">&gt;&gt;</a>
 			</div>
 			<div class="bt_wrap">
-				<a href="list.html" class="on">글쓰기</a> <a href="">수정</a>
+				<a href="${contextPath}/insert.no" class="on">글쓰기</a> <a href="">수정</a>
 			</div>
-		</div>
-	</div>
+   
+	
 </body>
 
 </body>
