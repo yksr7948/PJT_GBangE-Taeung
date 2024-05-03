@@ -3,6 +3,7 @@ package com.kh.training.model.dao;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.kh.common.JDBCTemplate;
+import com.kh.training.model.vo.Training;
 import com.kh.training.model.vo.TrainingCategory;
 
 public class TrainingDao {
@@ -53,6 +55,49 @@ public class TrainingDao {
 			JDBCTemplate.close(stmt);
 		}
 		return tCList;
+	}
+
+
+
+	public int insertTraining(Connection conn, Training t) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertTraining");
+		try {
+			pstmt = conn.prepareStatement(sql);
+//			TRAINING_NO
+//			MEMBER_NO
+//			TRAINING_TITLE
+//			TRAINING_KEY
+//			SHOES_NO
+//			TRAINING_DATE
+//			RECORD_DATE
+//			TRAINING_PLACE
+//			TRAINING_TIME
+//			TRAINING_GOAL
+//			TRAINING_DISTANCE
+//			WEIGHT
+//			TRAINING_CONTENT
+//			BOARD_ID
+//			OCSTATUS
+//			STATUS
+			pstmt.setString(1, t.getTrainingTitle());
+			pstmt.setInt(2, t.getTrainingKey());
+			pstmt.setString(3, t.getTrainingDate());
+			pstmt.setString(4, t.getTrainingPlace());
+			pstmt.setDouble(5, t.getTrainingTime());
+			pstmt.setString(6, t.getTrainingGoal());
+			pstmt.setDouble(7, t.getTrainingDistance());
+			pstmt.setDouble(8, t.getWeight());
+			pstmt.setString(9, t.getTrainingContent());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
 	}
 
 }
