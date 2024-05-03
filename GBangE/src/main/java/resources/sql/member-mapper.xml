@@ -8,4 +8,24 @@
 	WHERE MEMBER_ID=? AND MEMBER_PWD=? AND STATUS='Y'
 	</entry>
 
+	<entry key="insertMember">
+	INSERT INTO MEMBER(MEMBER_NO, 
+					   MEMBER_NAME, 
+					   MEMBER_ID, 
+					   MEMBER_PWD, 
+					   GENDER, 
+					   ADDRESS, 
+					   BIRTH_DATE, 
+					   SHOES, 
+					   WEIGHT)
+	VALUES(SEQ_MEM.NEXTVAL,
+		   ?,
+		   ?,
+		   ?,
+		   ?,
+		   ?,
+		   ?,
+		   ?,
+		   ?)
+	</entry>
 </properties>

@@ -6,28 +6,17 @@
     <title>회원가입</title>
     <link rel="stylesheet" href="./02-signup.css" />
     
-    <style>
-        * {
-  box-sizing: border-box;
-  font-family: "Noto Sans CJK KR";
-  font-style: normal;
-}
+<style>
 
-body {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.container {
+#container {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 670px;
-  height: 960px;
+  height: 1200px;
+  margin: auto;
   margin-top: 60px;
   margin-bottom: 60px;
-  background: #ffffff;
   border: 1px solid black;
   box-shadow: 5px 5px 5px gray;
   border-radius: 20px;
@@ -132,42 +121,68 @@ button {
     </style>
   </head>
   <body>
-    <div class="container" >
-      <div class="member-container">
-        <div class="header" align="center">
-          <h1>회원가입</h1>
-        </div>
-        <div class="user-info">
-          <div class="user-info-id">
-            <div>* 아이디</div>
-            <input type="text" />
-          </div>
-          <div class="user-info-name">
-            <div>* 이름</div>
-            <input type="text" />
-          </div>
-          <div class="user-info-pw">
-            <div>* 비밀번호</div>
-            <input type="password" />
-          </div>
-          <div class="user-info-pw-check">
-            <div>* 비밀번호 확인</div>
-            <input type="password" />
-          </div>
-          <div>
-            
-          </div>
-        </div>
-        <div class="gender">
-          <input type="radio" name="gender" />
-          <label for="women">여성</label>
-          <input type="radio" name="gender" />
-          <label for="men">남성</label>
-        </div>
-        <div class="btn">
-          <button>가입하기</button>
-        </div>
-      </div>
-    </div>
+    <%@include file="/views/common/menubar.jsp"%>
+    	
+	  <form action="/gbange/insert.me" method="post">
+	    <div id="container">
+	      <div class="member-container">
+	        <div class="header" align="center">
+	          <h1>회원가입</h1>
+	        </div>
+	        <div class="user-info">
+	          <div class="user-info-id">
+	            <div>* 아이디</div>
+	            <input type="text" name="userId" required/>
+	          </div>
+	          <div class="user-info-name">
+	            <div>* 이름</div>
+	            <input type="text" name="userName" required/>
+	          </div>
+	          <div class="user-info-pw">
+	            <div>* 비밀번호</div>
+	            <input type="password" name="userPwd" required/>
+	          </div>
+	          <div class="user-info-pw-check">
+	            <div>* 비밀번호 확인</div>
+	            <input type="password" required/>
+	          </div>
+	          <div class="user-info-birth">
+	            <div>* 생년월일 (8자리)</div>
+	            <input type="text" name="birthDate" required>
+	          </div>
+	
+	          <div class="user-info-address">
+	            <div>  주소</div>
+	            <input type="text" name="address">
+	          </div>
+	
+	          <div class="user-info-weight">
+	            <div> 몸무게 (소수점 2자리)</div>
+	            <input type="number" step="0.02" name="weight">
+	          </div>
+	
+	          <div class="user-info-shoes">
+	            * 러닝화
+	            <select name="shoes">
+	                <option value="기타">기타</option>
+	                <option value="맨발">맨발</option>
+	                <option value="운동화">운동화</option>
+	                <option value="스니커즈">스니커즈</option>
+	            </select>
+	          </div>
+	          <div>
+	            
+	          </div>
+	        </div>
+	        <div class="gender">
+	          <input type="radio" name="gender" id="women" value="W" /><label for="women">여성</label>
+	          <input type="radio" name="gender" id="men" value="M" /><label for="men">남성</label>
+	        </div>
+	        <div class="btn">
+	          <button type="submit">가입하기</button>
+	        </div>
+	      </div>
+	    </div>
+    </form>
   </body>
 </html>

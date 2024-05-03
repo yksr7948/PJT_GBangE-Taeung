@@ -1,6 +1,11 @@
+<%@page import="com.kh.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	Member loginUser = (Member)session.getAttribute("loginUser");
+	String alertMsg = (String)session.getAttribute("alertMsg");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,6 +67,14 @@ nav{
 }
 </style>
 <body>
+<script>
+		var msg = "<%=alertMsg%>";
+		
+		if(msg!="null"){
+			alert(msg); 
+			<%session.removeAttribute("alertMsg");%>
+		}
+</script>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
   <nav id="top-nav">
     <ul>
