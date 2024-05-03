@@ -31,7 +31,7 @@ a {
 }
 
 .board_wrap {
-	width: 1000px;
+	width: 80%px;
 	margin: 100px auto;
 }
 
@@ -196,7 +196,7 @@ a {
                     </div>
                 <% } else { %>
                     <% for(Notice n : list) { %>
-                        <div>
+                         <div class="list-area">
                             <div class="num"><%= n.getNoticeId() %></div>
                             <div class="title"><%= n.getNoticeTitle() %></div>
                             <div class="writer"><%= n.getMemberName() %></div>
@@ -227,6 +227,16 @@ a {
 			</div>
 		</div>
 	</div>
+	<script>
+    
+    $(".list-area").click(function(){
+       ;
+        var nno = $(this).children().eq(0).text();
+        location.href='<%=request.getContextPath()%>/detail.no?nno='+nno;
+    });
+</script>
+	
+	
 </body>
 
 </body>

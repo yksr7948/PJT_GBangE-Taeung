@@ -1,8 +1,6 @@
 package com.kh.notice.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,16 +11,16 @@ import com.kh.notice.model.service.NoticeService;
 import com.kh.notice.model.vo.Notice;
 
 /**
- * Servlet implementation class ListNoticeController
+ * Servlet implementation class DetailNoticeController
  */
-@WebServlet("/list.no")
-public class ListNoticeController extends HttpServlet {
+@WebServlet("/detail.no")
+public class DetailNoticeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListNoticeController() {
+    public DetailNoticeController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +29,19 @@ public class ListNoticeController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		ArrayList<Notice> list = new NoticeService().selectNoticeList();
-		request.setAttribute("noticeList", list);
+		int nno = Integer.parseInt(request.getParameter("nno"));
+		int result = new NoticeService().increaseCount(nno);
+		
+		 Notice notice = new NoticeService().selectNotice(nno);
+	        
+	      
+	        request.setAttribute("notice", notice);
+	        
+
+	        request.getRequestDispatcher("/views/notice/noticeDetailView.jsp").forward(request, response);
 		
 		
-		request.getRequestDispatcher("views/notice/noticeListView.jsp").forward(request, response);
+		
 	}
 
 	/**

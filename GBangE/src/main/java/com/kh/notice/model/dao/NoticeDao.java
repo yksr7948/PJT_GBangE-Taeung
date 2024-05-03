@@ -88,11 +88,67 @@ public class NoticeDao {
 		
 		return result;
 	}
+
+	//조회수 증가
+	public int increaseCount(Connection conn, int nno) {
+		 int result = 0;
+	     PreparedStatement pstmt = null;
+	     String sql = prop.getProperty("increaseCount");
+	      
+	     try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, nno);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			
+		}
+	     return result;    
+	        
+	}
+	//공지글 상세보기
+	public Notice selectNotice(Connection conn, int nno) {
+		Notice n = null;//공지글 담을 객체변수
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, nno);
+			
+			rset = pstmt.executeQuery();
+			 
+			if(rset.next()) {
+				n = new Notice(rset.getInt("NOTICE_ID")
+							  ,rset.getString("NOTICE_TITLE")
+							  ,rset.getString("NOTICE_CONTENT")
+							  ,rset.getString("MEMBER_NAME")
+							  ,rset.getDate("CREAET_DATE")
+							  ,rset.getInt("COUNT"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return n;
+	}
+		
+		
+		
+		
+	}
 	
 	
 				
 				
 				
 
-	}
+	
 

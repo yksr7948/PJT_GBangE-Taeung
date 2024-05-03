@@ -46,12 +46,15 @@ public class InsertNoticeController extends HttpServlet {
 		 
 		String content = request.getParameter("content");
 		
-		String memberName = request.getParameter("memberName");
+		
 		HttpSession session = request.getSession();
+		int memberNo = (int) session.getAttribute("memberNo");
 		Notice n = new Notice();
 		n.setNoticeTitle(title);
-		n.setMemberName(memberName);
+		
 		n.setNoticeContent(content);
+		
+		 n.setMemberNo(memberNo);
 		
 		int result = new NoticeService().insertNotice(n);
 		

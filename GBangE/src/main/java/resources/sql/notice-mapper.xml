@@ -18,6 +18,31 @@ ORDER BY NOTICE_ID DESC
 <entry key="insertNotice" >
 INSERT INTO NOTICE(NOTICE_ID, NOTICE_TITLE, NOTICE_CONTENT)
 VALUES(notice_seq.NEXTVAL,?,?)
+</entry>
+
+<entry key="increaseCount">
+UPDATE NOTICE
+		SET COUNT = COUNT+1
+		WHERE NOTICE_ID=?
+		AND STATUS='Y'
 
 </entry>
+
+
+
+<entry key="selectNotice">
+SELECT NOTICE_ID
+      ,NOTICE_CONTENT
+      ,MEMBER_NAME
+      ,CREATE_DATE
+      ,COUNT
+      ,CREATE_DATE
+FROM NOTICE N
+JOIN MEMBER M ON N.MEMBER_NO = M.MEMBER_NO
+WHERE NOTICE_ID= ?
+AND N.STATUS = 'Y'
+
+</entry>
+
+
 </properties>

@@ -118,7 +118,7 @@
 						<dl>
 							<dt>제목</dt>
 							<dd>
-								<input type="text" placeholder="제목 입력" required>
+								<input type="text" name="title" placeholder="제목 입력" required>
 							</dd>
 						</dl>
 					</div>
@@ -130,13 +130,13 @@
 						</dl>
 					</div>
 					<div class="cont">
-						<textarea placeholder="내용 입력"></textarea>
+						<textarea name="content" placeholder="내용 입력"></textarea>
 					</div>
 				</div>
 				<br>
 				<div class="bt_wrap">
-					<button type="submit" class="btn btn-success">등록</button> <a href=""
-						class="btn btn-outline-secondary">취소</a>
+					<button type="submit" class="btn btn-success">등록</button> <button type="reset"
+						class="btn btn-outline-secondary">취소</button>
 				</div>
 			</div>
 		</form>
