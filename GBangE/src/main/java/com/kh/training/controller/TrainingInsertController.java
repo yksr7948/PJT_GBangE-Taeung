@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import com.kh.training.model.service.TrainingService;
 import com.kh.training.model.vo.Training;
@@ -18,13 +21,13 @@ import com.kh.training.model.vo.TrainingCategory;
  * Servlet implementation class InsertTrainingController
  */
 @WebServlet("/insert.tr")
-public class InsertTrainingController extends HttpServlet {
+public class TrainingInsertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertTrainingController() {
+    public TrainingInsertController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -68,11 +71,15 @@ public class InsertTrainingController extends HttpServlet {
 		t.setWeight(weight);
 		t.setTrainingContent(trainingContent);
 		
+		HttpSession session = request.getSession();
+		
 		int result = new TrainingService().insertTraining(t);
 		if(result>0) {
-			System.out.println("추가성공");
+			session.setAttribute("alertMsg", "게시글 작성 성공");
+			request.getRequestDispatcher("views/training/trainingDetailView.jsp").forward(request, response);
 		}else {
-			System.out.println("추가실패");
+			session.setAttribute("alertMsg", "게시글 작성 실패");
+			response.sendRedirect(request.getContextPath());
 		}
 //		System.out.println(trainingTitle);
 //		System.out.println(category);
