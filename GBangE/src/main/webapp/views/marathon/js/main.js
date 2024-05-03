@@ -42,5 +42,4 @@
         $("#carouselplaybtn").css("display","");
         $("#carouselstopbtn").css("display","none");
     });
-
 })(jQuery);

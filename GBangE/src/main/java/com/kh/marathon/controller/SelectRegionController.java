@@ -1,23 +1,26 @@
 package com.kh.marathon.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.marathon.model.service.RegionService;
+
 /**
- * Servlet implementation class InsertParticipateController
+ * Servlet implementation class SelectRegionController
  */
-@WebServlet("/insert.pa")
-public class InsertParticipateController extends HttpServlet {
+@WebServlet("/select.re")
+public class SelectRegionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertParticipateController() {
+    public SelectRegionController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,11 +29,9 @@ public class InsertParticipateController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int marathonNo = Integer.parseInt(request.getParameter("marathonNo"));
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-		request.setAttribute("marathonNo", marathonNo);
-		request.setAttribute("memberNo", memberNo);
-		request.getRequestDispatcher("views/marathon/insertParticipateView.jsp").forward(request, response);
+		int regionId= Integer.parseInt(request.getParameter("regionId"));
+		String regionName = new RegionService().selectRegion(regionId);
+		request.setAttribute("regionName", regionName);
 	}
 
 	/**
