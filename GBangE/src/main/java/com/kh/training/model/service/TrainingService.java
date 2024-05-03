@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.kh.common.JDBCTemplate;
 import com.kh.training.model.dao.TrainingDao;
+import com.kh.training.model.vo.Training;
 import com.kh.training.model.vo.TrainingCategory;
 
 public class TrainingService {
@@ -15,6 +16,17 @@ public class TrainingService {
 		
 		JDBCTemplate.close(conn);
 		return tCList;
+	}
+
+	public int insertTraining(Training t) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new TrainingDao().insertTraining(conn,t);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		return result;
 	}
 
 }

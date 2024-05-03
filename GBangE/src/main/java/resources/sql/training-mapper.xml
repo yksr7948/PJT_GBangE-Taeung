@@ -5,6 +5,8 @@
 SELECT TRAINING_KEY, TRAINING_NAME
 FROM TRAINING_CATEGORY
 </entry>
-
+<entry key="insertTraining">
+INSERT INTO TRAINING VALUES(SEQ_TNO.NEXTVAL,3,?,?,1,?,SYSDATE,?,?,?,?,?,?,'2','O','Y')
+</entry>
 
 </properties>

@@ -1,6 +1,7 @@
 package com.kh.training.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.training.model.service.TrainingService;
+import com.kh.training.model.vo.Training;
 import com.kh.training.model.vo.TrainingCategory;
 
 /**
@@ -45,8 +47,9 @@ public class InsertTrainingController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String trainingTitle = request.getParameter("trainingTitle");
-		String category = request.getParameter("category");
-//		String shoes = request.getParameter("shoes"); 러닝화 기능 구현되면 가져올 것
+		int trainingKey = Integer.parseInt(request.getParameter("category"));
+		String trainingDate = request.getParameter("trainingDate");
+		//		String shoes = request.getParameter("shoes"); 러닝화 기능 구현되면 가져올 것
 		String trainingPlace = request.getParameter("trainingPlace");
 		double trainingDistance = Double.parseDouble(request.getParameter("trainingDistance"));
 		double trainingTime = Double.parseDouble(request.getParameter("trainingTime"));
@@ -54,6 +57,23 @@ public class InsertTrainingController extends HttpServlet {
 		double weight = Double.parseDouble(request.getParameter("weight"));
 		String trainingContent = request.getParameter("trainingContent");
 		
+		Training t = new Training();
+		t.setTrainingTitle(trainingTitle);
+		t.setTrainingKey(trainingKey);
+		t.setTrainingDate(trainingDate);
+		t.setTrainingPlace(trainingPlace);
+		t.setTrainingDistance(trainingDistance);
+		t.setTrainingTime(trainingTime);
+		t.setTrainingGoal(trainingGoal);
+		t.setWeight(weight);
+		t.setTrainingContent(trainingContent);
+		
+		int result = new TrainingService().insertTraining(t);
+		if(result>0) {
+			System.out.println("추가성공");
+		}else {
+			System.out.println("추가실패");
+		}
 //		System.out.println(trainingTitle);
 //		System.out.println(category);
 //		System.out.println(trainingPlace);

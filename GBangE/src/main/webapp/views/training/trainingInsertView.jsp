@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,11 +103,11 @@
 </head>
 
 <body>
-
+<%@include file="/views/common/menubar.jsp"%>
 	<div class="board_wrap">
 		<div class="board_title">
-			<h1>훈련일지</h1>
-			<p>훈련일지 페이지입니다.</p>
+			<h1>러닝일지</h1>
+			<p>러닝일지 페이지입니다.</p>
 		</div>
 		<form action="/gbange/insert.tr" method="post" id="training-area">
 			<!-- <input type="hidden" name="memberNo" value=""> 나중에 로그인 기능 구현되면 가져올 것 -->
@@ -117,6 +117,9 @@
 						<dl>
 							<dd>
 								<input type="text" placeholder="훈련명을 입력해주세요." name="trainingTitle">
+							</dd>
+							<dd style="text-align: right;">
+								달린 날짜 : <input type="date" name="trainingDate">
 							</dd>
 						</dl>
 					</div>

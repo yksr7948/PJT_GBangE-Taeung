@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class Training {
 	private String trainingTitle;
+
 //	TRAINING_NO
 	private int trainingNo;
 //	MEMBER_NO
@@ -13,7 +14,7 @@ public class Training {
 //	SHOES_NO
 	private int shoesNo;
 //	TRAINING_DATE
-	private Date trainingDate;
+	private String trainingDate;
 //	RECORD_DATE
 	private Date recordDate;
 //	TRAINING_PLACE
@@ -31,17 +32,22 @@ public class Training {
 //	BOARD_ID
 	private int boardId;
 
+	private String oCStatus;
+
+	private String status;
+
 	public Training() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Training(String trainingTitle, int training, int memberNo, int trainingKey, int shoesNo, Date trainingDate,
-			Date recordDate, String trainingPlace, double trainingTime, String trainingGoal, double trainingDistance,
-			double weight, String trainingContent, int boardId) {
+	public Training(String trainingTitle, int trainingNo, int memberNo, int trainingKey, int shoesNo,
+			String trainingDate, Date recordDate, String trainingPlace, double trainingTime, String trainingGoal,
+			double trainingDistance, double weight, String trainingContent, int boardId, String oCStatus,
+			String status) {
 		super();
 		this.trainingTitle = trainingTitle;
-		this.trainingNo = training;
+		this.trainingNo = trainingNo;
 		this.memberNo = memberNo;
 		this.trainingKey = trainingKey;
 		this.shoesNo = shoesNo;
@@ -54,8 +60,12 @@ public class Training {
 		this.weight = weight;
 		this.trainingContent = trainingContent;
 		this.boardId = boardId;
+		this.oCStatus = oCStatus;
+		this.status = status;
 	}
 
+	
+	
 	public String getTrainingTitle() {
 		return trainingTitle;
 	}
@@ -64,12 +74,12 @@ public class Training {
 		this.trainingTitle = trainingTitle;
 	}
 
-	public int getTraining() {
+	public int getTrainingNo() {
 		return trainingNo;
 	}
 
-	public void setTraining(int training) {
-		this.trainingNo = training;
+	public void setTrainingNo(int trainingNo) {
+		this.trainingNo = trainingNo;
 	}
 
 	public int getMemberNo() {
@@ -96,11 +106,11 @@ public class Training {
 		this.shoesNo = shoesNo;
 	}
 
-	public Date getTrainingDate() {
+	public String getTrainingDate() {
 		return trainingDate;
 	}
 
-	public void setTrainingDate(Date trainingDate) {
+	public void setTrainingDate(String trainingDate) {
 		this.trainingDate = trainingDate;
 	}
 
@@ -168,13 +178,31 @@ public class Training {
 		this.boardId = boardId;
 	}
 
-	@Override
-	public String toString() {
-		return "Training [trainingNo=" + trainingNo + ", memberNo=" + memberNo + ", trainingKey=" + trainingKey
-				+ ", shoesNo=" + shoesNo + ", trainingDate=" + trainingDate + ", recordDate=" + recordDate
-				+ ", trainingPlace=" + trainingPlace + ", trainingTime=" + trainingTime + ", trainingGoal="
-				+ trainingGoal + ", trainingDistance=" + trainingDistance + ", weight=" + weight + ", trainingContent="
-				+ trainingContent + ", boardId=" + boardId + "]";
+	public String getoCStatus() {
+		return oCStatus;
 	}
 
+	public void setoCStatus(String oCStatus) {
+		this.oCStatus = oCStatus;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return "Training [trainingTitle=" + trainingTitle + ", trainingNo=" + trainingNo + ", memberNo=" + memberNo
+				+ ", trainingKey=" + trainingKey + ", shoesNo=" + shoesNo + ", trainingDate=" + trainingDate
+				+ ", recordDate=" + recordDate + ", trainingPlace=" + trainingPlace + ", trainingTime=" + trainingTime
+				+ ", trainingGoal=" + trainingGoal + ", trainingDistance=" + trainingDistance + ", weight=" + weight
+				+ ", trainingContent=" + trainingContent + ", boardId=" + boardId + ", oCStatus=" + oCStatus
+				+ ", status=" + status + "]";
+	}
+
+	
 }
