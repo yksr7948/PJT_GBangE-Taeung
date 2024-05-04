@@ -60,7 +60,7 @@ public class TrainingInsertController extends HttpServlet {
 		double weight = Double.parseDouble(request.getParameter("weight"));
 		String trainingContent = request.getParameter("trainingContent");
 		boolean open = request.getParameter("secret") != null;
-		System.out.println(open);
+		
 		Training t = new Training();
 		t.setTrainingTitle(trainingTitle);
 		t.setTrainingKey(trainingKey);
@@ -71,7 +71,11 @@ public class TrainingInsertController extends HttpServlet {
 		t.setTrainingGoal(trainingGoal);
 		t.setWeight(weight);
 		t.setTrainingContent(trainingContent);
-		
+		if(open) {
+		t.setoCStatus("C");
+		}else {
+			t.setoCStatus("O");
+		}
 		HttpSession session = request.getSession();
 		
 		int result = new TrainingService().insertTraining(t);

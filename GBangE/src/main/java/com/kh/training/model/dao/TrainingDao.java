@@ -91,6 +91,7 @@ public class TrainingDao {
 			pstmt.setDouble(7, t.getTrainingDistance());
 			pstmt.setDouble(8, t.getWeight());
 			pstmt.setString(9, t.getTrainingContent());
+			pstmt.setString(10, t.getoCStatus());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

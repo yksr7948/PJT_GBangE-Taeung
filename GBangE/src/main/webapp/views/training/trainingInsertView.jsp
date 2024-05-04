@@ -47,6 +47,27 @@
 }
 
 /*title, info 설정*/
+#secret {
+	display: none;
+}
+
+label {
+	display: block;
+	float: right;
+	width: 50px;
+	height: 50px;
+}
+/* 공개 */
+#secret+label {
+	background-repeat: no-repeat;
+	background-image: url('/gbange/views/training/img/unlock_icon.png');
+}
+/* 비공개 */
+#secret:checked+label {
+	background-repeat: no-repeat;
+	background-image: url('/gbange/views/training/img/lock_icon.png');
+}
+
 .board_write .title dt, .board_write .title dd, .board_write .info dt,
 	.board_write .info dd {
 	display: inline-block;
@@ -117,10 +138,9 @@
 						<dl>
 							<dd>
 								<input type="text" placeholder="훈련명을 입력해주세요."
-									name="trainingTitle">
+									name="trainingTitle"> <input type="checkbox" name="secret"
+									id="secret"><label for="secret"></label>
 							</dd>
- 							<input id="hide" type="checkbox" name="secret">
-							<label for="hide" style="text-align: right;">나만 보기</label>
 							<dd style="text-align: right;">
 								달린 날짜 : <input type="date" name="trainingDate">
 							</dd>
