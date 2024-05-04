@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,7 +103,7 @@
 </head>
 
 <body>
-<%@include file="/views/common/menubar.jsp"%>
+	<%@include file="/views/common/menubar.jsp"%>
 	<div class="board_wrap">
 		<div class="board_title">
 			<h1>러닝일지</h1>
@@ -116,8 +116,11 @@
 					<div class="title">
 						<dl>
 							<dd>
-								<input type="text" placeholder="훈련명을 입력해주세요." name="trainingTitle">
+								<input type="text" placeholder="훈련명을 입력해주세요."
+									name="trainingTitle">
 							</dd>
+ 							<input id="hide" type="checkbox" name="secret">
+							<label for="hide" style="text-align: right;">나만 보기</label>
 							<dd style="text-align: right;">
 								달린 날짜 : <input type="date" name="trainingDate">
 							</dd>
@@ -128,20 +131,21 @@
 							<tr>
 								<th>훈련종류</th>
 								<td><select name="category">
-								<c:forEach items="${tCList}" var="tc">
-										<option value="${tc.trainingKey }">${tc.trainingName }</option>
-								</c:forEach>
+										<c:forEach items="${tCList}" var="tc">
+											<option value="${tc.trainingKey }">${tc.trainingName }</option>
+										</c:forEach>
 								</select></td>
 								<th>착용신발</th>
 								<td><select name="shoes">
-								<!-- shoes 조회 기능 구현되면 가져올 것 -->
+										<!-- shoes 조회 기능 구현되면 가져올 것 -->
 								</select></td>
 							</tr>
 							<tr>
 								<th>훈련장소</th>
 								<td><input type="text" name="trainingPlace"></td>
 								<th>운동거리(km)</th>
-								<td><input type="number" step="0.01" min="1" max="100" name="trainingDistance">km</td>
+								<td><input type="number" step="0.01" min="1" max="100"
+									name="trainingDistance">km</td>
 							</tr>
 							<tr>
 								<th>운동시간</th>
@@ -153,7 +157,8 @@
 								<th>목표</th>
 								<td><input type="text" name="trainingGoal"></td>
 								<th>현재 체중(kg)</th>
-								<td><input type="number" step="0.01" min="20" max="200" name="weight"></td>
+								<td><input type="number" step="0.01" min="20" max="200"
+									name="weight"></td>
 							</tr>
 						</table>
 					</div>
@@ -164,8 +169,8 @@
 				</div>
 				<br>
 				<div class="bt_wrap">
-					<button type="submit" class="btn btn-success">등록</button> <button href=""
-						class="btn btn-outline-secondary">취소</button>
+					<button type="submit" class="btn btn-success">등록</button>
+					<button href="" class="btn btn-outline-secondary">취소</button>
 				</div>
 			</div>
 		</form>

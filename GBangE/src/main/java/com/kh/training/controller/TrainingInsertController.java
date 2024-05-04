@@ -1,17 +1,16 @@
 package com.kh.training.controller;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
+
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.kh.training.model.service.TrainingService;
 import com.kh.training.model.vo.Training;
@@ -49,6 +48,7 @@ public class TrainingInsertController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String trainingTitle = request.getParameter("trainingTitle");
 		int trainingKey = Integer.parseInt(request.getParameter("category"));
 		String trainingDate = request.getParameter("trainingDate");
@@ -59,7 +59,8 @@ public class TrainingInsertController extends HttpServlet {
 		String trainingGoal = request.getParameter("trainingGoal");
 		double weight = Double.parseDouble(request.getParameter("weight"));
 		String trainingContent = request.getParameter("trainingContent");
-		
+		boolean open = request.getParameter("secret") != null;
+		System.out.println(open);
 		Training t = new Training();
 		t.setTrainingTitle(trainingTitle);
 		t.setTrainingKey(trainingKey);
@@ -89,6 +90,7 @@ public class TrainingInsertController extends HttpServlet {
 //		System.out.println(trainingGoal);
 //		System.out.println(weight);
 //		System.out.println(trainingContent); 값 제대로 받아지는지 확인
+		if(ServletFileUpload.isMultipartContent(request)) {}
 	}
 
 }
