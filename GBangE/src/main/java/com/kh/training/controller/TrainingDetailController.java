@@ -30,15 +30,15 @@ public class TrainingDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		int tno = Integer.parseInt(request.getParameter("tno"));
+		int tno = Integer.parseInt(request.getParameter("tno"));
 //		
-//		int result = new TrainingService().increaseCount(tno);
+		int result = new TrainingService().increaseCount(tno);
 //		
-//		if (result>0) {
+		if (result>0) {
 //			Training t = new Training().selectTraining(tno);
-//		}else {
+		}else {
 //			
-//		}
+		}
 	}
 
 	/**

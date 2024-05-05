@@ -104,7 +104,6 @@ label {
 	box-sizing: border-box;
 	border-width: 0;
 }
-
 .bt_wrap {
 	margin-top: 30px;
 	text-align: center;
@@ -138,11 +137,11 @@ label {
 						<dl>
 							<dd>
 								<input type="text" placeholder="훈련명을 입력해주세요."
-									name="trainingTitle"> <input type="checkbox" name="secret"
-									id="secret"><label for="secret"></label>
+									name="trainingTitle" required> <input type="checkbox"
+									name="secret" id="secret"><label for="secret"></label>
 							</dd>
 							<dd style="text-align: right;">
-								달린 날짜 : <input type="date" name="trainingDate">
+								달린 날짜 : <input type="date" name="trainingDate" required>
 							</dd>
 						</dl>
 					</div>
@@ -162,7 +161,7 @@ label {
 							</tr>
 							<tr>
 								<th>훈련장소</th>
-								<td><input type="text" name="trainingPlace"></td>
+								<td><input type="text" name="trainingPlace" required></td>
 								<th>운동거리(km)</th>
 								<td><input type="number" step="0.01" min="1" max="100"
 									name="trainingDistance">km</td>
@@ -176,9 +175,15 @@ label {
 							<tr>
 								<th>목표</th>
 								<td><input type="text" name="trainingGoal"></td>
-								<th>현재 체중(kg)</th>
+								<th>현재 체중</th>
 								<td><input type="number" step="0.01" min="20" max="200"
-									name="weight"></td>
+									name="weight">kg</td>
+							</tr>
+							<tr>
+								<th>멋진 인증샷</th>
+								<td><input type="file"></td>
+								<th></th>
+								<td></td>
 							</tr>
 						</table>
 					</div>
