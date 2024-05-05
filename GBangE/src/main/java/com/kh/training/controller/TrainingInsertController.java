@@ -65,7 +65,7 @@ public class TrainingInsertController extends HttpServlet {
 					new TrainingImgNamePolicy());
 
 			String trainingTitle = multiRequest.getParameter("trainingTitle");
-			int trainingKey = Integer.parseInt(multiRequest.getParameter("category"));
+			String trainingKey = multiRequest.getParameter("category");
 			String trainingDate = multiRequest.getParameter("trainingDate");
 			// String shoes = request.getParameter("shoes"); 러닝화 기능 구현되면 가져올 것
 			String trainingPlace = multiRequest.getParameter("trainingPlace");

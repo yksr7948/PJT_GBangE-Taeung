@@ -33,6 +33,7 @@ public class TrainingService {
 
 			if (resultTr > 0 && at != null) {
 				at.setRefBno(trainingNo);
+				System.out.println(trainingNo);
 				resultAt = new TrainingDao().insertAttachment(conn, at);
 			}
 			if (resultTr * resultAt > 0) {
@@ -77,6 +78,20 @@ public class TrainingService {
 		JDBCTemplate.close(conn);
 
 		return list;
+	}
+
+	public Training selectTraining(int tno) {
+		Connection conn = JDBCTemplate.getConnection();
+		Training t = new TrainingDao().selectTraining(conn,tno);
+		JDBCTemplate.close(conn);
+		return t;
+	}
+
+	public Attachment selectAttachment(int tno) {
+		Connection conn = JDBCTemplate.getConnection();
+		Attachment at = new TrainingDao().selectAttachment(conn,tno);
+		JDBCTemplate.close(conn);
+		return at;
 	}
 
 }

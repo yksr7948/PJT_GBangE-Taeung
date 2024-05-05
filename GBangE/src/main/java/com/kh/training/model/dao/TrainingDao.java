@@ -84,7 +84,7 @@ public class TrainingDao {
 //			OCSTATUS
 //			STATUS
 			pstmt.setString(1, t.getTrainingTitle());
-			pstmt.setInt(2, t.getTrainingKey());
+			pstmt.setString(2, t.getTrainingKey());
 			pstmt.setString(3, t.getTrainingDate());
 			pstmt.setString(4, t.getTrainingPlace());
 			pstmt.setDouble(5, t.getTrainingTime());
@@ -232,6 +232,86 @@ public class TrainingDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
+	}
+
+
+
+	public Training selectTraining(Connection conn, int tno) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectTraining");
+		Training t = new Training();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tno);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+//				TRAINING_NO,
+				t.setTrainingNo(rset.getInt("TRAINING_NO"));
+//				MEMBER_NAME,
+				t.setTrainingWriter(rset.getString("MEMBER_NAME"));
+//				TRAINING_TITLE,
+				t.setTrainingTitle(rset.getString("TRAINING_TITLE"));
+//				COUNT,
+				t.setCount(rset.getInt("COUNT"));
+//				TRAINING_NAME,
+				t.setTrainingKey(rset.getString("TRAINING_NAME"));
+//				SHOES_NO,
+				t.setShoesNo(rset.getInt("SHOES_NO"));
+//				TRAINING_DATE,
+				t.setTrainingDate(rset.getString("TRAINING_DATE"));
+//				RECORD_DATE,
+				t.setRecordDate(rset.getDate("RECORD_DATE"));
+//				TRAINING_PLACE,
+				t.setTrainingPlace(rset.getString("TRAINING_PLACE"));
+//				TRAINING_TIME,
+				t.setTrainingTime(rset.getDouble("TRAINING_TIME"));
+//				TRAINING_GOAL,
+				t.setTrainingGoal(rset.getString("TRAINING_GOAL"));
+//				TRAINING_DISTANCE,
+				t.setTrainingDistance(rset.getDouble("TRAINING_DISTANCE"));
+//				T.WEIGHT WEIGHT,
+				t.setWeight(rset.getDouble("WEIGHT"));
+//				TRAINING_CONTENT
+				t.setTrainingContent(rset.getString("TRAINING_CONTENT"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return t;
+	}
+
+
+
+	public Attachment selectAttachment(Connection conn, int tno) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectAttachment");
+		Attachment at = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tno);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				at = new Attachment(
+						rset.getInt("FILE_NO")
+						,rset.getString("FILE_NAME")
+						,rset.getString("FILE_RENAME")
+						,rset.getString("FILE_PATH")
+						);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return at;
 	}
 
 }

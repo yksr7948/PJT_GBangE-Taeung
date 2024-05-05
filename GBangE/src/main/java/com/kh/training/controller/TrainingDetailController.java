@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.training.model.service.TrainingService;
+import com.kh.training.model.vo.Attachment;
 import com.kh.training.model.vo.Training;
 
 /**
@@ -33,11 +34,18 @@ public class TrainingDetailController extends HttpServlet {
 		int tno = Integer.parseInt(request.getParameter("tno"));
 //		
 		int result = new TrainingService().increaseCount(tno);
-		System.out.println(tno);
 		if (result>0) {
-//			Training t = new Training().selectTraining(tno);
+			Training t = new TrainingService().selectTraining(tno);
+			Attachment at = new TrainingService().selectAttachment(tno);
+			
+			request.setAttribute("training", t);
+			request.setAttribute("attachment", at);
+			
+			request.getRequestDispatcher("views/training/trainingDetailView.jsp").forward(request, response);
+			
 		}else {
-//			
+			request.getSession().setAttribute("alertMsg", "일지 조회 실패ㅠㅠ");
+			response.sendRedirect(request.getHeader("referer"));
 		}
 	}
 

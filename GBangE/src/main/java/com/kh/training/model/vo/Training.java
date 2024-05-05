@@ -11,7 +11,7 @@ public class Training {
 //	MEMBER_NO
 	private String trainingWriter;
 //	TRAINING_KEY
-	private int trainingKey;
+	private String trainingKey;
 //	SHOES_NO
 	private int shoesNo;
 //	TRAINING_DATE
@@ -42,7 +42,7 @@ public class Training {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Training(String trainingTitle, int count, int trainingNo, String trainingWriter, int trainingKey,
+	public Training(String trainingTitle, int count, int trainingNo, String trainingWriter, String trainingKey,
 			int shoesNo, String trainingDate, Date recordDate, String trainingPlace, double trainingTime,
 			String trainingGoal, double trainingDistance, double weight, String trainingContent, int boardId,
 			String oCStatus, String status) {
@@ -107,11 +107,11 @@ public class Training {
 		this.trainingWriter = trainingWriter;
 	}
 
-	public int getTrainingKey() {
+	public String getTrainingKey() {
 		return trainingKey;
 	}
 
-	public void setTrainingKey(int trainingKey) {
+	public void setTrainingKey(String trainingKey) {
 		this.trainingKey = trainingKey;
 	}
 
