@@ -32,4 +32,13 @@ WHERE T.STATUS = 'Y'
 ORDER BY RECORD_DATE DESC)S)
 WHERE RNUM BETWEEN ? AND ?
 </entry>
+
+<entry key="selectTrainingNo">
+SELECT SEQ_TNO.NEXTVAL TNO FROM DUAL
+</entry>
+
+<entry key="insertAttachment">
+INSERT INTO ATTACHMENT(FILE_NO,REF_BNO,FILE_NAME,FILE_RENAME,FILE_PATH,BOARD_ID)
+VALUES(SEQ_ATT.NEXTVAL,?,?,?,?,2)
+</entry>
 </properties>

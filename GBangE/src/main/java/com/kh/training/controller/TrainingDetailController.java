@@ -33,7 +33,7 @@ public class TrainingDetailController extends HttpServlet {
 		int tno = Integer.parseInt(request.getParameter("tno"));
 //		
 		int result = new TrainingService().increaseCount(tno);
-//		
+		System.out.println(tno);
 		if (result>0) {
 //			Training t = new Training().selectTraining(tno);
 		}else {

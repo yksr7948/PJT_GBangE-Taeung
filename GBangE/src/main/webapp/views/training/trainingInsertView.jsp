@@ -57,11 +57,13 @@ label {
 	width: 50px;
 	height: 50px;
 }
+
 /* 공개 */
 #secret+label {
 	background-repeat: no-repeat;
 	background-image: url('/gbange/views/training/img/unlock_icon.png');
 }
+
 /* 비공개 */
 #secret:checked+label {
 	background-repeat: no-repeat;
@@ -104,6 +106,30 @@ label {
 	box-sizing: border-box;
 	border-width: 0;
 }
+
+.upload-btn {
+	width: 150px;
+	height: 30px;
+	background: rgb(77, 77, 77);
+	color: #fff;
+	border-radius: 10px;
+	font-weight: 500;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	float: right;
+}
+
+.upload-btn:hover {
+	background: cornflowerblue;
+	color: #fff;
+}
+
+#uploadImg {
+	display: none;
+}
+
 .bt_wrap {
 	margin-top: 30px;
 	text-align: center;
@@ -129,7 +155,7 @@ label {
 			<h1>러닝일지</h1>
 			<p>러닝일지 페이지입니다.</p>
 		</div>
-		<form action="/gbange/insert.tr" method="post" id="training-area">
+		<form action="/gbange/insert.tr" method="post" id="training-area" enctype="multipart/form-data">
 			<!-- <input type="hidden" name="memberNo" value=""> 나중에 로그인 기능 구현되면 가져올 것 -->
 			<div class="board_write_wrap">
 				<div class="board_write">
@@ -181,7 +207,14 @@ label {
 							</tr>
 							<tr>
 								<th>멋진 인증샷</th>
-								<td><input type="file"></td>
+								<td><label for="uploadImg" class="upload-btn">사진
+										올리기</label><input type="file" name="uploadImg" id="uploadImg"></td>
+								<th></th>
+								<td></td>
+							</tr>
+							<tr>
+								<th></th>
+								<td></td>
 								<th></th>
 								<td></td>
 							</tr>
