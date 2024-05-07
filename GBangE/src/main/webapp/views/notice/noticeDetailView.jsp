@@ -85,6 +85,19 @@
 	margin-left: 10px;
 	color: #777;
 }
+
+ /* 공유 아이콘 스타일 */
+        .social-share {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .social-share img {
+            width: 30px;
+            height: 30px;
+            margin-left: 10px;
+        }
 </style>
 </head>
 <body>
@@ -94,6 +107,7 @@
             <h1>공지사항</h1>
             <p>공지사항 페이지입니다.</p>
         </div>
+        
         <div class="board_view_wrap">
             <div class="board_view">
                 <div class="title">${notice.noticeTitle}</div>
