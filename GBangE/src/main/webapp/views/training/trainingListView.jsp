@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+<title>러닝일지 페이지</title>
 
 <style>
 /*기본 설정*/
@@ -54,7 +54,6 @@ a {
 	min-width: 80px;
 	margin-left: 10px;
 	padding: 10px;
-	border: 1px solid #000;
 	border-radius: 2px;
 	font-size: 1.4rem;
 }
@@ -138,7 +137,7 @@ a {
 	box-sizing: border-box;
 	vertical-align: middle;
 	border: 1px solid #ddd;
-	border-left: 0;
+	/* border-left: 0; */
 	line-height: 100%;
 }
 
@@ -146,6 +145,7 @@ a {
 	padding-top: 7px;
 	font-size: 1.2rem;
 	letter-spacing: -3px;
+	color: black;
 }
 
 .board_page a.num {
@@ -167,11 +167,11 @@ a {
 
 <body>
 <body>
-
+	<%@include file="/views/common/menubar.jsp"%>
 	<div class="board_wrap">
 		<div class="board_title">
-			<h1>훈련일지</h1>
-			<p>훈련일지 페이지입니다.</p>
+			<h1>러닝일지</h1>
+			<p>러닝일지 페이지입니다.</p>
 		</div>
 		<div class="board_list_wrap">
 			<div class="board_list">
@@ -182,36 +182,64 @@ a {
 					<div class="date">작성일</div>
 					<div class="count">조회</div>
 				</div>
-				<div>
-					<div class="num">3</div>
-					<div class="title">글 제목이 들어갑니다</div>
-					<div class="writer">홍길순</div>
-					<div class="date">2023-07-27</div>
-					<div class="count">32</div>
-				</div>
-				<div>
-					<div class="num">2</div>
-					<div class="title">글 제목이 들어갑니다</div>
-					<div class="writer">홍길동</div>
-					<div class="date">2023-06-01</div>
-					<div class="count">32</div>
-				</div>
-				<div>
-					<div class="num">1</div>
-					<div class="title">글 제목이 들어갑니다</div>
-					<div class="writer">홍길동</div>
-					<div class="date">2023-05-28</div>
-					<div class="count">1</div>
-				</div>
+				<c:choose>
+					<c:when test="${empty list }">
+						<div>
+							<div class="num"></div>
+							<div class="title">조회된 게시글이 없습니다</div>
+							<div class="writer"></div>
+							<div class="date"></div>
+							<div class="count"></div>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="t" items="${list}">
+							<div>
+								<div class="num body">${t.trainingNo }</div>
+								<div class="title body">${t.trainingTitle }</div>
+								<div class="writer body">${t.trainingWriter }</div>
+								<div class="date body">${t.recordDate }</div>
+								<div class="count body">${t.count }</div>
+							</div>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</div>
+			<script>
+			$(function() {
+				$(".body").click(function() {
+					var tno = $(this).prev().html();
+					location.href="detail.tr?tno="+tno;
+				});
+			});
+			</script>
 			<div class="board_page">
-				<a href="#" class="btn frist"> &lt;&lt; </a> <a href="#"
-					class="btn prew"> &lt; </a> <a href="#" class="num selected">1</a>
-				<a href="#" class="num">2</a> <a href="#" class="btn next">&gt;</a>
-				<a href="#" class="btn last">&gt;&gt;</a>
+				<c:choose>
+					<c:when test="${pi.currentPage eq 1}">
+						<a class="btn first"> &lt;&lt; </a>
+						<a class="btn prew"> &lt; </a>
+					</c:when>
+					<c:otherwise>
+						<a href="list.tr?currentPage=${pi.currentPage-1}" class="btn first"> &lt;&lt; </a>
+						<a href="list.tr?currentPage=${pi.currentPage-1}" class="btn prew"> &lt; </a>
+					</c:otherwise>
+				</c:choose>
+				<c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">
+					<a href="list.tr?currentPage=${i}" class="num selected">${i}</a>
+				</c:forEach>
+				<c:choose>
+				<c:when test="${pi.currentPage eq pi.maxPage}">
+				<a class="btn next">&gt;</a> <a class="btn last">&gt;&gt;</a>
+				</c:when>
+				<c:otherwise>
+				<a href="list.tr?currentPage=${pi.currentPage+1}"class="btn next">&gt;</a>
+				<a href="list.tr?currentPage=${pi.currentPage+1}" class="btn last">&gt;&gt;</a>
+				</c:otherwise>
+				</c:choose>
 			</div>
 			<div class="bt_wrap">
-				<a href="list.html" class="on">글쓰기</a> <a href="">수정</a>
+				<a href="${contextPath}/insert.tr" class="on">글쓰기</a> 
+				<a href="" style="background: gray;">수정</a>
 			</div>
 		</div>
 	</div>
