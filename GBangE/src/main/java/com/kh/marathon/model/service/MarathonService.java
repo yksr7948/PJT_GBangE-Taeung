@@ -16,7 +16,7 @@ import com.kh.marathon.model.vo.Marathon;
 public class MarathonService {
 	private String baseURL = "http://www.roadrun.co.kr/schedule/list.php";
 	
-    public int insertMarthon(){
+    public int insertMarathon(){
         Connection conn = new JDBCTemplate().getConnection();
         int result=0;
         JSONArray jArr = crawling();
@@ -120,5 +120,48 @@ public class MarathonService {
 		Marathon mar = new MarathonDao().marathonDetail(conn,marathonNo);
 		JDBCTemplate.close(conn);
 		return mar;
+	}
+
+	public int updateMarathon(Marathon m) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new MarathonDao().updateMarathon(m,conn);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int deleteMarathon(int marathonNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new MarathonDao().deleteMarathon(marathonNo,conn);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+	
+	public int restoreMarathon(int marathonNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new MarathonDao().restoreMarathon(marathonNo,conn);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public JSONArray selectDeleteMarathon() {
+		Connection conn = JDBCTemplate.getConnection();
+		JSONArray MarathonArr = new MarathonDao().selectDeleteMarathon(conn);
+		JDBCTemplate.close(conn);
+		return MarathonArr;
 	}
 }
