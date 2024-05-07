@@ -83,16 +83,17 @@ public class TrainingDao {
 //			BOARD_ID
 //			OCSTATUS
 //			STATUS
-			pstmt.setString(1, t.getTrainingTitle());
-			pstmt.setString(2, t.getTrainingKey());
-			pstmt.setString(3, t.getTrainingDate());
-			pstmt.setString(4, t.getTrainingPlace());
-			pstmt.setDouble(5, t.getTrainingTime());
-			pstmt.setString(6, t.getTrainingGoal());
-			pstmt.setDouble(7, t.getTrainingDistance());
-			pstmt.setDouble(8, t.getWeight());
-			pstmt.setString(9, t.getTrainingContent());
-			pstmt.setString(10, t.getoCStatus());
+			pstmt.setInt(1, t.getTrainingNo());
+			pstmt.setString(2, t.getTrainingTitle());
+			pstmt.setString(3, t.getTrainingKey());
+			pstmt.setString(4, t.getTrainingDate());
+			pstmt.setString(5, t.getTrainingPlace());
+			pstmt.setDouble(6, t.getTrainingTime());
+			pstmt.setString(7, t.getTrainingGoal());
+			pstmt.setDouble(8, t.getTrainingDistance());
+			pstmt.setDouble(9, t.getWeight());
+			pstmt.setString(10, t.getTrainingContent());
+			pstmt.setString(11, t.getoCStatus());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -212,21 +213,22 @@ public class TrainingDao {
 
 
 
-	public int insertAttachment(Connection conn, Attachment at) {
+	public int insertAttachment(Connection conn, Attachment at, int trainingNo) {
+		
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertAttachment");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, at.getRefBno());
+			pstmt.setInt(1, trainingNo);
 			pstmt.setString(2, at.getOriginName());
 			pstmt.setString(3, at.getChangeName());
 			pstmt.setString(4, at.getFilePath());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			result = 0;
 			e.printStackTrace();
 		}finally {
 			JDBCTemplate.close(pstmt);

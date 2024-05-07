@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
+ <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
 <!-- jQuery library -->
@@ -18,8 +18,8 @@
 
 <!-- Latest compiled JavaScript -->
 <script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<title>${training.trainingTitle }</title>
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script> 
+<title>${training.trainingTitle}</title>
 <style>
 .board_wrap {
 	margin: 30px;
@@ -85,6 +85,10 @@
 	margin-left: 10px;
 	color: #777;
 }
+.cont{
+word-break:break-all;
+height: 500px;
+}
 #uploadImg{
 float: right;
 }
@@ -107,7 +111,7 @@ float: right;
 					</dl>
 					<dl>
 						<dt>글쓴이</dt>
-						<dd>${training.trainingWriter }</dd>
+						<dd>${training.trainingWriter}</dd>
 					</dl>
 					<dl>
 						<dt>작성일</dt>
@@ -115,13 +119,13 @@ float: right;
 					</dl>
 					<dl>
 						<dt>조회</dt>
-						<dd>${training.count }</dd>
+						<dd>${training.count}</dd>
 					</dl>
 				</div>
-                <table class="table table-hover">
+                <table class="table">
                     <tr>
                         <th>훈련종류</th>
-                        <td>${training.trainingKey }</td>
+                        <td>${training.trainingKey}</td>
                         <th>착용신발</th>
                         <td>
                         <!-- shoes 조회 기능 구현되면 가져올 것 -->
@@ -129,9 +133,9 @@ float: right;
                     </tr>
                     <tr>
                         <th>훈련장소</th>
-                        <td>${training.trainingPlace }</td>
+                        <td>${training.trainingPlace}</td>
                         <th>운동거리</th>
-                        <td>${training.trainingDistance } km</td>
+                        <td>${training.trainingDistance} km</td>
                     </tr>
                     <tr>
                         <th>운동시간</th>
@@ -150,13 +154,13 @@ float: right;
 				<div class="cont">
 				${training.trainingContent}
 				<img alt="업로드이미지" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadImg">
-				${contextPath}${attachment.filePath}${attachment.changeName}
+				
 				</div>
 			</div>
 			<br>
 			<div class="bt_wrap">
-				<a href="" class="btn btn-outline-secondary">목록</a> <a href=""
-					class="btn btn-success">수정</a>
+				<a href="" class="btn btn-outline-secondary">목록</a>
+				<a href="${contextPath}/update.tr" class="btn btn-success">수정</a>
 			</div>
 		</div>
 	</div>
