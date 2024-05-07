@@ -44,15 +44,17 @@ public class InsertMemberController extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String userName = request.getParameter("userName");
 		String userPwd = request.getParameter("userPwd");
-		String birthDate = request.getParameter("birthDate");
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		String day = request.getParameter("day");
 		String address = request.getParameter("address");
 		double weight = Double.parseDouble(request.getParameter("weight"));
 		String shoes = request.getParameter("shoes");
 		String gender = request.getParameter("gender");
 		
-		Member m = new Member(userName,userId,userPwd,gender,address,birthDate,shoes,weight);
+		String birthDate = year+month+day;
 		
-		System.out.println(m.getWeight());
+		Member m = new Member(userName,userId,userPwd,gender,address,birthDate,shoes,weight);
 		
 		int result = new MemberService().insertMember(m);
 		

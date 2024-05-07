@@ -27,8 +27,8 @@
     height: 1400px;
     padding: 60px;
     box-sizing: border-box;
-    border: 1px solid black;
-    box-shadow: 5px 5px 5px gray;
+ 	border: 1px solid #aacdff;
+  	box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
     margin: auto;
     margin-top: 60px;
     border-radius: 20px;
@@ -37,7 +37,7 @@
     font-weight: 700;
     font-size: 32px;
     line-height: 47px;
-    color: black;
+    color: #0068ff;
     }
     
     img{
@@ -48,7 +48,7 @@
       display: block;
     }
     .agree{
-      border: 2px solid black;
+      border: 2px solid #aacdff;
       width: 650px;
       height: 200px;
       overflow-y: scroll;
@@ -59,15 +59,15 @@
       font-weight: bolder;
     }
     #enroll-btn{
-      margin-top: 30px;
       width: 470px;
       height: 75px;
       font-weight: 400;
       font-size: 18px;
       line-height: 27px;
-      color: black;
-      background: #cbcbcb;
+      color: #ffffff;
+      background: #8990a0;
       margin: auto;
+      margin-top: 30px;
       display: block;
       border: 1px solid gray;
       border-radius: 10px;
@@ -207,9 +207,9 @@
       //회원가입 버튼 활성화
       $(".check").click(function(){
       if($("#check-all").prop('checked') == true){
-        $("#enroll-btn").css({"backgroundColor":"#fff","cursor":"pointer","color":"#000"}).prop("disabled",false);
+        $("#enroll-btn").css({"backgroundColor":"#aacdff","cursor":"pointer","color":"#000"}).prop("disabled",false);
       }else{
-        $("#enroll-btn").css({"backgroundColor":"#cbcbcb","cursor":"auto","color":"#303033"}).prop("disabled",true);
+        $("#enroll-btn").css({"backgroundColor":"#8990a0","cursor":"auto","color":"#ffffff"}).prop("disabled",true);
       }
     })
 
