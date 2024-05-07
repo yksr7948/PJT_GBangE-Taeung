@@ -111,26 +111,42 @@
 			<h1>대회참여인증 게시판</h1>
 			<p>대회참여인증 페이지입니다.</p>
 		</div>
-		<form action="${contextPath}/insert.fe" method="post" id="enroll-form">
+		<form action="/gbange/insert.fe" method="post" id="enroll-form" enctype="multipart/form-data">
 			<div class="board_write_wrap">
 				<div class="board_write">
 					<div class="title">
 						<dl>
 							<dt>제목</dt>
 							<dd>
-								<input type="text" placeholder="제목 입력" required>
+								<input type="text" placeholder="제목 입력" required name="title">
 							</dd>
+							<dt>카테고리</dt>
+							<dd>
+								<select name="category">
+							<c:forEach items="${cList}" var="c">
+								<option value="${c.categoryNo }">${c.categoryName }</option>							
+							</c:forEach>
+						</select>
+							</dd>
+							<dt>대회명</dt>
+							<dd>
+							<select name="competition">
+							<c:forEach var="mar" items="${marathonArr}">
+							<option value = "${mar.marathonNo}">${mar.marathonName}</option>
+							</c:forEach>
+							</select>
+							</dd>
+						<dt>첨부파일</dt>
+						<dd>
+							<input type="file" name="uploadFile" class="btn btn-outline-secondary">
+						</dd>
 						</dl>
+						
 					</div>
 					<div class="info">
-						
-						<dl>
-							<dt></dt>
-							<dd></dd>
-						</dl>
 					</div>
 					<div class="cont">
-						<textarea placeholder="내용 입력"></textarea>
+						<textarea placeholder="내용 입력" name="content"></textarea>
 					</div>
 				</div>
 				<br>

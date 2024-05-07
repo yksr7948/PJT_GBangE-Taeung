@@ -86,7 +86,7 @@ alert(msg);
         <ul>
           <li><a href="/gbange/list.no">공지사항</a></li>
           <li><a href="${contextPath}/list.tr?currentPage=1">러닝일지 게시판</a></li>
-          <li><a href="/gbange/list.fe">대회참여인증 게시판</a></li>
+          <li><a href="/gbange/list.fe?currentPage=1">대회참여인증 게시판</a></li>
           <li><a href="#">Q/A</a></li>
         </ul>
       </nav>

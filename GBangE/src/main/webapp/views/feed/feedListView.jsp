@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	ArrayList<Feed> list = (ArrayList<Feed>)request.getAttribute("feedList");
+	ArrayList<Feed> list = (ArrayList<Feed>)request.getAttribute("list");
 	
 %>  
 
@@ -216,14 +216,33 @@ a {
         </div>
     </div>
 
-	<div class="board_page">
-				<a href="#" class="btn frist"> &lt;&lt; </a> <a href="#"
-					class="btn prew"> &lt; </a> <a href="#" class="num selected">1</a>
-				<a href="#" class="num">2</a> <a href="#" class="btn next">&gt;</a>
-				<a href="#" class="btn last">&gt;&gt;</a>
-			</div>
-			<div class="bt_wrap">
-				<a href="${contextPath}/insert.no" class="on">글쓰기</a> <a href="">수정</a>
+		<div align="center" class="paging-area">
+			
+		
+		<c:choose>
+			<c:when test="${pi.currentPage eq 1}">
+				<button disabled>이전</button>
+			</c:when>	 
+			<c:otherwise>
+				<button onclick="location.href='list.fe?currentPage=${pi.currentPage-1}'">이전</button>
+			</c:otherwise>
+		</c:choose>
+	
+		<c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">
+			<button onclick="location.href='list.fe?currentPage=${i}'">${i}</button>
+		</c:forEach>
+		
+		<c:choose>
+			<c:when test="${pi.currentPage eq pi.maxPage}">
+				<button disabled>다음</button>
+			</c:when>	 
+			<c:otherwise>
+				<button onclick="location.href='list.fe?currentPage=${pi.currentPage+1}'">다음</button>
+			</c:otherwise>
+		</c:choose>
+		</div>
+		<div class="bt_wrap">
+				<a href="${contextPath}/insert.fe" class="on">글쓰기</a> <a href="">수정</a>
 			</div>
    
 	

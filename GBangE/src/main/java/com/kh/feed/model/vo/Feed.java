@@ -5,8 +5,8 @@ import java.util.Date;
 public class Feed {
 	private int feedNo;
 	private String memberNo;
-	private int categoryNo;
-	private int competition;
+	private String category;
+	private String competition;
 	private String feedTitle;
 	private String feedContent;
 	private int count;
@@ -17,12 +17,12 @@ public class Feed {
 		super();
 	
 	}
-	public Feed(int feedNo, String memberNo, int categoryNo, int competition, String feedTitle, String feedContent,
+	public Feed(int feedNo, String memberNo, String category, String competition, String feedTitle, String feedContent,
 			int count, Date createDate, int boardId, String status) {
 		super();
 		this.feedNo = feedNo;
 		this.memberNo = memberNo;
-		this.categoryNo = categoryNo;
+		this.category = category;
 		this.competition = competition;
 		this.feedTitle = feedTitle;
 		this.feedContent = feedContent;
@@ -53,16 +53,16 @@ public class Feed {
 	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
 	}
-	public int getCategoryNo() {
-		return categoryNo;
+	public String getCategory() {
+		return category;
 	}
-	public void setCategoryNo(int categoryNo) {
-		this.categoryNo = categoryNo;
+	public void setCategoryNo(String category) {
+		this.category = category;
 	}
-	public int getCompetition() {
+	public String getCompetition() {
 		return competition;
 	}
-	public void setCompetition(int competition) {
+	public void setCompetition(String competition) {
 		this.competition = competition;
 	}
 	public String getFeedTitle() {
@@ -103,7 +103,7 @@ public class Feed {
 	}
 	@Override
 	public String toString() {
-		return "Feed [feedNo=" + feedNo + ", memberNo=" + memberNo + ", categoryNo=" + categoryNo + ", competition="
+		return "Feed [feedNo=" + feedNo + ", memberNo=" + memberNo + ", categoryNo=" + category + ", competition="
 				+ competition + ", feedTitle=" + feedTitle + ", feedContent=" + feedContent + ", count=" + count
 				+ ", createDate=" + createDate + ", boardId=" + boardId + ", status=" + status + "]";
 	}
