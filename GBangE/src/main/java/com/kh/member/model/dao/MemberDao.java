@@ -50,7 +50,7 @@ public class MemberDao {
 							   rset.getString("MEMBER_PWD"),
 							   rset.getString("GENDER"),
 							   rset.getString("ADDRESS"),
-							   rset.getString("BIRTH_DATE"),
+							   rset.getString("MEMBER_PNO"),
 							   rset.getDouble("MILEAGE"),
 							   rset.getString("SHOES"),
 							   rset.getDouble("WEIGHT"),
@@ -81,7 +81,7 @@ public class MemberDao {
 			pstmt.setString(3, m.getMemberPwd());
 			pstmt.setString(4, m.getGender());
 			pstmt.setString(5, m.getAddress());
-			pstmt.setString(6, m.getBirthDate());
+			pstmt.setString(6, m.getMemberPno());
 			pstmt.setString(7, m.getShoes());
 			pstmt.setDouble(8, m.getWeight());
 			

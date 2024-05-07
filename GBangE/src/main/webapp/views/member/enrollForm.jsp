@@ -33,7 +33,7 @@
   flex-direction: column;
   align-items: center;
   width: 470px;
-  height: 818px;
+  height: 918px;
   margin-top: 72px;
   margin-bottom: 70px;
 }
@@ -64,6 +64,17 @@
   border: none;
   border-bottom: 1px solid #0068ff;
   width: 466px;
+  height: 40px;
+  margin-top: 21px;
+}
+#userPno1, #userPno2{
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #797979;
+  border: none;
+  border-bottom: 1px solid #0068ff;
+  width: 220px;
   height: 40px;
   margin-top: 21px;
 }
@@ -102,12 +113,7 @@ input:focus {
 	margin-left: 5px;
 }
 
-.user-info-shoes{
-	margin-right: 125px;
-}
-.user-info-shoes>select{
-	margin-left: 15px;
-}
+
 
 .gender {
   display: flex;
@@ -196,100 +202,22 @@ input:focus {
 	          </div>
 	          	<div id="hidden-checkPwdArea" style="display:none;"></div>
 	          
+			  <div class="user-info-pno" >
+	            <div>* 주민등록번호</div>
+	            <input type="text" name="userPno1" id="userPno1"/>
+	            <font style="font-size:30px">-</font>
+	            <input type="text" name="userPno2" id="userPno2"/>
+	          </div>
+	          	<div id="hidden-pnoArea" style="display:none;"></div>
+	          
 	          <div class="user-info-address">
 	            <div>  주소</div>
 	            <input type="text" name="address" id="address">
 	          </div>
-	
+	          
 	          <div class="user-info-weight">
 	            <div> 몸무게 (소수점 2자리)</div>
-	            <input type="number" step="0.02" name="weight" id="weight">
-	          </div>
-	
-				
-			  <div class="user-info-birth" align="center">
-	            <div> 생년월일 
-	             <select name="year" id="year">
-                        <option value = "1994">1994</option>
-                        <option value = "1995">1995</option>
-                        <option value = "1996">1996</option>
-                        <option value = "1997">1997</option>
-                        <option value = "1998">1998</option>
-                        <option value = "1999">1999</option>
-                        <option value = "2000">2000</option>
-                        <option value = "2001">2001</option>
-                        <option value = "2002">2002</option>
-                        <option value = "2003">2003</option>
-                        <option value = "2004">2004</option>
-                        <option value = "2005">2005</option>
-                        <option value = "2006">2006</option>
-                        <option value = "2007">2007</option>
-                        <option value = "2008">2008</option>
-                        <option value = "2009">2009</option>
-                        <option value = "2010">2010</option>
-                        <option value = "2011">2011</option>
-                        <option value = "2012">2012</option>
-                        <option value = "2013">2013</option>
-                        <option value = "2014">2014</option>
-                        <option value = "2015">2015</option>
-                        <option value = "2016">2016</option>
-                        <option value = "2017">2017</option>
-                        <option value = "2018">2018</option>
-                        <option value = "2019">2019</option>
-                        <option value = "2020">2020</option>
-                        <option value = "2021">2021</option>
-                        <option value = "2022">2022</option>
-                        <option value = "2023">2023</option>
-                        <option value = "2024">2024</option>
-                </select> 년 
-	            <select name="month" id="month">
-                        <option value = "01">1</option>
-                        <option value = "02">2</option>
-                        <option value = "03">3</option>
-                        <option value = "04">4</option>
-                        <option value = "05">5</option>
-                        <option value = "06">6</option>
-                        <option value = "07">7</option>
-                        <option value = "08">8</option>
-                        <option value = "09">9</option>
-                        <option value = "10">10</option>
-                        <option value = "11">11</option>
-                        <option value = "12">12</option>
-               </select> 월 
-               <select name="day" id="day">
-                        <option value = "01">1</option>
-                        <option value = "02">2</option>
-                        <option value = "03">3</option>
-                        <option value = "04">4</option>
-                        <option value = "05">5</option>
-                        <option value = "06">6</option>
-                        <option value = "07">7</option>
-                        <option value = "08">8</option>
-                        <option value = "09">9</option>
-                        <option value = "10">10</option>
-                        <option value = "11">11</option>
-                        <option value = "12">12</option>
-                        <option value = "13">13</option>
-                        <option value = "14">14</option>
-                        <option value = "15">15</option>
-                        <option value = "16">16</option>
-                        <option value = "17">17</option>
-                        <option value = "18">18</option>
-                        <option value = "19">19</option>
-                        <option value = "20">20</option>
-                        <option value = "21">21</option>
-                        <option value = "22">22</option>
-                        <option value = "23">23</option>
-                        <option value = "24">24</option>
-                        <option value = "25">25</option>
-                        <option value = "26">26</option>
-                        <option value = "27">27</option>
-                        <option value = "28">28</option>
-                        <option value = "29">29</option>
-                        <option value = "30">30</option>
-                        <option value = "31">31</option>
-                </select> 일
-                </div> 
+	            <input type="number" step="0.01" name="weight" id="weight" value="0">
 	          </div>
 			
 	          <div class="user-info-shoes" align="center">
@@ -326,12 +254,17 @@ input:focus {
     	var name = $("#userName");
         var pwd = $("#userPwd");
         var checkPwd = $("#checkPwd");
-        var birth = $("#user-birth");
+        var pno1 = $("#userPno1");
+        var pno2 = $("#userPno2");
         var address = $("#address");
         var weight = $("#weight");
         
+        console.log(pno1.val());
+        
         var regName = /^[가-힣a-zA-Z]{2,15}$/;
-        var regPwd = regExp = /^[a-zA-Z0-9!@#$%^&*]{4,15}$/;
+        var regPwd = /^[a-zA-Z0-9!@#$%^&*]{4,15}$/;
+        var regBirth = /^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))$/; 
+        var regPno = /^[1-4]\d{6}$/;
         
         //이름 null값 비교
         if(name.val() == ""){
@@ -381,8 +314,30 @@ input:focus {
         	$("#hidden-checkPwdArea").hide();
         }
 
-    	}
-    
+        //주민번호 null값 체크
+       	if(pno1.val() == "" && pno2.val() == ""){
+       		$("#hidden-pnoArea").html("*주민번호를 입력하세요.").show();
+            $("#hidden-pnoArea").css({"color":"red"});
+            pno1.focus();
+            return false;
+       	}else if(!regBirth.test(pno1.val())){
+       		$("#hidden-pnoArea").html("*생년월일을 잘못입력했습니다.").show();
+            $("#hidden-pnoArea").css({"color":"red"});
+            pno1.focus();
+            return false;
+       	}else if(!regPno.test(pno2.val())){
+       		$("#hidden-pnoArea").html("*주민등록번호을 잘못입력했습니다.").show();
+            $("#hidden-pnoArea").css({"color":"red"});
+            pno2.focus();
+            return false;
+       	}else{
+       		$("#hidden-pnoArea").hide();
+       	}
+        
+    }
+    	
+    	
+    	
     	//아이디 중복체크
     	function idCheck(){
     		var inputId = $("#userId");
