@@ -19,7 +19,7 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<title>Insert title here</title>
+<title>${training.trainingTitle }</title>
 <style>
 .board_wrap {
 	margin: 30px;
@@ -85,6 +85,9 @@
 	margin-left: 10px;
 	color: #777;
 }
+#uploadImg{
+float: right;
+}
 </style>
 </head>
 <body>
@@ -96,63 +99,58 @@
 		</div>
 		<div class="board_view_wrap">
 			<div class="board_view">
-				<div class="title">글 제목이 들어갑니다.</div>
+				<div class="title">${training.trainingTitle}</div>
 				<div class="info">
 					<dl>
 						<dt>번호</dt>
-						<dd>3</dd>
+						<dd>${training.trainingNo}</dd>
 					</dl>
 					<dl>
 						<dt>글쓴이</dt>
-						<dd>홍길순</dd>
+						<dd>${training.trainingWriter }</dd>
 					</dl>
 					<dl>
 						<dt>작성일</dt>
-						<dd>2023-07-27</dd>
+						<dd>${training.recordDate}</dd>
 					</dl>
 					<dl>
 						<dt>조회</dt>
-						<dd>32</dd>
+						<dd>${training.count }</dd>
 					</dl>
 				</div>
                 <table class="table table-hover">
                     <tr>
                         <th>훈련종류</th>
-                        <td><select name="category">
-                        <c:forEach items="${tCList}" var="tc">
-                                <option value="${tc.trainingKey }">${tc.trainingName }</option>
-                        </c:forEach>
-                        </select></td>
+                        <td>${training.trainingKey }</td>
                         <th>착용신발</th>
-                        <td><select name="shoes">
+                        <td>
                         <!-- shoes 조회 기능 구현되면 가져올 것 -->
-                        </select></td>
+                        </td>
                     </tr>
                     <tr>
                         <th>훈련장소</th>
-                        <td><input type="text" name="trainingPlace"></td>
-                        <th>운동거리(km)</th>
-                        <td><input type="number" step="0.01" min="1" max="100" name="trainingDistance">km</td>
+                        <td>${training.trainingPlace }</td>
+                        <th>운동거리</th>
+                        <td>${training.trainingDistance } km</td>
                     </tr>
                     <tr>
                         <th>운동시간</th>
-                        <td><input type="number" step="0.1" name="trainingTime"></td>
+                        <td>${training.trainingTime } 분</td>
                         <th>평균페이스</th>
-                        <td><input type="number" readonly value="">/km</td>
+                        <td>${training.trainingTime div training.trainingDistance} 분/km</td>
                     </tr>
                     <tr>
                         <th>목표</th>
-                        <td><input type="text" name="trainingGoal"></td>
-                        <th>현재 체중(kg)</th>
-                        <td><input type="number" step="0.01" min="20" max="200" name="weight"></td>
+                        <td>${training.trainingGoal}</td>
+                        <th>현재 체중</th>
+                        <td>${training.weight } kg</td>
                     </tr>
                 </table>
                 <hr>
 				<div class="cont">
-
-					글 내용이 들어갑니다<br> 글 내용이 들어갑니다<br> 글 내용이 들어갑니다<br> 글
-					내용이 들어갑니다<br> 글 내용이 들어갑니다<br> 글 내용이 들어갑니다<br> 글 내용이
-					들어갑니다
+				${training.trainingContent}
+				<img alt="업로드이미지" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadImg">
+				${contextPath}${attachment.filePath}${attachment.changeName}
 				</div>
 			</div>
 			<br>
