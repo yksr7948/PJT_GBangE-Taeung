@@ -98,6 +98,7 @@ public class NoticeDao {
 	     try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, nno);
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -124,9 +125,9 @@ public class NoticeDao {
 			if(rset.next()) {
 				n = new Notice(rset.getInt("NOTICE_ID")
 							  ,rset.getString("NOTICE_TITLE")
-							  ,rset.getString("NOTICE_CONTENT")
 							  ,rset.getString("MEMBER_NAME")
-							  ,rset.getDate("CREAET_DATE")
+							  ,rset.getString("NOTICE_CONTENT")
+							  ,rset.getTimestamp("CREATE_DATE")
 							  ,rset.getInt("COUNT"));
 			}
 		} catch (SQLException e) {
@@ -139,12 +140,136 @@ public class NoticeDao {
 		
 		return n;
 	}
+	
+	//공지사항 제목 + 내용으로 검색기능
+	public ArrayList<Notice> searchTitleContent(Connection conn, String searchType, String keyword) {
+		 ArrayList<Notice> list = new ArrayList<>();
+		    PreparedStatement pstmt = null;
+		    ResultSet rset = null;
+		    String sql = prop.getProperty("searchNotice"); 
+
+		    try {
+		       
+
+		        pstmt = conn.prepareStatement(sql);
+		        if (searchType.equals("titleContent")) {
+		            pstmt.setString(1, "%" + keyword + "%");
+		            pstmt.setString(2, "%" + keyword + "%");
+		        } else {
+		            pstmt.setString(1, "%" + keyword + "%");
+		        	
+		        }
+
+		        rset = pstmt.executeQuery();
+
+		        while (rset.next()) {
+		            Notice notice = new Notice();
+		            notice.setNoticeId(rset.getInt("NOTICE_ID"));
+		            notice.setNoticeTitle(rset.getString("NOTICE_TITLE"));
+		            notice.setNoticeContent(rset.getString("NOTICE_CONTENT"));
+		            notice.setMemberName(rset.getString("MEMBER_NAME"));
+		            notice.setCreateDate(rset.getTimestamp("CREATE_DATE"));
+		            notice.setCount(rset.getInt("COUNT"));
+		            list.add(notice);
+		        }
+		    } catch (SQLException e) {
+		    	// TODO Auto-generated catch block
+		        e.printStackTrace();
+		    } finally {
+		        JDBCTemplate.close(rset);
+		        JDBCTemplate.close(pstmt);
+		    }
+		    return list;
+	}
+	//공지사항 내용으로 검색기능
+	public ArrayList<Notice> searchContent(Connection conn, String searchType, String keyword) {
+		 ArrayList<Notice> list = new ArrayList<>();
+		    PreparedStatement pstmt = null;
+		    ResultSet rset = null;
+		    String sql = prop.getProperty("searchContent"); 
+
+		    try {
+		       
+
+		        pstmt = conn.prepareStatement(sql);
+		        if (searchType.equals("content")) {
+		            pstmt.setString(1, "%" + keyword + "%");
+		            pstmt.setString(2, "%" + keyword + "%");
+		        } else {
+		            pstmt.setString(1, "%" + keyword + "%");
+		        	
+		        }
+
+		        rset = pstmt.executeQuery();
+
+		        while (rset.next()) {
+		            Notice notice = new Notice();
+		            notice.setNoticeId(rset.getInt("NOTICE_ID"));
+		            notice.setNoticeTitle(rset.getString("NOTICE_TITLE"));
+		            notice.setNoticeContent(rset.getString("NOTICE_CONTENT"));
+		            notice.setMemberName(rset.getString("MEMBER_NAME"));
+		            notice.setCreateDate(rset.getTimestamp("CREATE_DATE"));
+		            notice.setCount(rset.getInt("COUNT"));
+		            list.add(notice);
+		        }
+		    } catch (SQLException e) {
+		    	// TODO Auto-generated catch block
+		        e.printStackTrace();
+		    } finally {
+		        JDBCTemplate.close(rset);
+		        JDBCTemplate.close(pstmt);
+		    }
+		    return list;
+	
 		
 		
 		
 		
 	}
+	//공지사항 제목으로 검색가능
+	public ArrayList<Notice> searchTitle(Connection conn, String searchType, String keyword) {
+		 ArrayList<Notice> list = new ArrayList<>();
+		    PreparedStatement pstmt = null;
+		    ResultSet rset = null;
+		    String sql = prop.getProperty("searchContent"); 
+
+		    try {
+		       
+
+		        pstmt = conn.prepareStatement(sql);
+		        if (searchType.equals("title")) {
+		            pstmt.setString(1, "%" + keyword + "%");
+		            pstmt.setString(2, "%" + keyword + "%");
+		        } else {
+		            pstmt.setString(1, "%" + keyword + "%");
+		        	
+		        }
+
+		        rset = pstmt.executeQuery();
+
+		        while (rset.next()) {
+		            Notice notice = new Notice();
+		            notice.setNoticeId(rset.getInt("NOTICE_ID"));
+		            notice.setNoticeTitle(rset.getString("NOTICE_TITLE"));
+		            notice.setNoticeContent(rset.getString("NOTICE_CONTENT"));
+		            notice.setMemberName(rset.getString("MEMBER_NAME"));
+		            notice.setCreateDate(rset.getTimestamp("CREATE_DATE"));
+		            notice.setCount(rset.getInt("COUNT"));
+		            list.add(notice);
+		        }
+		    } catch (SQLException e) {
+		    	// TODO Auto-generated catch block
+		        e.printStackTrace();
+		    } finally {
+		        JDBCTemplate.close(rset);
+		        JDBCTemplate.close(pstmt);
+		    }
+		    return list;
 	
+}
+
+}
+
 	
 				
 				

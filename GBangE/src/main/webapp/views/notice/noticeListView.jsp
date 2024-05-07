@@ -216,16 +216,33 @@ a {
     </div>
     </div>
 </div>
+
 			<div class="board_page">
 				<a href="#" class="btn frist"> &lt;&lt; </a> <a href="#"
 					class="btn prew"> &lt; </a> <a href="#" class="num selected">1</a>
 				<a href="#" class="num">2</a> <a href="#" class="btn next">&gt;</a>
 				<a href="#" class="btn last">&gt;&gt;</a>
 			</div>
+			<br>
+			<div class="search_form" style="text-align: center; margin-bottom: 20px;">
+            <form action="${contextPath}/search.no" method="get">
+                <select name="searchType" style="font-size: 1.6rem; padding: 10px; margin: 5px;">
+                    <option value="title">제목</option>
+                    <option value="content">내용</option>
+                    <option value="titleContent">제목+내용</option>
+                </select>
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요" style="font-size: 1.6rem; padding: 10px; margin: 5px;">
+                <button type="submit" style="font-size: 1.6rem; padding: 10px; margin: 5px;">검색</button>
+            </form>
+			
+			
 			<div class="bt_wrap">
 				<a href="${contextPath}/insert.no" class="on">글쓰기</a> <a href="">수정</a>
 			</div>
 		</div>
+		
+	
+		
 	</div>
 	<script>
     

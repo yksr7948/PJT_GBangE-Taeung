@@ -8,6 +8,12 @@
     
 <style>
 
+*{
+  box-sizing: border-box;
+  font-family: "Noto Sans CJK KR";
+  font-style: normal;
+}
+
 #container {
   display: flex;
   flex-direction: column;
@@ -17,8 +23,8 @@
   margin: auto;
   margin-top: 60px;
   margin-bottom: 60px;
-  border: 1px solid black;
-  box-shadow: 5px 5px 5px gray;
+  border: 1px solid #aacdff;
+  box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
   border-radius: 20px;
 }
 
@@ -27,18 +33,19 @@
   flex-direction: column;
   align-items: center;
   width: 470px;
-  height: 818px;
+  height: 918px;
   margin-top: 72px;
   margin-bottom: 70px;
 }
 
-.header {
+#header {
   width: 466px;
   height: 94px;
   font-weight: 700;
   font-size: 32px;
   line-height: 47px;
-  color: black;
+  margin-bottom: 50px;
+  color: #0068ff;
 }
 
 .user-info {
@@ -55,18 +62,27 @@
   line-height: 24px;
   color: #797979;
   border: none;
-  border-bottom: 1px solid #cfcfcf;
+  border-bottom: 1px solid #0068ff;
   width: 466px;
   height: 40px;
   margin-top: 21px;
 }
-.user-info-id{
-	position: relative;
+#userPno1, #userPno2{
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #797979;
+  border: none;
+  border-bottom: 1px solid #0068ff;
+  width: 220px;
+  height: 40px;
+  margin-top: 21px;
 }
-
-.user-info-id>input {
-  border-bottom: 1px solid #d2d2d2;
-  
+input:focus {
+  outline: none;
+}
+.user-info-id{
+  position: relative;
 }
 
 .user-info-id>button{
@@ -79,8 +95,25 @@
   margin: auto;
   margin-bottom: 0px;
   margin-right: -5px;
+  color: #0068ff;
+  border: 1px solid #0068ff;;
   border-radius: 3px;
 }
+
+.user-info-weight{
+	margin-bottom: 50px;
+}
+
+.user-info-birth{
+	margin-left: 10px;
+	margin-bottom: 50px;
+
+}
+.user-info-birth select{
+	margin-left: 5px;
+}
+
+
 
 .gender {
   display: flex;
@@ -88,7 +121,8 @@
   justify-content: space-between;
   width: 140px;
   height: 23.94px;
-  margin-top: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .gender input {
@@ -114,85 +148,80 @@
   color: #000000;
 }
 
-.btn {
-  display: flex;
-  flex-direction: column;
-  margin-top: 60px;
-  width: 470px;
-  height: 106px;
-  border-top: 1px solid #e6e6e6;
-}
-
 #enroll-btn {
-  margin-top: 30px;
-  width: 470px;
-  height: 75px;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 27px;
-  text-align: center;
-  color: black;
-  background: #ffffff;
-  border: 1px solid gray;
-  border-radius: 10px;
+      width: 470px;
+      height: 75px;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 27px;
+      color: #ffffff;
+      background: #8990a0;
+      margin: auto;
+      margin-top: 30px;
+      display: block;
+      border: 1px solid gray;
+      border-radius: 10px;
 }
 
-#hidden-area{
-display: none;
-}
 
     </style>
   </head>
   <body>
-    <%@include file="/views/common/menubar.jsp"%>
+     <%@include file="/views/common/menubar.jsp"%>
     	
 	  <form action="/gbange/insert.me" method="post">
 	    <div id="container">
 	      <div class="member-container">
-	        <div class="header" align="center">
+	        <div id="header" align="center">
 	          <h1>회원가입</h1>
 	        </div>
 	        <div class="user-info">
 	        
 	          <div class="user-info-id">
 	            <div>* 아이디 </div>
-	            <input type="text" name="userId" id="userId" required/>
+	            <input type="text" name="userId" id="userId"/>
 	            <button type="button" onclick="idCheck();">중복확인</button>
 	          </div>
-	            <div id="hidden-area"></div>
+	            <div id="hidden-idArea" style="display:none;"></div>
 	          
 	          <div class="user-info-name">
 	            <div>* 이름</div>
-	            <input type="text" name="userName" id="userName" required/>
+	            <input type="text" name="userName" id="userName"/>
 	          </div>
+	          	<div id="hidden-nameArea" style="display:none;"></div>
 	          
 	          <div class="user-info-pw">
 	            <div>* 비밀번호</div>
-	            <input type="password" name="userPwd" id="userPwd" required/>
+	            <input type="password" name="userPwd" id="userPwd"/>
 	          </div>
+	          	<div id="hidden-pwdArea" style="display:none;"></div>
 	          
 	          <div class="user-info-pw-check">
 	            <div>* 비밀번호 확인</div>
-	            <input type="password" id="checkPwd" required/>
+	            <input type="password" id="checkPwd"/>
 	          </div>
+	          	<div id="hidden-checkPwdArea" style="display:none;"></div>
 	          
-	          <div class="user-info-birth">
-	            <div>* 생년월일 (8자리)</div>
-	            <input type="text" name="birthDate" id="user-birth" required>
+			  <div class="user-info-pno" >
+	            <div>* 주민등록번호</div>
+	            <input type="text" name="userPno1" id="userPno1"/>
+	            <font style="font-size:30px">-</font>
+	            <input type="text" name="userPno2" id="userPno2"/>
 	          </div>
-	
+	          	<div id="hidden-pnoArea" style="display:none;"></div>
+	          
 	          <div class="user-info-address">
 	            <div>  주소</div>
 	            <input type="text" name="address" id="address">
 	          </div>
-	
+	          
 	          <div class="user-info-weight">
 	            <div> 몸무게 (소수점 2자리)</div>
-	            <input type="number" step="0.02" name="weight" id="weight">
+	            <input type="number" step="0.01" name="weight" id="weight" value="0">
 	          </div>
-	
-	          <div class="user-info-shoes">
-	            * 러닝화
+			
+	          <div class="user-info-shoes" align="center">
+	            러닝화 
 	            <select name="shoes">
 	                <option value="기타">기타</option>
 	                <option value="맨발">맨발</option>
@@ -209,7 +238,7 @@ display: none;
 	          <input type="radio" name="gender" id="men" value="M" /><label for="men">남성</label>
 	        </div>
 	        <div class="btn">
-	          <button id="enroll-btn" type="submit" disabeld>가입하기</button>
+	          <button type="submit" id="enroll-btn" onclick="return enroll();" disabled>회원가입</button>
 	          <br>
 	          <button type="button" onclick="enroll();">확인버튼</button>
 	        </div>
@@ -221,40 +250,130 @@ display: none;
     	
     	//회원가입 정규표현식
     	function enroll(){
-    	var id = $("#userId").val();
-    	var name = $("#userName").val();
-        var pwd = $("#userPwd").val();
-        var checkPwd = $("#checkPwd").val();
-        var birth = $("#user-birth").val();
-        var address = $("#address").val();
-        var weight = $("#weight").val();
+    	var id = $("#userId");
+    	var name = $("#userName");
+        var pwd = $("#userPwd");
+        var checkPwd = $("#checkPwd");
+        var pno1 = $("#userPno1");
+        var pno2 = $("#userPno2");
+        var address = $("#address");
+        var weight = $("#weight");
+        
+        console.log(pno1.val());
+        
+        var regName = /^[가-힣a-zA-Z]{2,15}$/;
+        var regPwd = /^[a-zA-Z0-9!@#$%^&*]{4,15}$/;
+        var regBirth = /^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))$/; 
+        var regPno = /^[1-4]\d{6}$/;
+        
+        //이름 null값 비교
+        if(name.val() == ""){
+        	$("#hidden-nameArea").html("*이름을 입력하세요.").show();
+            $("#hidden-nameArea").css({"color":"red"});
+            name.focus();
+            return false;
+        //이름 형식 비교
+        }else if(!regName.test(name.val())){
+        	$("#hidden-nameArea").html("*최소 2글자 이상, 한글과 영어만 입력하세요.").show();
+            $("#hidden-nameArea").css({"color":"red"});
+            name.focus();
+            return false;
+        }else{
+        	$("#hidden-nameArea").hide();
+        }
+        
+        //비밀번호 null값 비교
+        if(pwd.val() == ""){
+        	$("#hidden-pwdArea").html("*비밀번호를 입력하세요.").show();
+            $("#hidden-pwdArea").css({"color":"red"});
+            pwd.focus();
+            return false;
+		//비밀번호 형식 비교
+        }else if(!regPwd.test(pwd.val())){
+        	$("#hidden-pwdArea").html("*4~15자 영문 대소문자, 숫자, 특수기호만 입력하세요.").show();
+        	$("#hidden-pwdArea").css({"color":"red"});
+            pwd.focus();
+            return false;
+		//비밀번호 아이디값 비교
+        }else if(pwd.val() == id.val()){
+        	$("#hidden-pwdArea").html("*아이디와 동일한 비밀번호를 사용할 수 없습니다.").show();
+        	$("#hidden-pwdArea").css({"color":"red"});
+            pwd.focus();
+            return false;
+        }else{
+        	$("#hidden-pwdArea").hide();
+        }
+        
+        //비밀번호 동일여부 체크
+        if(checkPwd.val() !== pwd.val()){
+        	$("#hidden-checkPwdArea").html("*비밀번호와 동일하지 않습니다.").show();
+        	$("#hidden-checkPwdArea").css({"color":"red"});
+            checkPwd.focus();
+            return false;
+        }else{
+        	$("#hidden-checkPwdArea").hide();
+        }
 
-    	console.log(id);
-        console.log(name);
-        console.log(pwd);
-        console.log(checkPwd);
-        console.log(birth);
-        console.log(address);
-        console.log(weight);
-    	}
-    
+        //주민번호 null값 체크
+       	if(pno1.val() == "" && pno2.val() == ""){
+       		$("#hidden-pnoArea").html("*주민번호를 입력하세요.").show();
+            $("#hidden-pnoArea").css({"color":"red"});
+            pno1.focus();
+            return false;
+       	}else if(!regBirth.test(pno1.val())){
+       		$("#hidden-pnoArea").html("*생년월일을 잘못입력했습니다.").show();
+            $("#hidden-pnoArea").css({"color":"red"});
+            pno1.focus();
+            return false;
+       	}else if(!regPno.test(pno2.val())){
+       		$("#hidden-pnoArea").html("*주민등록번호을 잘못입력했습니다.").show();
+            $("#hidden-pnoArea").css({"color":"red"});
+            pno2.focus();
+            return false;
+       	}else{
+       		$("#hidden-pnoArea").hide();
+       	}
+        
+    }
+    	
+    	
+    	
     	//아이디 중복체크
     	function idCheck(){
-    		var inputId = $("#userId").val();
-    		
+    		var inputId = $("#userId");
+            var regIdPw = /^[a-zA-Z0-9]{4,15}$/;
     		
     		$.ajax({
     			url : "/gbange/idCheck.me",
     			data : {
-    				inputId : inputId
+    				inputId : inputId.val()
     			},
     			success : function(result){
-    				if(result == "NNNNN"){
-    					$("#hidden-area").html("*사용불가능한 아이디입니다.").show();
-    					$("#hidden-area").css({"color":"red"});
+    				//아이디 null값 비교
+    		        if(inputId.val() == ""){
+    		            $("#hidden-idArea").html("*아이디를 입력하세요.").show();
+    		            $("#hidden-idArea").css({"color":"red"});
+    		            inputId.focus();
+    		            $("#enroll-btn").css({"backgroundColor":"#8990a0","cursor":"auto","color":"#ffffff"}).prop("disabled",true);
+    		            return false;
+    		        //아이디 형식 비교
+    		        }else if(!regIdPw.test(inputId.val())){
+    		            $("#hidden-idArea").html("*4~12자 영문 대소문자, 숫자만 입력하세요.").show();
+    		            $("#hidden-idArea").css({"color":"red"});
+    		        	inputId.focus();
+    		        	$("#enroll-btn").css({"backgroundColor":"#8990a0","cursor":"auto","color":"#ffffff"}).prop("disabled",true);
+    		        	return false;
+    		        	//중복아이디 비교
+    		        }else if(result == "NNNNN"){
+    					$("#hidden-idArea").html("*사용불가능한 아이디입니다.").show();
+    					$("#hidden-idArea").css({"color":"red"});
+    					inputId.focus();
+    					$("#enroll-btn").css({"backgroundColor":"#8990a0","cursor":"auto","color":"#ffffff"}).prop("disabled",true);
+ 	
     				}else{
-    					$("#hidden-area").html("*사용가능한 아이디입니다.").show();
-    					$("#hidden-area").css({"color":"green"});
+    					$("#hidden-idArea").html("*사용가능한 아이디입니다.").show();
+    					$("#hidden-idArea").css({"color":"green"});
+    					$("#enroll-btn").css({"backgroundColor":"#aacdff","cursor":"pointer","color":"#000"}).prop("disabled",false);
     				}
     			},
     			error : function(){

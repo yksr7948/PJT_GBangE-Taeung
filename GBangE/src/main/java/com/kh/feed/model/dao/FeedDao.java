@@ -12,6 +12,8 @@ import java.util.Properties;
 
 import com.kh.common.JDBCTemplate;
 import com.kh.common.model.vo.PageInfo;
+import com.kh.feed.model.vo.Attachment;
+import com.kh.feed.model.vo.Category;
 import com.kh.feed.model.vo.Feed;
 
 
@@ -48,7 +50,7 @@ public class FeedDao {
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			
-			rset = pstmt.executeQuery(sql);
+			rset = pstmt.executeQuery();
 		
 			while(rset.next()) {
 				list.add(new Feed(rset.getInt("FEED_NO")
@@ -57,7 +59,6 @@ public class FeedDao {
 								,rset.getInt("COUNT")
 								,rset.getDate("CREATE_DATE")));
 			}
-				
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,11 +76,14 @@ public class FeedDao {
 		String sql = prop.getProperty("insertFeed");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, f.getFeedTitle());
-			pstmt.setString(2, f.getMemberNo());
-			pstmt.setString(3, f.getFeedContent());
+			pstmt.setString(1, f.getCategory());
+			pstmt.setString(2, f.getCompetition());
+			pstmt.setString(3, f.getFeedTitle());
+			pstmt.setString(4, f.getMemberNo());
+			pstmt.setString(5, f.getFeedContent());
 			
 			result = pstmt.executeUpdate();
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -112,6 +116,81 @@ public class FeedDao {
 			JDBCTemplate.close(stmt);
 		}
 		return listCount;
+	}
+
+	public ArrayList<Category> selectCategoryList(Connection conn) {
+		
+		ResultSet rset = null;
+		ArrayList<Category> cList = new ArrayList<>();
+		Statement stmt = null;
+		
+		String sql = prop.getProperty("selectCategoryList");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(sql);
+			
+			while(rset.next()) {
+				cList.add(new Category(rset.getInt("CATEGORY_NO")
+									  ,rset.getString("CATEGORY_NAME")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(stmt);
+		}
+		return cList;
+	}
+
+	public int selectFeedNo(Connection conn) {
+		
+		int feedNo = 0;
+		ResultSet rset = null;
+		Statement stmt = null;
+		
+		String sql = prop.getProperty("selectFeedNo");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				feedNo = rset.getInt("FNO");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(stmt);
+		}
+		
+		return feedNo;
+	}
+
+	public int insertAttachment(Connection conn, Attachment at) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, at.getRefBno());
+			pstmt.setString(2, at.getOriginName());
+			pstmt.setString(3, at.getChangeName());
+			pstmt.setString(4, at.getFilePath());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
 	}
 
 
