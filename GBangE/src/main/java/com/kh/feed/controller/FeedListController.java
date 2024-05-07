@@ -47,6 +47,7 @@ public class FeedListController extends HttpServlet {
 		
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
+		
 		pageLimit = 10;
 		
 		boardLimit = 10;
@@ -64,7 +65,7 @@ public class FeedListController extends HttpServlet {
 		
 		ArrayList<Feed> list = new FeedService().selectFeedList(pi);
 		
-		request.setAttribute("feedList", list);
+		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
 		
 		request.getRequestDispatcher("views/feed/feedListView.jsp").forward(request, response);

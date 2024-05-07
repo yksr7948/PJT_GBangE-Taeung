@@ -7,7 +7,7 @@
 		FROM (
                 SELECT ROWNUM,S.*
         		FROM (SELECT FEED_NO
-               ,BOARD_TITLE
+               ,FEED_TITLE
                ,MEMBER_ID
                ,COUNT
                ,CREATE_DATE
@@ -19,15 +19,37 @@
 </entry>
 
 <entry key = "insertFeed">
-	INSERT INTO FEED(FEED_NO,FEED_TITLE,FEED_CONTENT)
-	VALUES(FEED_FNO.NEXTVAL,?,?)
+	INSERT INTO FEED(FEED_NO,CATEGORY_NO,COMPETITION_NO,FEED_TITLE,MEMBER_NO,FEED_CONTENT,BOARD_ID)
+     VALUES(SEQ_FNO.NEXTVAL,?,?,?,?,?,4)
 </entry>
 <entry key="listCount">
 		SELECT COUNT(*) COUNT
 		FROM FEED
 		WHERE STATUS='Y'
 	</entry>
+<entry key="selectCategoryList">
+	SELECT CATEGORY_NO
+	      ,CATEGORY_NAME 
+		FROM CATEGORY
+</entry>
 
+<entry key="selectFeedNo">
+SELECT SEQ_FNO.NEXTVAL FNO
+        FROM DUAL 
 
+</entry>
+
+<entry key="insertAttachment">
+INSERT INTO ATTACHMENT (FILE_NO
+                        ,REF_BNO
+                        ,ORIGIN_NAME
+                        ,CHANGE_NAME
+                        ,FILE_PATH)
+            VALUES(SEQ_FNO.NEXTVAL
+                    ,?
+                    ,?
+                    ,?
+                    ,?)
+</entry>
 
 </properties>
