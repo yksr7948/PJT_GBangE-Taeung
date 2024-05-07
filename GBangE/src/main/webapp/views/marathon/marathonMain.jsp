@@ -79,7 +79,7 @@
                       <c:choose>
 						<c:when test="${empty marathonArr }">
 						<tr>
-							<td colspan="5">조회된 게시글이 없습니다.</td>
+							<td colspan="5">조회된 마라톤이 없습니다.</td>
 						</tr>
 						</c:when>
 						<c:otherwise>
@@ -97,11 +97,16 @@
 					</tbody>
 					</table>					
                     </div>
-                    <div class="modal-footer">
                     <!-- 관리자전용 기능 -->
-                    	<c:if test="'${memberNo}'==1">
-                    		<button onclick='location.href="${contextPath }/insert.ma"' class="btn btn-outline-primary">대회정보 초기화</button>
-                    	</c:if>
+                    <div class="adminMenu">
+<%--                     	<c:if test="'${memberNo}'==1"> --%>
+                    <br>
+                    <p> * 관리자용 메뉴</p>                   
+                    		<button onclick='location.href="${contextPath }/insert.ma"' class="btn btn-outline-primary">대회정보 초기화</button>                    		
+                    		<button onclick='checkRestore();' class="btn btn-outline-primary">대회정보 복구</button>
+<%--                     	</c:if> --%>
+					</div>
+					<div class="modal-footer">
                       <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">종료</button>
                     </div>
                   </div>
@@ -133,6 +138,11 @@ function checkParticipate(){
 		}
 	}else{
 		location.href="${contextPath}/insert.pa?marathonNo=${mar.marathonNo}&memberNo=${m.memberNo}"	
+	}
+}
+function checkRestore(){
+	if(confirm("복구 페이지로 이동하시겠어요?")){
+		location.href="${contextPath }/restore.ma"
 	}
 }
 </script>

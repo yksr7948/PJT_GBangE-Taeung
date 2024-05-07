@@ -130,5 +130,97 @@ public class MarathonDao{
 		}
 		return mar;
 	}
+	public int updateMarathon(Marathon m, Connection conn) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateMarathon");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, m.getMarathonName());
+			pstmt.setString(2, m.getLocation());
+			pstmt.setString(3, m.getRegion());
+			pstmt.setString(4, m.getMarathonDate());
+			pstmt.setString(5, m.getApplicationDate());
+			pstmt.setString(6, m.getOtherIntroduction());
+			pstmt.setString(7, m.getOrganizer());
+			pstmt.setString(8, m.getOrganizerHost());
+			pstmt.setString(9, m.getOrganizerPhone());
+			pstmt.setString(10, m.getMarathonSite());
+			pstmt.setInt(11, m.getMarathonNo());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	finally {
+			JDBCTemplate.close(pstmt);
+		}		
+		return result;
+	}
+	public int deleteMarathon(int marathonNo, Connection conn) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteMarathon");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, marathonNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}		
+		return result;
+	}
+	
+	public int restoreMarathon(int marathonNo, Connection conn) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("restoreMarathon");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, marathonNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}		
+		return result;
+	}
+	public JSONArray selectDeleteMarathon(Connection conn) {
+		JSONArray MarathonArr = new JSONArray();
+		Statement stmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectDeleteMarathon");
+		try {
+			stmt=conn.createStatement();
+			rset = stmt.executeQuery(sql);
+			while(rset.next()) {
+				JSONObject jobj = new JSONObject();
+				jobj.put("marathonNo",rset.getString("MARATHON_NO"));
+				jobj.put("marathonName",rset.getString("MARATHON_NAME"));
+				jobj.put("location",rset.getString("LOCATION"));
+				jobj.put("region",rset.getString("REGION"));
+				jobj.put("marathonDate",rset.getString("MARATHON_DATE").substring(0, rset.getString("MARATHON_DATE").indexOf(" ")));
+				jobj.put("marathonSite",rset.getString("MARATHON_SITE"));
+				jobj.put("organizer", rset.getString("ORGANIZER"));
+				String otherIntroduction = rset.getString("OTHER_INTRODUCTION");
+				if(otherIntroduction!=null&&otherIntroduction.length()>50) {
+					otherIntroduction = otherIntroduction.substring(0,50);
+				}
+				jobj.put("otherIntroduction", otherIntroduction);
+				MarathonArr.add(jobj);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(stmt);
+		}
+		return MarathonArr;
+	}
 
 }

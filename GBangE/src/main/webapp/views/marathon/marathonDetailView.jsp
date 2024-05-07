@@ -84,9 +84,21 @@
     </tr>
     </table>
 </div>
+<!-- 관리자기능 -->
+<div class="admindiv" style="margin-left:300px">
+<%-- <c:if test="${memberNo==1}"> --%>
+<button onclick='checkdelete();' class="btn btn-outline-primary">대회정보 삭제</button>
+<button onclick='location.href="${contextPath }/update.ma?marathonNo=${mar.marathonNo }"' class="btn btn-outline-primary">대회정보 변경</button>
+<%-- </c:if> --%>
+</div>
 </body>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a1b4846e472c7771e5d7f51cf184db58&libraries=services"></script>
 <script>
+function checkdelete(){
+	if(confirm("정말 삭제하시겠어요?")){
+		location.href="${contextPath }/delete.ma?marathonNo=${mar.marathonNo }"
+	}
+}
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -111,14 +123,11 @@ function placesSearchCB (data, status, pagination) {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         var bounds = new kakao.maps.LatLngBounds();
-
-        for (var i=0; i<1; i++) {
-            displayMarker(data[i]);    
-            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-        }
-
+        displayMarker(data[0]);    
+        bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds);
+        map.setLevel(3);
     }else{
     	// 장소 검색 실패시, alert 
     	alert("장소 검색에 실패했습니다.");
