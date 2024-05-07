@@ -10,7 +10,7 @@ public class Member {
 	private String memberPwd;
 	private String gender;
 	private String address;
-	private String birthDate;
+	private String memberPno;
 	private double mileage;
 	private String shoes;
 	private double weight;
@@ -19,7 +19,7 @@ public class Member {
 	
 
 	public Member(int memberNo, String memberName, String memberId, String memberPwd, String gender, String address,
-			String birthDate, double mileage, String shoes, double weight, Date enrollDate, String status) {
+			String memberPno, double mileage, String shoes, double weight, Date enrollDate, String status) {
 		super();
 		this.memberNo = memberNo;
 		this.memberName = memberName;
@@ -27,7 +27,7 @@ public class Member {
 		this.memberPwd = memberPwd;
 		this.gender = gender;
 		this.address = address;
-		this.birthDate = birthDate;
+		this.memberPno = memberPno;
 		this.mileage = mileage;
 		this.shoes = shoes;
 		this.weight = weight;
@@ -35,7 +35,7 @@ public class Member {
 		this.status = status;
 	}
 
-	public Member(String memberName, String memberId, String memberPwd, String gender, String address, String birthDate,
+	public Member(String memberName, String memberId, String memberPwd, String gender, String address, String memberPno,
 			String shoes, double weight) {
 		super();
 		this.memberName = memberName;
@@ -43,7 +43,7 @@ public class Member {
 		this.memberPwd = memberPwd;
 		this.gender = gender;
 		this.address = address;
-		this.birthDate = birthDate;
+		this.memberPno = memberPno;
 		this.shoes = shoes;
 		this.weight = weight;
 	}
@@ -96,12 +96,12 @@ public class Member {
 		this.address = address;
 	}
 
-	public String getBirthDate() {
-		return birthDate;
+	public String getMemberPno() {
+		return memberPno;
 	}
 
-	public void setBirthDate(String birthDate) {
-		this.birthDate = birthDate;
+	public void setMemberPno(String memberPno) {
+		this.memberPno = memberPno;
 	}
 
 	public double getMileage() {
@@ -147,7 +147,7 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberName=" + memberName + ", memberId=" + memberId + ", memberPwd="
-				+ memberPwd + ", gender=" + gender + ", address=" + address + ", birthDate=" + birthDate + ", mileage="
+				+ memberPwd + ", gender=" + gender + ", address=" + address + ", memberPno=" + memberPno + ", mileage="
 				+ mileage + ", shoes=" + shoes + ", weight=" + weight + ", enrollDate=" + enrollDate + ", status="
 				+ status + "]";
 	}
