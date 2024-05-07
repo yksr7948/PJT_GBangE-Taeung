@@ -13,7 +13,6 @@ String contextPath = request.getContextPath();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -77,7 +76,7 @@ alert(msg);
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
   <nav id="top-nav">
     <ul>
-        <li><input type="button" onclick="loginView();" value="로그인" ></li>
+        <li><input type="button" onclick="loginView();" value="로그인" class="btn btn-info"></li>
         <li><a href="#">로고</a></li>
         <li><a href="#">로고</a></li>
     </ul>
