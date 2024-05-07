@@ -33,7 +33,7 @@ public class InsertMarathonController extends HttpServlet {
 		int result = 0;
 		result = new MarathonService().deleteAllMarathon();
 		if(result<0) {
-			request.getSession().setAttribute("msg", "초기화 실패");
+			request.getSession().setAttribute("alertMsg", "초기화 실패");
 			response.sendRedirect(request.getContextPath()+"/list.ma");
 		}else {
 			result = new MarathonService().insertMarathon();
