@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <style>
 .Detaildiv{
 	box-sizing: border-box;
@@ -29,6 +30,7 @@
 </style>
 </head>
 <body>
+
 <%@include file="/views/common/menubar.jsp"%>
 <div class="head">
 	<h1>대회정보</h1>
@@ -91,7 +93,6 @@
 <button onclick='location.href="${contextPath }/update.ma?marathonNo=${mar.marathonNo }"' class="btn btn-outline-primary">대회정보 변경</button>
 <%-- </c:if> --%>
 </div>
-</body>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a1b4846e472c7771e5d7f51cf184db58&libraries=services"></script>
 <script>
 function checkdelete(){
@@ -151,4 +152,5 @@ function displayMarker(place) {
     });
 }
 	</script>
+</body>
 </html>
