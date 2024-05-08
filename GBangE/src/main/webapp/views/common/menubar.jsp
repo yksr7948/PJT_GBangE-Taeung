@@ -13,9 +13,11 @@ String contextPath = request.getContextPath();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  
 </head>
 <style>
 *{
@@ -62,7 +64,7 @@ nav{
     max-width: 200px;
     vertical-align: middle;
     margin: auto;
-  margin-top: -70px;
+  	margin-top: -70px;
 }
 </style>
 <body>
@@ -76,13 +78,20 @@ alert(msg);
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
   <nav id="top-nav">
     <ul>
-        <li><input type="button" onclick="loginView();" value="로그인" class="btn btn-info"></li>
+    	<c:choose>
+    		<c:when test="${empty loginUser }">
+		        <li><input type="button" onclick="loginView();" value="로그인" class="btn btn-info"></li>
+    		</c:when>
+    		<c:otherwise>
+    			<li><input type="button" onclick="myPage();" value="<%=loginUser.getMemberId() %>" class="btn btn-info"></li>
+    		</c:otherwise>
+    	</c:choose>
         <li><a href="#">로고</a></li>
         <li><a href="#">로고</a></li>
     </ul>
 </nav>
 <nav id="nav2">
-      <a href="#"> <img src="/gbange/views/common/resources/img/Logo-Black.png" alt="지방이" class="logo"></a>
+      <a href="${contextPath}"> <img src="/gbange/views/common/resources/img/Logo-Black.png" alt="지방이" class="logo"></a>
         <ul>
           <li><a href="/gbange/list.no">공지사항</a></li>
           <li><a href="${contextPath}/list.tr?currentPage=1">러닝일지 게시판</a></li>
@@ -93,7 +102,11 @@ alert(msg);
       
       <script>
       	function loginView(){
-      		location.href="views/member/loginForm.jsp";
+      		location.href="${contextPath}/login.me";
+      	}
+      	
+      	function myPage(){
+      		location.href="${contextPath}/mypage.me";
       	}
       </script>
 </body>

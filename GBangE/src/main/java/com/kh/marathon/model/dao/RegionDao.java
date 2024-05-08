@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.kh.common.JDBCTemplate;
+
 public class RegionDao {
 	private Properties prop = new Properties();
 	public RegionDao() {
@@ -32,7 +34,30 @@ public class RegionDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}		
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
 		return regionName;
+	}
+	public int selectRegionId(Connection conn, String regionName) {
+		int regionId = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectRegionId");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, regionName);
+			rset=pstmt.executeQuery();
+			if(rset.next()) {
+				regionId=rset.getInt("REGION_ID");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return regionId;
 	}
 }

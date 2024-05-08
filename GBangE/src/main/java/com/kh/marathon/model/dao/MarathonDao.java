@@ -222,5 +222,25 @@ public class MarathonDao{
 		}
 		return MarathonArr;
 	}
+	public String selectMarathonRegionName(Connection conn, int marathonNo) {
+		String regionName = "";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectMarathonRegionName");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, marathonNo);
+			rset=pstmt.executeQuery();
+			if(rset.next()) {
+				regionName=rset.getString("REGION");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return regionName;
+	}
 
 }

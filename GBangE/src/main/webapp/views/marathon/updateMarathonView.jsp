@@ -44,50 +44,50 @@
 	<h1>대회정보 변경</h1>
 </div>
 <br>
-<div class="Detaildiv">
+<div class="Detaildiv form-floating mb-3">
 	<form action="update.ma" method="post">
 	<input type="hidden" name="marathonNo" value="${mar.marathonNo }">
     <table class="marathonDetail table">
     <tr>
     	<th>행사명</th>
-    	<td><input type="text" name="marathonName" value="${mar.marathonName }"></td>
+    	<td><input type="text" class="form-control" name="marathonName" value="${mar.marathonName }"></td>
     </tr>
     <tr>
     	<th>지역</th>
-    	<td><input type="text" name="region" value="${mar.region }"></td>
+    	<td><input type="text" class="form-control" name="region" value="${mar.region }"></td>
     </tr>
     <tr>
     	<th>마라톤 장소</th>
-    	<td><input type="text" name="location" value="${mar.location }"></td>
+    	<td><input type="text" class="form-control" name="location" value="${mar.location }"></td>
     </tr>
     <tr>
     	<th>출발일</th>
-    	<td><input type="text" name="marathonDate" value="${mar.marathonDate }"></td>
+    	<td><input type="text" class="form-control" name="marathonDate" value="${mar.marathonDate }"></td>
     </tr>
     <tr>
     	<th>접수기간</th>
-    	<td><input type="text" name="applicationDate" value="${mar.applicationDate }"></td>
+    	<td><input type="text" class="form-control" name="applicationDate" value="${mar.applicationDate }"></td>
     </tr>
 	<tr>
     	<th>주최자</th>
-    	<td><input type="text" name="organizer" value="${mar.organizer }"></td>
+    	<td><input type="text" class="form-control" name="organizer" value="${mar.organizer }"></td>
     </tr>
     <tr>
     	<th>주최단체</th>
-    	<td><input type="text" name="organizerHost" value="${mar.organizerHost }"></td>
+    	<td><input type="text" class="form-control" name="organizerHost" value="${mar.organizerHost }"></td>
     </tr>
     <tr>
     	<th>번호</th>
-    	<td><input type="text" name="organizerPhone" value="${mar.organizerPhone }"></td>
+    	<td><input type="text" class="form-control" name="organizerPhone" value="${mar.organizerPhone }"></td>
     </tr>
     <tr>
     	<th>대회 주소</th>
-    	<td><input type="text" name="marathonSite" value="${mar.marathonSite }"></td>
+    	<td><input type="text" class="form-control" name="marathonSite" value="${mar.marathonSite }"></td>
     </tr>
     <tr>
     	<th style="height:250px">상세 정보</th>
     	<td>
-    	<textarea name="otherIntroduction" style="width:500px; height:350px">
+    	<textarea class="form-control" name="otherIntroduction" style="width:500px; height:350px">
     	${mar.otherIntroduction }
     	</textarea>
     	</td>    	
@@ -95,8 +95,8 @@
     </table>
     <div class="btndiv">
     <button type="button" id="checkBtn" class="btn btn-outline-primary">저장</button>
-    <button type="submit" id="submitBtn" class="btn btn-outline-primary" disabled>제출</button>
-    <button type="reset" class="btn btn-outline-primary">취소</button>
+    <button type="submit" id="submitBtn" class="btn btn-dark" disabled>제출</button>
+    <button type="reset" id="resetBtn" class="btn btn-outline-primary">취소</button>
     </div>
     </form>            
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -108,6 +108,9 @@
 			if(confirm('변경사항을 저장하시겠습니까?')){
 				$("#submitBtn").attr("disabled",false);	
 			}	
+		});
+		$("#resetBtn").click(function(){
+			$("#submitBtn").attr("disabled",true);	
 		});		
 	});
 	</script>
