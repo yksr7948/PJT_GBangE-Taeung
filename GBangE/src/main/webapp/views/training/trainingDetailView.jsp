@@ -160,7 +160,7 @@ float: right;
 			<br>
 			<div class="bt_wrap">
 				<a href="" class="btn btn-outline-secondary">목록</a>
-				<a href="${contextPath}/update.tr" class="btn btn-success">수정</a>
+				<a href="${contextPath}/update.tr?tno=${training.trainingNo}" class="btn btn-success">수정</a>
 			</div>
 		</div>
 	</div>
