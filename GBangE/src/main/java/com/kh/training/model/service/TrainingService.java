@@ -3,6 +3,8 @@ package com.kh.training.model.service;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import org.apache.jasper.compiler.NewlineReductionServletWriter;
+
 import com.google.gson.annotations.Until;
 import com.kh.common.JDBCTemplate;
 import com.kh.common.model.vo.PageInfo;
@@ -25,23 +27,23 @@ public class TrainingService {
 		Connection conn = JDBCTemplate.getConnection();
 
 		int trainingNo = new TrainingDao().selectTrainingNo(conn);
-		
+
 		t.setTrainingNo(trainingNo);
 		int resultTr = new TrainingDao().insertTraining(conn, t);
 		System.out.println(resultTr);
-		System.out.println("게시글 작성할 때의 게시글 번호"+trainingNo);
-		int resultAt = new TrainingDao().insertAttachment(conn, at,trainingNo);
+		System.out.println("게시글 작성할 때의 게시글 번호" + trainingNo);
+		int resultAt = new TrainingDao().insertAttachment(conn, at, trainingNo);
 		System.out.println(resultAt);
-		System.out.println("사진 첨부할 때의 게시글 번호"+trainingNo);
-		if(resultTr*resultAt>0) {
+		System.out.println("사진 첨부할 때의 게시글 번호" + trainingNo);
+		if (resultTr * resultAt > 0) {
 			JDBCTemplate.commit(conn);
-		}else {
+		} else {
 			JDBCTemplate.rollback(conn);
 		}
-		System.out.println("모두 첨부 완료했을 때의 게시글 번호"+trainingNo);
+		System.out.println("모두 첨부 완료했을 때의 게시글 번호" + trainingNo);
 		JDBCTemplate.close(conn);
-		
-		return resultTr*resultAt;
+
+		return resultTr * resultAt;
 	}
 
 	public int increaseCount(int tno) {
@@ -76,24 +78,41 @@ public class TrainingService {
 
 	public Training selectTraining(int tno) {
 		Connection conn = JDBCTemplate.getConnection();
-		Training t = new TrainingDao().selectTraining(conn,tno);
+		Training t = new TrainingDao().selectTraining(conn, tno);
 		JDBCTemplate.close(conn);
 		return t;
 	}
 
 	public Attachment selectAttachment(int tno) {
 		Connection conn = JDBCTemplate.getConnection();
-		Attachment at = new TrainingDao().selectAttachment(conn,tno);
+		Attachment at = new TrainingDao().selectAttachment(conn, tno);
 		JDBCTemplate.close(conn);
 		return at;
 	}
 
 	public int updateTraining(Training t, Attachment at) {
 		Connection conn = JDBCTemplate.getConnection();
-		int resultTr = new TrainingDao().updateTraining(conn,t);
-		System.out.println(resultTr);
-//		int resultAt = new TrainingDao().updateAttachment(conn,at);
-		return 0;
+		System.out.println("서비스로 넘어온 첨부파일"+at);
+		int resultTr = new TrainingDao().updateTraining(conn, t);
+
+		int resultAt = 1;
+
+		if (at != null) {
+			if (at.getFileNo() != 0) {
+				resultAt = new TrainingDao().updateAttachment(conn, at);
+			} else {
+				resultAt = new TrainingDao().insertAttachment(conn, at, at.getRefBno());
+			}
+		}
+
+		if (resultTr * resultAt > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+
+		return resultTr * resultAt;
 	}
 
 }

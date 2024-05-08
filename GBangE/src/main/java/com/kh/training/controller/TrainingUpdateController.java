@@ -50,7 +50,6 @@ public class TrainingUpdateController extends HttpServlet {
 		ArrayList<TrainingCategory> tCList = ts.selectCategoryList();
 
 		Attachment at = ts.selectAttachment(tno);
-		System.out.println("첨부파일 가져왔는지 확인"+at);
 		request.setAttribute("training", t);
 		request.setAttribute("tCList", tCList);
 		request.setAttribute("attachment", at);

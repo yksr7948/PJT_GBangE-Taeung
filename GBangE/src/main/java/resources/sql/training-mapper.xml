@@ -83,4 +83,10 @@ UPDATE TRAINING SET TRAINING_TITLE = ?
 					,OCSTATUS = ?
 WHERE TRAINING_NO = ?
 </entry>
+
+<entry key="updateAttachment">
+UPDATE ATTACHMENT SET FILE_NAME = ? 
+                    ,FILE_RENAME = ?
+WHERE FILE_NO = ?
+</entry>
 </properties>
