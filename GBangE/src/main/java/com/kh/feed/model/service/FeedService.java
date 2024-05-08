@@ -32,32 +32,22 @@ public class FeedService {
 		
 		int feedNo = new FeedDao().selectFeedNo(conn);
 		
-		if(feedNo !=0) {
 			f.setFeedNo(feedNo);
 			
 			int result = new FeedDao().insertFeed(conn,f);
-			
-			int result2 = 1;
-			
-			if(result>0 && at!=null) {
-				
-				at.setRefBno(feedNo);
-				
-				result2 = new FeedDao().insertAttachment(conn,at);
-			}
+			int result2 = new FeedDao().insertAttachment(conn, at,feedNo);
+
 			if(result*result2>0) {
 				JDBCTemplate.commit(conn);
 			}else {
 				JDBCTemplate.rollback(conn);
 			}
 			JDBCTemplate.close(conn);
+			
 			return result*result2;
-		}else {
-			JDBCTemplate.close(conn);
-			return feedNo;
 		}
 		
-	}
+	
 
 	public int listCount() {
 		
@@ -78,6 +68,41 @@ public class FeedService {
 		JDBCTemplate.close(conn);
 		
 		return cList;
+	}
+
+	public int increaseCount(int fno) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new FeedDao().increaseCount(conn,fno);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public Feed selectFeed(int fno) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		Feed f = new FeedDao().selectFeed(conn,fno);
+		
+		JDBCTemplate.close(conn);
+		
+		return f;
+	}
+
+	public Attachment selectAttachment(int fno) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		Attachment at = new FeedDao().selectAttachment(conn,fno);
+		
+		JDBCTemplate.close(conn);
+		
+		return at;
 	}
 
 

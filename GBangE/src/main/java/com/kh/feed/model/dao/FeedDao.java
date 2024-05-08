@@ -76,14 +76,14 @@ public class FeedDao {
 		String sql = prop.getProperty("insertFeed");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, f.getCategory());
-			pstmt.setString(2, f.getCompetition());
-			pstmt.setString(3, f.getFeedTitle());
-			pstmt.setString(4, f.getMemberNo());
-			pstmt.setString(5, f.getFeedContent());
+			pstmt.setString(1, f.getFeedTitle());
+			pstmt.setString(2, f.getCategory());
+			pstmt.setString(3, f.getCompetition());
+			pstmt.setInt(4, f.getFeedNo());
+			pstmt.setString(5, f.getMemberNo());
+			pstmt.setString(6, f.getFeedContent());
 			
 			result = pstmt.executeUpdate();
-			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -93,7 +93,7 @@ public class FeedDao {
 		}
 		return result;
 	}
-
+	
 	public int listCount(Connection conn) {
 		ResultSet rset = null;
 		Statement stmt = null;
@@ -170,7 +170,7 @@ public class FeedDao {
 		return feedNo;
 	}
 
-	public int insertAttachment(Connection conn, Attachment at) {
+	public int insertAttachment(Connection conn, Attachment at, int feedNo) {
 		
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -178,10 +178,12 @@ public class FeedDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, at.getRefBno());
+			pstmt.setInt(1, feedNo);
 			pstmt.setString(2, at.getOriginName());
 			pstmt.setString(3, at.getChangeName());
 			pstmt.setString(4, at.getFilePath());
+			
+			System.out.println(at.getRefBno());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -191,6 +193,89 @@ public class FeedDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
+	}
+
+	public int increaseCount(Connection conn, int fno) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("increaseCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, fno);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Feed selectFeed(Connection conn, int fno) {
+		
+		Feed f = null;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectFeed");
+		
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, fno);
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					f = new Feed(rset.getString("FEED_TITLE")
+								,rset.getInt("FEED_NO")
+								,rset.getString("FEED_CONTENT")
+								,rset.getString("CATEGORY_NAME")
+								,rset.getString("MEMBER_ID")
+								,rset.getString("COMPETITION_NAME")
+								,rset.getDate("CREATE_DATE"));
+				}
+	
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+		return f;
+	}
+
+	public Attachment selectAttachment(Connection conn, int fno) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		Attachment at = null;
+		String sql = prop.getProperty("selectAttachment");
+		
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, fno);
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					at = new Attachment(rset.getInt("FILE_NO")
+									    ,rset.getString("ORIGIN_NAME")
+									    ,rset.getString("CHANGE_NAME")
+									    ,rset.getString("FILE_PATH"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			
+		return at;
 	}
 
 

@@ -112,6 +112,7 @@
 			<p>대회참여인증 페이지입니다.</p>
 		</div>
 		<form action="/gbange/insert.fe" method="post" id="enroll-form" enctype="multipart/form-data">
+		<input type="hidden" value="${loginUser.memberNo}" name="memberNo">
 			<div class="board_write_wrap">
 				<div class="board_write">
 					<div class="title">

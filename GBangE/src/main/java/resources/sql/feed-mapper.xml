@@ -20,7 +20,7 @@
 
 <entry key = "insertFeed">
 	INSERT INTO FEED(FEED_NO,CATEGORY_NO,COMPETITION_NO,FEED_TITLE,MEMBER_NO,FEED_CONTENT,BOARD_ID)
-     VALUES(SEQ_FNO.NEXTVAL,?,?,?,?,?,4)
+     VALUES(?,?,?,?,?,?,4)
 </entry>
 <entry key="listCount">
 		SELECT COUNT(*) COUNT
@@ -45,11 +45,43 @@ INSERT INTO ATTACHMENT (FILE_NO
                         ,ORIGIN_NAME
                         ,CHANGE_NAME
                         ,FILE_PATH)
-            VALUES(SEQ_FNO.NEXTVAL
+            VALUES(SEQ_ATT.NEXTVAL
                     ,?
                     ,?
                     ,?
                     ,?)
+</entry>
+
+<entry key="increaseCount">
+	UPDATE FEED
+	SET COUNT = COUNT +1
+	WHERE FEED_NO = ?
+	AND STATUS = 'Y'
+</entry>
+
+<entry key="selectFeed">
+SELECT FEED_TITLE
+       ,FEED_NO
+       ,FEED_CONTENT
+       ,CATEGORY_NAME
+       ,MEMBER_ID
+       ,COMPETITION_NAME
+       ,CREATE_DATE
+       FROM FEED F
+       JOIN CATEGORY USING(CATEGORY_NO)
+       JOIN MEMBER M USING (MEMBER_NO)
+       WHERE FEED_NO = ?
+       AND F.STATUS = 'Y'
+</entry>
+
+<entry key="selectAttachment">
+	SELECT FILE_NO
+      		 ,ORIGIN_NAME
+       		 ,CHANGE_NAME
+       	     ,FILE_PATH
+	FROM ATTACHMENT
+	WHERE REF_BNO = ?
+	AND STATUS = 'Y'
 </entry>
 
 </properties>
