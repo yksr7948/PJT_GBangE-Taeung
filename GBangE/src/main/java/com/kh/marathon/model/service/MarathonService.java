@@ -164,4 +164,10 @@ public class MarathonService {
 		JDBCTemplate.close(conn);
 		return MarathonArr;
 	}
+	public String selectMarathonRegionName(int marathonNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		String regionName = new MarathonDao().selectMarathonRegionName(conn,marathonNo);
+		JDBCTemplate.close(conn);
+		return regionName;
+	}
 }
