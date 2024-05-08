@@ -69,4 +69,18 @@ AND T.STATUS = 'Y'
 SELECT FILE_NO,FILE_NAME,FILE_RENAME,FILE_PATH
 FROM ATTACHMENT WHERE REF_BNO = ?
 </entry>
+
+<entry key="updateTraining">
+UPDATE TRAINING SET TRAINING_TITLE = ? 
+					,TRAINING_KEY = ?
+					,TRAINING_DATE = ?
+					,TRAINING_PLACE = ?
+					,TRAINING_TIME = ?
+					,TRAINING_GOAL = ?
+					,TRAINING_DISTANCE = ?
+					,WEIGHT = ?
+					,TRAINING_CONTENT = ?
+					,OCSTATUS = ?
+WHERE TRAINING_NO = ?
+</entry>
 </properties>

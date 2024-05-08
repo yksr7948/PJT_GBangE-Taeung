@@ -104,7 +104,7 @@ public class TrainingInsertController extends HttpServlet {
 			HttpSession session = request.getSession();
 			if (result > 0) {
 				session.setAttribute("alertMsg", "게시글 작성 성공");
-				request.getRequestDispatcher("views/training//gbange/detail.tr?tno="+t.getTrainingNo()).forward(request, response);
+				request.getRequestDispatcher("views/training/gbange/detail.tr?tno="+t.getTrainingNo()).forward(request, response);
 			} else {
 //				if(at!=null) {
 //					게시글 작성 실패시 파일 삭제하는 기능 구현

@@ -27,6 +27,7 @@
 
 .board_write {
 	border-top: 2px solid #000;
+/* 	border-bottom: 2px solid #000; */
 }
 
 .board_write .title, .board_write .info {
@@ -44,9 +45,8 @@
 	border-bottom: 1px solid #000;
 }
 
-.board_write .cont {
-	border-bottom: 2px solid #000;
-}
+/* .board_write .cont {
+} */
 
 /*textarea*/
 .board_write .cont textarea {
@@ -158,6 +158,12 @@ label {
 	font-size: 1.4rem;
 	text-decoration: none;
 }
+.cont{
+	width: 920px;
+	float: left;
+}
+
+
 </style>
 </head>
 <body>
@@ -169,6 +175,7 @@ label {
 		</div>
 		<form action="/gbange/update.tr" method="post" id="training-area" enctype="multipart/form-data">
 			<!-- <input type="hidden" name="memberNo" value=""> 나중에 로그인 기능 구현되면 가져올 것 -->
+			<input type="hidden" name="trainingNo" value="${training.trainingNo}">
 			<div class="board_write_wrap">
 				<div class="board_write">
 					<div class="title">
@@ -188,7 +195,7 @@ label {
 								<th>훈련종류</th>
 								<td><select name="category">
 										<c:forEach items="${tCList}" var="tc">
-											<option value="${tc.trainingKey }">${tc.trainingName }</option>
+											<option value="${tc.trainingKey}">${tc.trainingName}</option>
 										</c:forEach>
 								</select></td>
 								<th>착용신발</th>
@@ -198,28 +205,33 @@ label {
 							</tr>
 							<tr>
 								<th>훈련장소</th>
-								<td><input type="text" name="trainingPlace" required></td>
+								<td><input type="text" name="trainingPlace" value="${training.trainingPlace }" required></td>
 								<th>운동거리(km)</th>
 								<td><input type="number" step="0.01" min="1" max="100"
-									name="trainingDistance">km</td>
+									name="trainingDistance" value="${training.trainingDistance }">km</td>
 							</tr>
 							<tr>
 								<th>운동시간</th>
-								<td><input type="number" step="0.1" name="trainingTime"></td>
+								<td><input type="number" step="0.1" name="trainingTime" value="${training.trainingTime }">분</td>
 								<th>평균페이스</th>
 								<td><input type="number" readonly value="">/km</td>
 							</tr>
 							<tr>
 								<th>목표</th>
-								<td><input type="text" name="trainingGoal"></td>
+								<td><input type="text" name="trainingGoal" value="${training.trainingGoal }"></td>
 								<th>현재 체중</th>
 								<td><input type="number" step="0.01" min="20" max="200"
-									name="weight">kg</td>
+									name="weight" value="${training.weight }">kg</td>
 							</tr>
 							<tr>
 								<th>멋진 인증샷</th>
-								<td><label for="uploadImg" class="upload-btn">사진
-										올리기</label><input type="file" name="uploadImg" id="uploadImg"></td>
+								<td>
+								<c:if test="${attachment!=null }">
+								<input type="hidden" name="originFileNo" value="${attachment.fileNo }">
+								<input type="hidden" name="originFileName" value=${attachment.changeName }>
+								</c:if>
+								<label for="uploadImg" class="upload-btn">사진
+										올리기</label><input type="file" name="reUploadImg" id="uploadImg"></td>
 								<th></th>
 								<td></td>
 							</tr>
@@ -232,14 +244,17 @@ label {
 						</table>
 					</div>
 					<div class="cont">
-						<textarea name="trainingContent"
-							placeholder="달릴 때 심박은 어땠나요?&#13;&#10;함께 달리는 사람이 있었나요?&#13;&#10;그냥 달릴 때의 기분, 생각 등을 자유롭게 작성해보세요 :)"></textarea>
+						<textarea name="trainingContent" cols="100" rows="100" style="resize: none;">${training.trainingContent}
+					</textarea>
 					</div>
 				</div>
+					<div class="cont">
+					<img alt="업로드이미지" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="imgArea">
+					</div>
 				<br>
 				<div class="bt_wrap">
 					<button type="submit" class="btn btn-success">등록</button>
-					<button href="" class="btn btn-outline-secondary">취소</button>
+					<button href="${contextPath }/list.tr" class="btn btn-outline-secondary">취소</button>
 				</div>
 			</div>
 		</form>

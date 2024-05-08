@@ -88,4 +88,12 @@ public class TrainingService {
 		return at;
 	}
 
+	public int updateTraining(Training t, Attachment at) {
+		Connection conn = JDBCTemplate.getConnection();
+		int resultTr = new TrainingDao().updateTraining(conn,t);
+		System.out.println(resultTr);
+//		int resultAt = new TrainingDao().updateAttachment(conn,at);
+		return 0;
+	}
+
 }
