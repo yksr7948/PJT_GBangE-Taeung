@@ -17,7 +17,7 @@
             '<i class="bi bi-arrow-left"></i>',
             '<i class="bi bi-arrow-right"></i>'
         ],
-        responsiveClass: true,
+        responsiveClass: true,        
         responsive: {
             items:3,
             autoplayHoverPause:false,

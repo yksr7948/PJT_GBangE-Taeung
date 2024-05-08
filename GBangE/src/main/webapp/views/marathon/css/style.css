@@ -144,7 +144,7 @@
     margin: 0 auto;
     
 }
-.searchArea > a{
+.searchArea > span{
 	box-sizing: border-box;
 	position:absolute;
 	margin: auto;

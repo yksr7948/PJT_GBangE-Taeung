@@ -10,18 +10,18 @@
 <%@include file="/views/common/menubar.jsp"%>
 <div class="container-fluid packages py-5">
 
-<!-- 	<div class="searchArea">			 -->
-<!-- 			<input type="text" name="search" id="search"> -->
-<!-- 			<a href=""> -->
-<!--         	<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16"> -->
-<!--   			<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg> -->
-<!-- 			</a> -->
-<!--         </div> -->
+	<div class="searchArea">			
+			<input type="text" name="searchName" id="searchName">
+			<span onclick="selectSearch();" cursor="pointer";>
+        	<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+  			<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+			</span>
+        </div>
     <div class="container py-5">        
         <div class="packages-carousel owl-carousel" data-packages-carousel-autoplay-status="Y">
             <c:choose>
 				<c:when test="${empty marathonArr }">
-					조회된 게시글이 없습니다.
+					조회된 마라톤이 없습니다.
 					</c:when>
 					<c:otherwise>
 					<c:forEach var="mar" items="${marathonArr}">
@@ -148,6 +148,11 @@ function checkRestore(){
 	if(confirm("복구 페이지로 이동하시겠어요?")){
 		location.href="${contextPath }/restore.ma"
 	}
+}
+function selectSearch(){
+	var searchName = $("#searchName").val()
+	console.log(searchName);
+	location.href="${contextPath }/search.ma?searchName="+searchName;
 }
 </script>
 </html>
