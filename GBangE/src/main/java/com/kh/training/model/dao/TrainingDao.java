@@ -19,13 +19,11 @@ import com.kh.training.model.vo.TrainingCategory;
 public class TrainingDao {
 
 	private Properties prop = new Properties();
-	
-	
-	
+
 	public TrainingDao() {
-		
+
 		String filePath = TrainingDao.class.getResource("/resources/sql/training-mapper.xml").getPath();
-	
+
 		try {
 			prop.loadFromXML(new FileInputStream(filePath));
 		} catch (IOException e) {
@@ -33,8 +31,6 @@ public class TrainingDao {
 			e.printStackTrace();
 		}
 	}
-
-
 
 	public ArrayList<TrainingCategory> selectCategoryList(Connection conn) {
 		ArrayList<TrainingCategory> tCList = new ArrayList<>();
@@ -44,22 +40,17 @@ public class TrainingDao {
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(sql);
-			while(rset.next()) {
-				tCList.add(new TrainingCategory(
-						rset.getInt("TRAINING_KEY")
-						,rset.getString("TRAINING_NAME")
-						));
+			while (rset.next()) {
+				tCList.add(new TrainingCategory(rset.getInt("TRAINING_KEY"), rset.getString("TRAINING_NAME")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(stmt);
 		}
 		return tCList;
 	}
-
-
 
 	public int insertTraining(Connection conn, Training t) {
 		int result = 0;
@@ -98,19 +89,17 @@ public class TrainingDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
 	}
 
-
-
 	public int increaseCount(Connection conn, int tno) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("increaseCount");
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, tno);
@@ -118,66 +107,57 @@ public class TrainingDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
 	}
 
-
-
 	public int listCount(Connection conn) {
 		ResultSet rset = null;
 		Statement stmt = null;
 		String sql = prop.getProperty("listCount");
-		
+
 		int listCount = 0;
-		
+
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(sql);
-			if(rset.next()) {
+			if (rset.next()) {
 				listCount = rset.getInt("COUNT");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(stmt);
 		}
-		
+
 		return listCount;
 	}
 
-
-
 	public ArrayList<Training> selectList(Connection conn, PageInfo pi) {
-		
+
 		ArrayList<Training> list = new ArrayList<>();
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
-		
+
 		String sql = prop.getProperty("selectList");
-		
-		int startRow = (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
-		int endRow = pi.getCurrentPage()*pi.getBoardLimit();
-		
+
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			
+
 			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				list.add(new Training(
-						rset.getInt("TRAINING_NO")
-						,rset.getString("TRAINING_TITLE")
-						,rset.getString("MEMBER_NAME")
-						,rset.getDate("RECORD_DATE")
-						,rset.getInt("COUNT")
-						));
+
+			while (rset.next()) {
+				list.add(new Training(rset.getInt("TRAINING_NO"), rset.getString("TRAINING_TITLE"),
+						rset.getString("MEMBER_NAME"), rset.getDate("RECORD_DATE"), rset.getInt("COUNT")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -186,57 +166,51 @@ public class TrainingDao {
 		return list;
 	}
 
-
-
 	public int selectTrainingNo(Connection conn) {
 		int trainingNo = 0;
 		ResultSet rset = null;
 		Statement stmt = null;
-		
+
 		String sql = prop.getProperty("selectTrainingNo");
-		
+
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(sql);
-			if(rset.next()) {
+			if (rset.next()) {
 				trainingNo = rset.getInt("TNO");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(stmt);
 		}
 		return trainingNo;
 	}
 
-
-
 	public int insertAttachment(Connection conn, Attachment at, int trainingNo) {
-		
+
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertAttachment");
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, trainingNo);
 			pstmt.setString(2, at.getOriginName());
 			pstmt.setString(3, at.getChangeName());
 			pstmt.setString(4, at.getFilePath());
-			
+
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			result = 0;
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
 	}
-
-
 
 	public Training selectTraining(Connection conn, int tno) {
 		ResultSet rset = null;
@@ -247,7 +221,7 @@ public class TrainingDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, tno);
 			rset = pstmt.executeQuery();
-			if(rset.next()) {
+			if (rset.next()) {
 //				TRAINING_NO,
 				t.setTrainingNo(rset.getInt("TRAINING_NO"));
 //				MEMBER_NAME,
@@ -280,14 +254,12 @@ public class TrainingDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
 		}
 		return t;
 	}
-
-
 
 	public Attachment selectAttachment(Connection conn, int tno) {
 		ResultSet rset = null;
@@ -298,22 +270,62 @@ public class TrainingDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, tno);
 			rset = pstmt.executeQuery();
-			while(rset.next()) {
-				at = new Attachment(
-						rset.getInt("FILE_NO")
-						,rset.getString("FILE_NAME")
-						,rset.getString("FILE_RENAME")
-						,rset.getString("FILE_PATH")
-						);
+			while (rset.next()) {
+				at = new Attachment(rset.getInt("FILE_NO"), rset.getString("FILE_NAME"), rset.getString("FILE_RENAME"),
+						rset.getString("FILE_PATH"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
 		}
 		return at;
 	}
+
+	public int updateTraining(Connection conn, Training t) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateTraining");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, t.getTrainingTitle());
+			pstmt.setString(2, t.getTrainingKey());
+			pstmt.setString(3, t.getTrainingDate());
+			pstmt.setString(4, t.getTrainingPlace());
+			pstmt.setDouble(5, t.getTrainingTime());
+			pstmt.setString(6, t.getTrainingGoal());
+			pstmt.setDouble(7, t.getTrainingDistance());
+			pstmt.setDouble(8, t.getWeight());
+			pstmt.setString(9, t.getTrainingContent());
+			pstmt.setString(10, t.getoCStatus());
+			pstmt.setInt(11, t.getTrainingNo());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateAttachment(Connection conn, Attachment at) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateAttachment");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, at.getOriginName());
+			pstmt.setString(2, at.getChangeName());
+			pstmt.setInt(3, at.getFileNo());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
 
 }

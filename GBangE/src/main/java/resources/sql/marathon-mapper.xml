@@ -87,4 +87,9 @@ FROM MARATHON_INFO
 WHERE STATUS='N'
 ORDER BY MARATHON_NO
 </entry>
+<entry key="selectMarathonRegionName">
+SELECT REGION
+FROM MARATHON_INFO
+WHERE MARATHON_NO = ?
+</entry>
 </properties>

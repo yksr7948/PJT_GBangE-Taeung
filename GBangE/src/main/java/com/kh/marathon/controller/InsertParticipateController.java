@@ -1,11 +1,17 @@
 package com.kh.marathon.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.kh.marathon.model.service.MarathonService;
+import com.kh.marathon.model.service.ParticipateService;
+import com.kh.marathon.model.service.RegionService;
+import com.kh.marathon.model.vo.Participate;
 
 /**
  * Servlet implementation class InsertParticipateController
@@ -37,8 +43,43 @@ public class InsertParticipateController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("utf-8");
+		int memberNo=Integer.parseInt(request.getParameter("memberNo"));
+		
+		int marathonNo = Integer.parseInt(request.getParameter("marathonNo"));
+		String regionName = new MarathonService().selectMarathonRegionName(marathonNo);
+		int regionId = new RegionService().selectRegionId(regionName);
+		
+		String Name = request.getParameter("participateName");
+		String Pwd = request.getParameter("participatePwd");
+		String registerationNo = request.getParameter("registerationNo");
+		String gender = request.getParameter("gender");
+		String participatePhone = request.getParameter("participatePhone");
+		
+		String sample6_postcode = request.getParameter("sample6_postcode");
+		String sample6_address = request.getParameter("sample6_address");
+		String sample6_detailAddress = request.getParameter("sample6_detailAddress");
+		String sample6_extraAddress = request.getParameter("sample6_extraAddress");
+		String address = sample6_postcode+sample6_address+sample6_detailAddress+sample6_extraAddress;
+		
+		Participate p = new Participate();
+		p.setMemberNo(memberNo);
+		p.setMarathonNo(marathonNo);
+		p.setRegionId(regionId);		
+		p.setName(Name);
+		p.setPassword(Pwd);
+		p.setRegisterationNo(registerationNo);
+		p.setGender(gender);
+		p.setPhone(participatePhone);
+		p.setAddress(address);
+		
+		int result = new ParticipateService().insertParticipate(p);
+		if(result>0) {
+			request.getSession().setAttribute("alertMsg", "신청 성공");				
+		}else {
+			request.getSession().setAttribute("alertMsg", "신청 실패");
+		}
+		response.sendRedirect(request.getContextPath()+"/list.ma");
 	}
 
 }
