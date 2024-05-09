@@ -157,7 +157,7 @@ label {
 			<p>러닝일지 페이지입니다.</p>
 		</div>
 		<form action="/gbange/insert.tr" method="post" id="training-area" enctype="multipart/form-data">
-			<!-- <input type="hidden" name="memberNo" value=""> 나중에 로그인 기능 구현되면 가져올 것 -->
+			<input type="hidden" name="memberNo" value="${loginUser.memberNo}">
 			<div class="board_write_wrap">
 				<div class="board_write">
 					<div class="title">
@@ -195,7 +195,7 @@ label {
 							</tr>
 							<tr>
 								<th>운동시간</th>
-								<td><input type="number" step="0.1" name="trainingTime"></td>
+								<td><input type="number" step="0.1" name="trainingTime">분</td>
 								<th>평균페이스</th>
 								<td><input type="number" readonly value="">/km</td>
 							</tr>
