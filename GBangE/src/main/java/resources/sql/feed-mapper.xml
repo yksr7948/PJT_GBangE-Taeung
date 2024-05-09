@@ -60,16 +60,18 @@ INSERT INTO ATTACHMENT (FILE_NO
 </entry>
 
 <entry key="selectFeed">
-SELECT FEED_TITLE
-       ,FEED_NO
+SELECT FEED_NO
+       ,FEED_TITLE
        ,FEED_CONTENT
        ,CATEGORY_NAME
        ,MEMBER_ID
-       ,COMPETITION_NAME
+       ,MARATHON_NAME
+       ,COUNT
        ,CREATE_DATE
        FROM FEED F
        JOIN CATEGORY USING(CATEGORY_NO)
        JOIN MEMBER M USING (MEMBER_NO)
+       JOIN MARATHON_INFO ON(MARATHON_NO = COMPETITION_NO)
        WHERE FEED_NO = ?
        AND F.STATUS = 'Y'
 </entry>
@@ -82,6 +84,31 @@ SELECT FEED_TITLE
 	FROM ATTACHMENT
 	WHERE REF_BNO = ?
 	AND STATUS = 'Y'
+</entry>
+
+<entry key="insertReply">
+INSERT INTO REPLY(REPLY_NO
+				,REPLY_CONTENT
+				,REF_BNO
+				,MEMBER_NO
+				,CREATE_DATE)
+        VALUES (SEQ_REP.NEXTVAL
+        ,?
+        ,?
+        ,?
+        ,SYSDATE)
+
+</entry>
+
+<entry key="replyList">
+    SELECT REPLY_NO
+       ,REPLY_CONTENT
+       ,MEMBER_ID
+       ,CREATE_DATE
+	FROM REPLY R
+	JOIN MEMBER M USING (MEMBER_NO)
+	WHERE R.STATUS = 'Y'
+	AND REF_BNO = ?
 </entry>
 
 </properties>

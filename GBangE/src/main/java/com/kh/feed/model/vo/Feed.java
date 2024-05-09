@@ -41,16 +41,17 @@ public class Feed {
 		this.count = count;
 		this.createDate = createDate;
 	}
-	
-	public Feed(String memberNo, int feedNo, String category, String competition, String feedTitle, String feedContent,
-			Date createDate) {
+
+	public Feed(int feedNo, String feedTitle, String feedContent, String category, String memberNo, String competition,
+			int count, Date createDate) {
 		super();
-		this.memberNo = memberNo;
 		this.feedNo = feedNo;
-		this.category = category;
-		this.competition = competition;
 		this.feedTitle = feedTitle;
 		this.feedContent = feedContent;
+		this.category = category;
+		this.memberNo = memberNo;
+		this.competition = competition;
+		this.count = count;
 		this.createDate = createDate;
 	}
 	public int getFeedNo() {

@@ -84,15 +84,12 @@
 }
 
 .info #ca{
-	margin-left : 1070px;
-	left : 40px;	
-	
+	margin-left : 270px;
+	left : 0px;	
+
 }
 
-.info #com{
-	left : 40px;	
-	
-}
+
 
 .board_view .info dl dd {
 	margin-left: 10px;
@@ -115,6 +112,7 @@
 </head>
 <body>
 <%@include file="/views/common/menubar.jsp"%>
+	<div class="board">
 	  <div class="board_wrap">
         <div class="board_title">
             <h1>대회인증참여 게시판</h1>
@@ -123,7 +121,7 @@
         
         <div class="board_view_wrap">
             <div class="board_view">
-                <div class="title">${f.memberNo}</div>
+                <div class="title">${f.feedTitle}</div>
                 <div class="info">
                     <dl>
                         <dt>번호</dt>
@@ -131,7 +129,7 @@
                     </dl>
                     <dl>
                         <dt>글쓴이</dt>
-                        <dd>${f.feedTitle}</dd>
+                        <dd>${f.memberNo}</dd>
                     </dl>
                     <dl>
                         <dt>작성일</dt>
@@ -143,27 +141,113 @@
                     </dl>
                     <dl id="ca">
                     	<dt>카테고리</dt>
-                    	<dd>${c.categoryNo}</dd>
+                    	<dd>${f.category}</dd>
                     </dl>
                      <dl id="com">
                     	<dt>참여한대회</dt>
-                    	<dd>${mar.marathonName}</dd>
+                    	<dd>${f.competition}</dd>
                     </dl>
-                </div>
- 				
+                </div>        
+                
+                  
  				
                 <div class="cont">
                     ${f.feedContent}
-                    <img alt="업로드이미지" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile">
+                    <img alt="업로드이미지" src="${contextPath}${at.filePath}${at.changeName}" id="uploadFile">
+               
                 </div>
             </div>
-            <br>
+            <br><br>
             <div class="bt_wrap">
                 <a href="" class="btn btn-outline-secondary" onclick="goToFeedListView()">목록</a>
                 <a href="#" class="btn btn-success">수정</a>
             </div>
+     		<br><br>
+            <div id="reply-area" align="center">
+            	<table border="1">
+            	<thead>
+            		<tr>
+            			<th>댓글작성</th>
+            			<td>
+            				<textarea id="replyContent" rows="3" cols="225" style="resize:none;"></textarea>
+            			</td>
+            			<td><button class="btn btn-success" onclick="insertReply();">등록</button></td>
+            		</tr>
+            	</thead>
+            	<tbody>
+            		<tr>
+            			<td>작성자</td>
+            			<td>내용</td>
+            			<td>작성일</td>
+            		</tr>
+            	</tbody>
+            </table>
+            <br>
+            </div>
         </div>
     </div>
+    </div>
+    	
+    
+    <script>
+  
+    	function insertReply(){
+    	
+    		$.ajax({
+    			url : "insertReply.fe",
+    			type : "post",
+    			data : {
+    				content : $("#replyContent").val(),
+    				fno : ${f.feedNo},
+    				memberNo : "${loginUser.memberNo}"
+    			},
+    			success : function(result){
+    			console.log(result);
+    			
+    				console.log(result);
+    				if(result>0){
+    					alert("댓글 작성 성공");
+    					$("#replyContent").val("");
+    					replyList();
+    				}else{
+    					alert("댓글 작성 실패");
+    				}
+    			},
+    			error : function(){
+    				console.log("통신 실패");
+    			}
+    		});
+    	}
+    	
+    	function replyList(){
+    		
+    		$.ajax({
+    			url : "replyList.fe",
+    			data : {
+    			fno : ${f.feedNo},
+    			},
+    			success : function(list){
+    				
+    				var tr = "";
+    				for(var i in list){
+    					tr +="<tr>"
+    					   +"<td>"+list[i].memberNo+"</td>"
+    					   +"<td>"+list[i].replyContent +"</td>"
+    					   +"<td>"+list[i].createDate+"</td>"
+    					   +"</tr>";
+    				}
+    				$("#reply-area tbody").html(tr);
+    			},
+    			error : function(){
+    				console.log("통신오류");
+    			}
+    		});
+    	}
+    	
+    	$(function(){
+    		replyList(); //댓글목록 조회
+    	});
+    </script>
     
    <script>
     function goToFeedListView() {

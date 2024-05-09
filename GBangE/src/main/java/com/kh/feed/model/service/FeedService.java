@@ -9,6 +9,7 @@ import com.kh.feed.model.dao.FeedDao;
 import com.kh.feed.model.vo.Attachment;
 import com.kh.feed.model.vo.Category;
 import com.kh.feed.model.vo.Feed;
+import com.kh.feed.model.vo.Reply;
 
 
 
@@ -104,6 +105,30 @@ public class FeedService {
 		
 		return at;
 	}
+
+	public int insertReply(Reply r) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new FeedDao().insertReply(conn,r);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public ArrayList<Reply> replyList(int refBno) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		ArrayList<Reply> list = new FeedDao().replyList(conn, refBno);
+		
+		JDBCTemplate.close(conn);
+		return list;
+	}
+
+
 
 
 }

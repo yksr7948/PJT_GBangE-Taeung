@@ -15,6 +15,7 @@ import com.kh.common.model.vo.PageInfo;
 import com.kh.feed.model.vo.Attachment;
 import com.kh.feed.model.vo.Category;
 import com.kh.feed.model.vo.Feed;
+import com.kh.feed.model.vo.Reply;
 
 
 
@@ -76,10 +77,10 @@ public class FeedDao {
 		String sql = prop.getProperty("insertFeed");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, f.getFeedTitle());
+			pstmt.setInt(1, f.getFeedNo());
 			pstmt.setString(2, f.getCategory());
 			pstmt.setString(3, f.getCompetition());
-			pstmt.setInt(4, f.getFeedNo());
+			pstmt.setString(4, f.getFeedTitle());
 			pstmt.setString(5, f.getMemberNo());
 			pstmt.setString(6, f.getFeedContent());
 			
@@ -230,12 +231,13 @@ public class FeedDao {
 				rset = pstmt.executeQuery();
 				
 				if(rset.next()) {
-					f = new Feed(rset.getString("FEED_TITLE")
-								,rset.getInt("FEED_NO")
+					f = new Feed(rset.getInt("FEED_NO")
+								,rset.getString("FEED_TITLE")
 								,rset.getString("FEED_CONTENT")
 								,rset.getString("CATEGORY_NAME")
 								,rset.getString("MEMBER_ID")
-								,rset.getString("COMPETITION_NAME")
+								,rset.getString("MARATHON_NAME")
+								,rset.getInt("COUNT")
 								,rset.getDate("CREATE_DATE"));
 				}
 	
@@ -276,6 +278,58 @@ public class FeedDao {
 			}
 			
 		return at;
+	}
+
+	public int insertReply(Connection conn, Reply r) {
+		System.out.println(r);
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertReply");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, r.getReplyContent());
+			pstmt.setInt(2, r.getRefBno());
+			pstmt.setString(3, r.getMemberNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public ArrayList<Reply> replyList(Connection conn, int refBno) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		ArrayList<Reply> list = new ArrayList<>();
+		
+		String sql = prop.getProperty("replyList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, refBno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Reply(rset.getInt("REPLY_NO")
+								  ,rset.getString("REPLY_CONTENT")
+								  ,rset.getString("MEMBER_ID")
+								  ,rset.getDate("CREATE_DATE")));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
 	}
 
 
