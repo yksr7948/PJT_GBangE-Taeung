@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="insertQuestion">
+INSERT INTO QUESTION (QUESTION_ID,MEMBER_NO,QUESTION_TITLE,QUESTION_CONTENT,CREATE_DATE,STATUS)
+VALUES(SEQ_QNO.NEXTVAL,?,?,?,SYSDATE,'Y')
+</entry>
+<entry key="selectQuestion">
+SELECT QUESTION_ID,MEMBER_NAME,QUESTION_TITLE,QUESTION_CONTENT,CREATE_DATE
+FROM QUESTION q
+JOIN MEMBER USING(MEMBER_NO)
+WHERE q.STATUS = 'Y'
+ORDER BY CREATE_DATE DESC
+</entry>
+</properties>
