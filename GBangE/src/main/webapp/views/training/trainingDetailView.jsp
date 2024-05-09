@@ -159,10 +159,18 @@ float: right;
 			</div>
 			<br>
 			<div class="bt_wrap">
-				<a href="" class="btn btn-outline-secondary">목록</a>
-				<a href="${contextPath}/update.tr?tno=${training.trainingNo}" class="btn btn-success">수정</a>
+				<a href="${contextPath}/list.tr?currentPage=1" class="btn btn-outline-secondary">목록</a>
+				<a href="${contextPath}/update.tr?tno=${training.trainingNo}" class="btn btn-info">수정</a>
+				<button class="btn btn-secondary" id="deleteTr">삭제</button>
 			</div>
 		</div>
 	</div>
+	<script>
+		$("#deleteTr").click(function() {
+			if(confirm("정말 삭제하시겠습니까?")){
+				location.href="${contextPath}/delete.tr?tno=${training.trainingNo}";
+			}
+		});
+	</script>
 </body>
 </html>

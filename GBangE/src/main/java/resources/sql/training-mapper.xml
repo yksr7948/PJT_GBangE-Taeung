@@ -89,4 +89,9 @@ UPDATE ATTACHMENT SET FILE_NAME = ?
                     ,FILE_RENAME = ?
 WHERE FILE_NO = ?
 </entry>
+
+<entry key="deleteTraining">
+UPDATE TRAINING SET STATUS = 'N'
+WHERE TRAINING_NO = ?
+</entry>
 </properties>

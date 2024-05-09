@@ -327,5 +327,21 @@ public class TrainingDao {
 		return result;
 	}
 
+	public int deleteTraining(Connection conn, int tno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteTraining");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tno);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
 
 }

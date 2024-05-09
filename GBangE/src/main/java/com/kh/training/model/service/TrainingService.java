@@ -92,7 +92,6 @@ public class TrainingService {
 
 	public int updateTraining(Training t, Attachment at) {
 		Connection conn = JDBCTemplate.getConnection();
-		System.out.println("서비스로 넘어온 첨부파일"+at);
 		int resultTr = new TrainingDao().updateTraining(conn, t);
 
 		int resultAt = 1;
@@ -113,6 +112,18 @@ public class TrainingService {
 		JDBCTemplate.close(conn);
 
 		return resultTr * resultAt;
+	}
+
+	public int deleteTraining(int tno) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new TrainingDao().deleteTraining(conn,tno);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
 	}
 
 }
