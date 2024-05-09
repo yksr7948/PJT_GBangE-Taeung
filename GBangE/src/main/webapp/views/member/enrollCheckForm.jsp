@@ -33,8 +33,6 @@
     border-radius: 20px;
     }
     .header {
-    font-weight: 700;
-    font-size: 32px;
     line-height: 47px;
     color: #0068ff;
     }
@@ -83,7 +81,7 @@
 	
     <div class="enroll-form">
         <div class="header" align="center">
-            <h1>회원가입</h1>
+            <h1 style="font-size:60px; font-weight:700">회원가입</h1>
         </div>
       <br><br><br><br><br>
       
@@ -91,7 +89,7 @@
       <label for="check-all"><font style="font-size: 20px;"><u>전체 동의하기</u></font></label>
       
       <br><br><br><br>
-      <h2>서비스 이용약관</h2>
+      <h2 style="font-weight:700">서비스 이용약관</h2>
       <br>
       <p class="agree">
       제 1 장 총칙
@@ -122,7 +120,7 @@
 
       <br><br><br><br>
       
-      <h2>개인정보 처리 방침안내</h2>
+      <h2 style="font-weight:700">개인정보 처리 방침안내</h2>
       <br>
       <p class="agree">
       1. 개인정보의 수집항목 및 수집방법 
@@ -206,7 +204,7 @@
       //회원가입 버튼 활성화
       $(".check").click(function(){
       if($("#check-all").prop('checked') == true){
-        $("#enroll-btn").css({"backgroundColor":"#aacdff","cursor":"pointer","color":"#000"}).prop("disabled",false);
+        $("#enroll-btn").css({"backgroundColor":"#fff","cursor":"pointer","color":"#000", "border":"1px solid #aacdff"}).prop("disabled",false);
       }else{
         $("#enroll-btn").css({"backgroundColor":"#8990a0","cursor":"auto","color":"#ffffff"}).prop("disabled",true);
       }

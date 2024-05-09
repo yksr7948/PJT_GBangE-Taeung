@@ -46,5 +46,16 @@ public class MemberService {
 		return flag;
 	}
 
+	public Member findId(String userName, String userPno) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		
+		Member m =new MemberDao().findId(conn,userName,userPno);
+		
+		JDBCTemplate.close(conn);
+		
+		return m;
+	}
+
 	
 }

@@ -48,6 +48,12 @@ public class Member {
 		this.weight = weight;
 	}
 
+	public Member(String memberId, String memberPno) {
+		super();
+		this.memberId = memberId;
+		this.memberPno = memberPno;
+	}
+
 	public int getMemberNo() {
 		return memberNo;
 	}

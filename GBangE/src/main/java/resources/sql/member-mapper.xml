@@ -34,4 +34,10 @@
 	FROM MEMBER 
 	WHERE MEMBER_ID = ?
 	</entry>
+	
+	<entry key="findId">
+	SELECT MEMBER_ID, MEMBER_PNO
+	FROM MEMBER
+	WHERE MEMBER_NAME = ? AND MEMBER_PNO = ?
+	</entry>
 </properties>
