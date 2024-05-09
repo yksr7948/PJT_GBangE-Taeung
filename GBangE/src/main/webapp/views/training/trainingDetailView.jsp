@@ -211,22 +211,26 @@
 					<!-- 댓글 하나 -->
 					<hr>
 					<dl>
-						<dt>서유르맘</dt>
-						<dd>감사합니다 덕분에 사고 싶던 르네상스 샀어요~^^</dd>
+						<dt>러닝맨</dt>
+						<dd>러닝 정말 너무 재밌어요!</dd>
 						<dd>2024.04.17</dd>
 					</dl>
 					<!-- 댓글 하나 -->
 					<hr>
 					<dl>
 						<dt>태양네</dt>
-						<dd>덕분에 질렀습니다. 감사합니다.</dd>
+						<dd>온 가족 함께 공원에서 뛰었습니다. 가족 러닝 강추!</dd>
 						<dd>2024.04.17</dd>
 					</dl>
 				</div>
 			</div>
 			<div class="comment-area">
-				<c:if test="${not empty loginUser}">
-
+				<c:if test="${empty loginUser}">
+				<div class="comment-write">
+					<textarea name="" id="" cols="200" rows="1" style="resize: none;"
+						placeholder="로그인 후 댓글입력이 가능합니다 :&#41;"></textarea>
+				</div>
+				</c:if>
 					<div class="comment-write">
 						<b id="memberName">${loginUser.memberName }</b>
 						<textarea name="comment" id="comment" cols="200" rows="1"
@@ -235,11 +239,6 @@
 					<div class="comment-btn right">
 						<button class="btn btn-outline-info" id="comment-btn">등록</button>
 					</div>
-				</c:if>
-				<div class="comment-write">
-					<textarea name="" id="" cols="200" rows="1" style="resize: none;"
-						placeholder="로그인 후 댓글입력이 가능합니다 :&#41;"></textarea>
-				</div>
 			</div>
 
 		</div>
