@@ -7,17 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+
+import com.kh.qna.model.service.QnAService;
+
 /**
- * Servlet implementation class InsertQnAController
+ * Servlet implementation class ListQuestionController
  */
-@WebServlet("/InsertQnAController")
-public class InsertQnAController extends HttpServlet {
+@WebServlet("/list.qu")
+public class ListQuestionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertQnAController() {
+    public ListQuestionController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,8 +30,9 @@ public class InsertQnAController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		JSONArray questionArr = new QnAService().selectQuestion();
+		request.setAttribute("questionArr",questionArr);
+		request.getRequestDispatcher("views/QnA/listQuestion.jsp").forward(request, response);
 	}
 
 	/**
