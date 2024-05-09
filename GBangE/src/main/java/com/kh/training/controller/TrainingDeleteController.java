@@ -6,6 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.kh.training.model.service.TrainingService;
 
 /**
  * Servlet implementation class TrainingDeleteController
@@ -26,8 +29,19 @@ public class TrainingDeleteController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		int tno = Integer.parseInt(request.getParameter("tno"));
+		int result = new TrainingService().deleteTraining(tno);
+		
+		HttpSession session = request.getSession();
+		if(result>0) {
+			session.setAttribute("alertMsg", "일지가 삭제되었습니다");
+			request.getRequestDispatcher("/list.tr?currentPage=1").forward(request, response);
+
+		}else {
+			session.setAttribute("alertMsg", "일지 삭제 실패ㅠㅠ");
+			response.sendRedirect(request.getHeader("referer"));
+		}
 	}
 
 	/**
