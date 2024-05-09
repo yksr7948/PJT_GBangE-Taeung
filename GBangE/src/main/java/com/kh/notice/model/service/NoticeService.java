@@ -109,6 +109,49 @@ public class NoticeService {
 		
 		return at;
 	}
+	//게시글 수정
+	public int updateNotice(Notice notice, Attachment at) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		 
+		int result = new NoticeDao().updateNotice(conn,notice);
+		
+		int result2 = 1; 
+	
+		if(at!=null) {
+			
+			if(at.getFileNo()!=0) {  
+				result2 = new NoticeDao().updateAttachment(conn,at);
+			}else { 
+				result2 = new NoticeDao().insertAttachment(conn, at);
+			}
+		}
+		if(result*result2>0) { 
+			JDBCTemplate.commit(conn);
+		}else { 
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		
+		return result*result2;
+	}
+	public int deleteNotice(int noticeId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new NoticeDao().deleteNotice(conn,noticeId);
+		//DML (UPDATE/DELETE) 구문이니 트랜잭션 처리
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		
+		return result;
+		
+		
+	}
 	
 	
 	
