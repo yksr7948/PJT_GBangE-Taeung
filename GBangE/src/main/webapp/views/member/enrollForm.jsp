@@ -17,7 +17,7 @@
 	flex-direction: column;
 	align-items: center;
 	width: 670px;
-	height: 1750px;
+	height: 1800px;
 	margin: auto;
 	margin-top: 60px;
 	margin-bottom: 60px;
@@ -196,58 +196,58 @@
 		<div id="container">
 			<div class="member-container">
 				<div id="header" align="center">
-					<h1>회원가입</h1>
+					<h1 style="font-size:60px; font-weight:700">회원가입</h1>
 				</div>
 				<div class="user-info">
 
 					<div class="user-info-id">
-						<div>* 아이디</div>
+						<div style="font-weight:700">* 아이디</div>
 						<input type="text" name="userId" id="userId" />
-						<button type="button" onclick="idCheck();">중복확인</button>
+						<button type="button" onclick="idCheck();" style="font-size:12px;">중복확인</button>
 					</div>
-					<div id="hidden-idArea" style="display: none;"></div>
+					<div id="hidden-idArea" style="display: none; margin-top:10px;"></div>
 
 					<div class="user-info-name">
-						<div>* 이름</div>
+						<div style="font-weight:700">* 이름</div>
 						<input type="text" name="userName" id="userName" />
 					</div>
-					<div id="hidden-nameArea" style="display: none;"></div>
+					<div id="hidden-nameArea" style="display: none; margin-top:10px;"></div>
 
 					<div class="user-info-pw">
-						<div>* 비밀번호</div>
+						<div style="font-weight:700">* 비밀번호</div>
 						<input type="password" name="userPwd" id="userPwd" />
 					</div>
-					<div id="hidden-pwdArea" style="display: none;"></div>
+					<div id="hidden-pwdArea" style="display: none; margin-top:10px;"></div>
 
 					<div class="user-info-pw-check">
-						<div>* 비밀번호 확인</div>
+						<div style="font-weight:700">* 비밀번호 확인</div>
 						<input type="password" id="checkPwd" />
 					</div>
-					<div id="hidden-checkPwdArea" style="display: none;"></div>
+					<div id="hidden-checkPwdArea" style="display: none; margin-top:10px;"></div>
 
 					<div class="user-info-pno">
-						<div>* 주민등록번호</div>
+						<div style="font-weight:700">* 주민등록번호</div>
 						<input type="text" name="userPno1" id="userPno1" /> 
 						<font style="font-size: 30px">-</font> 
 						<input type="text"name="userPno2" id="userPno2" />
 					</div>
-					<div id="hidden-pnoArea" style="display: none;"></div>
+					<div id="hidden-pnoArea" style="display: none; margin-top:10px;"></div>
 					
 					<div class="user-info-address">
-						<div>*주소</div>
+						<div style="font-weight:700">*주소</div>
 						<input type="text" id="sample6_postcode" placeholder="우편번호">
-						<button type="button" onclick="sample6_execDaumPostcode()">우편번호 찾기</button><br> 
+						<button type="button" onclick="sample6_execDaumPostcode()" style="font-size:12px;">우편번호 찾기</button><br> 
 					</div>
 						<input type="text" id="sample6_address" name="address" placeholder="주소"><br> 
 						<input type="text" id="sample6_detailAddress" name="address_dt" placeholder="상세주소">
 						<input type="text" id="sample6_extraAddress" placeholder="참고항목">
 
 					<div class="user-info-weight">
-						<div>몸무게 (소수점 2자리)</div>
+						<div style="font-weight:700">몸무게 (소수점 2자리)</div>
 						<input type="number" step="0.01" name="weight" id="weight" value=0.0>
 					</div>
 
-					<div class="user-info-shoes">
+					<div class="user-info-shoes" style="font-weight:700">
 						러닝화 <select name="shoes">
 							<option value="기타">기타</option>
 							<option value="맨발">맨발</option>
@@ -261,10 +261,10 @@
 					
 				<div class="gender">			
 					<input type="radio" name="gender" id="women" value="W" />
-					<label for="women">여성</label> 
+					<label for="women" style="font-weight:700">여성</label> 
 					
 					<input type="radio" name="gender" id="men"value="M" />
-					<label for="men">남성</label>
+					<label for="men" style="font-weight:700">남성</label>
 				</div>
 				<div class="btn">
 					<button type="submit" id="enroll-btn" onclick="return enroll();"
@@ -426,7 +426,7 @@
 				pno1.focus();
 				return false;
 			} else if (!regPno.test(pno2.val())) {
-				$("#hidden-pnoArea").html("*주민등록번호을 잘못입력했습니다.").show();
+				$("#hidden-pnoArea").html("*주민등록번호를 잘못입력했습니다.").show();
 				$("#hidden-pnoArea").css({
 					"color" : "red"
 				});
@@ -499,11 +499,10 @@
 						$("#hidden-idArea").css({
 							"color" : "green"
 						});
-						$("#enroll-btn").css({
-							"backgroundColor" : "#aacdff",
-							"cursor" : "pointer",
-							"color" : "#000"
-						}).prop("disabled", false);
+						$("#enroll-btn").css({"backgroundColor":
+											  "#fff","cursor":"pointer",
+											  "color":"#000", 
+											  "border":"1px solid #aacdff"}).prop("disabled",false);
 					}
 				},
 				error : function() {

@@ -9,20 +9,25 @@
 <body>
 <%@include file="/views/common/menubar.jsp"%>
 <div class="container-fluid packages py-5">
-    <div class="container py-5">
-        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+
+	<div class="searchArea">			
+			<input type="text" name="searchName" id="searchName">
+			<span onclick="selectSearch();" cursor="pointer";>
+        	<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+  			<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+			</span>
         </div>
+    <div class="container py-5">        
         <div class="packages-carousel owl-carousel" data-packages-carousel-autoplay-status="Y">
-            <!-- 테스트영역 -->
             <c:choose>
 				<c:when test="${empty marathonArr }">
-					조회된 게시글이 없습니다.
+					조회된 마라톤이 없습니다.
 					</c:when>
 					<c:otherwise>
 					<c:forEach var="mar" items="${marathonArr}">
 						<div class="packages-item">
                 	<div class="packages-img" onclick="window.open('${mar.marathonSite }')">
-                    	<img src="views/marathon/img/500x400-5.jpg" class="img-fluid w-100 rounded-top">
+                    	<img src="views/marathon/img/${mar.marathonNo }.jpg" class="img-fluid w-100 rounded-top" style="width:400px;height:300px;">
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>${mar.region }</small>
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>${mar.marathonDate }</small>
@@ -30,23 +35,22 @@
                     </div>
                 	</div>
                 	<div class="packages-content bg-light">
-                    <div class="p-4 pb-0">
-                        <h5 class="mb-0" style="height:68px">${mar.marathonName }</h5>
-                        <small class="text-uppercase">대회번호 ${mar.marathonNo }</small>
-                        <p class="mb-4">상세정보</p>
-                        <p class="mb-4" style="height:48px">${mar.otherIntroduction }</p>
-                    </div>
-                    <div class="row bg-primary rounded-bottom mx-0">
-                        <div class="col-6 text-start px-0">
-                        	<!-- 데이터 보낼때 memberNo도 보내야함 -->
-                            <a onclick="checkParticipate();" class="btn-hover btn text-white py-2 px-4">참가신청</a>
-                        </div>
-                        <div class="col-6 text-end px-0">
-                            <a href="${contextPath }/detail.ma?marathonNo=${mar.marathonNo }" target="_blank" class="btn-hover btn text-white py-2 px-4">더보기</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+	                    <div class="p-4 pb-0">
+	                        <h5 class="mb-0" style="height:68px">${mar.marathonName }</h5>
+	                        <small class="text-uppercase">대회번호<span>${mar.marathonNo }</span></small>
+	                        <p class="mb-4">상세정보</p>
+	                        <p class="mb-4" style="height:48px">${mar.otherIntroduction }</p>
+	                    </div>
+	                    <div class="row bg-primary rounded-bottom mx-0">
+	                        <div class="col-6 text-start px-0">
+	                            <a onclick="checkParticipate(this);" class="btn-hover btn text-white py-2 px-4">참가신청</a>
+	                        </div>
+	                        <div class="col-6 text-end px-0">
+	                            <a href="${contextPath }/detail.ma?marathonNo=${mar.marathonNo }" target="_blank" class="btn-hover btn text-white py-2 px-4">더보기</a>
+	                        </div>
+	                    </div>
+                	</div>
+            	</div>
 					</c:forEach>	
 				</c:otherwise>
 			</c:choose>
@@ -99,7 +103,7 @@
                     </div>
                     <!-- 관리자전용 기능 -->
                     <div class="adminMenu">
-<%--                     	<c:if test="'${memberNo}'==1"> --%>
+<%--                     	<c:if test="'${loginUser.memberId}'=='admin'"> --%>
                     <br>
                     <p> * 관리자용 메뉴</p>                   
                     		<button onclick='location.href="${contextPath }/insert.ma"' class="btn btn-outline-primary">대회정보 초기화</button>                    		
@@ -131,19 +135,24 @@
 <script src="views/marathon/lib/owlcarousel/owl.carousel.min.js"></script>
 <script src="views/marathon/js/main.js"></script>
 <script type="text/javascript">
-function checkParticipate(){
-	if('${memberNo}'==""){
+function checkParticipate(e){
+	if('${loginUser.memberNo}'==""){
 		if(confirm("로그인이 필요한 서비스입니다. 로그인페이지로 이동하시겠습니까?")){
 			location.href="${contextPath}/views/member/loginForm.jsp"
 		}
-	}else{
-		location.href="${contextPath}/insert.pa?marathonNo=${mar.marathonNo}&memberNo=${m.memberNo}"	
+	}else{		
+		location.href="${contextPath}/insert.pa?marathonNo="+$(e).closest('.packages-content').find('span').text()+"&memberNo=${loginUser.memberNo}"	
 	}
 }
 function checkRestore(){
 	if(confirm("복구 페이지로 이동하시겠어요?")){
 		location.href="${contextPath }/restore.ma"
 	}
+}
+function selectSearch(){
+	var searchName = $("#searchName").val()
+	console.log(searchName);
+	location.href="${contextPath }/search.ma?searchName="+searchName;
 }
 </script>
 </html>

@@ -89,7 +89,6 @@ public class MarathonDao{
 				MarathonArr.add(jobj);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(rset);
@@ -149,7 +148,6 @@ public class MarathonDao{
 			pstmt.setInt(11, m.getMarathonNo());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	finally {
 			JDBCTemplate.close(pstmt);
@@ -182,7 +180,6 @@ public class MarathonDao{
 			pstmt.setInt(1, marathonNo);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(pstmt);
@@ -190,7 +187,7 @@ public class MarathonDao{
 		return result;
 	}
 	public JSONArray selectDeleteMarathon(Connection conn) {
-		JSONArray MarathonArr = new JSONArray();
+		JSONArray marathonArr = new JSONArray();
 		Statement stmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectDeleteMarathon");
@@ -211,16 +208,68 @@ public class MarathonDao{
 					otherIntroduction = otherIntroduction.substring(0,50);
 				}
 				jobj.put("otherIntroduction", otherIntroduction);
-				MarathonArr.add(jobj);
+				marathonArr.add(jobj);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(stmt);
 		}
-		return MarathonArr;
+		return marathonArr;
+	}
+	public String selectMarathonRegionName(Connection conn, int marathonNo) {
+		String regionName = "";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectMarathonRegionName");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, marathonNo);
+			rset=pstmt.executeQuery();
+			if(rset.next()) {
+				regionName=rset.getString("REGION");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return regionName;
+	}
+	public JSONArray selectSearch(Connection conn, String searchName) {
+		JSONArray searchArr = new JSONArray();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSearch");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+searchName+"%");
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				JSONObject jobj = new JSONObject();
+				jobj.put("marathonNo",rset.getString("MARATHON_NO"));
+				jobj.put("marathonName",rset.getString("MARATHON_NAME"));
+				jobj.put("location",rset.getString("LOCATION"));
+				jobj.put("region",rset.getString("REGION"));
+				jobj.put("marathonDate",rset.getString("MARATHON_DATE").substring(0, rset.getString("MARATHON_DATE").indexOf(" ")));
+				jobj.put("marathonSite",rset.getString("MARATHON_SITE"));
+				jobj.put("organizer", rset.getString("ORGANIZER"));
+				String otherIntroduction = rset.getString("OTHER_INTRODUCTION");
+				if(otherIntroduction!=null&&otherIntroduction.length()>50) {
+					otherIntroduction = otherIntroduction.substring(0,50);
+				}
+				jobj.put("otherIntroduction", otherIntroduction);
+				searchArr.add(jobj);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return searchArr;
 	}
 
 }

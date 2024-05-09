@@ -13,5 +13,11 @@ public class RegionService {
 		JDBCTemplate.close(conn);
 		return regionName;
 	}
+	public int selectRegionId(String regionName) {
+		Connection conn = JDBCTemplate.getConnection();
+		int regionId = new RegionDao().selectRegionId(conn,regionName);
+		JDBCTemplate.close(conn);
+		return regionId;
+	}
 	
 }
