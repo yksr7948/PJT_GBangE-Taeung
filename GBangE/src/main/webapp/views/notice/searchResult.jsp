@@ -29,7 +29,7 @@ a {
 }
 
 .board_wrap {
-    width: 80%;
+    width: 1000px;
     margin: 100px auto;
 }
 

@@ -4,28 +4,29 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.kh.common.JDBCTemplate;
-
+import com.kh.common.model.vo.PageInfo;
 import com.kh.notice.model.dao.NoticeDao;
+import com.kh.notice.model.vo.Attachment;
 import com.kh.notice.model.vo.Notice;
+
 
 public class NoticeService {
 	//공지사항 글목록
-	public ArrayList<Notice> selectNoticeList() {
+	public ArrayList<Notice> selectNoticeList(PageInfo pi) {
 
 			Connection conn = JDBCTemplate.getConnection();
 			
-			ArrayList<Notice> list = new NoticeDao().selectNoticeList(conn);
+			ArrayList<Notice> list = new NoticeDao().selectNoticeList(conn,pi);
 			
 			JDBCTemplate.close(conn);
 			
 			return list;
 		}
 	//공지사항 글작성
-	public int insertNotice(Notice n) {
+	public int insertNotice(Notice n,Attachment at) {
 		Connection conn = JDBCTemplate.getConnection();
 		
-		int result = new NoticeDao().insertNotice(conn,n);
-		
+		int result = new NoticeDao().insertNotice(conn,n,at);
 	
 		if(result>0) {
 			JDBCTemplate.commit(conn);
@@ -97,6 +98,23 @@ public class NoticeService {
 
 	    return list;
 	}
+	
+	
+	
+	public Attachment selectAttachment(int nno) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		Attachment at = new NoticeDao().selectAttachment(conn,nno);
+		JDBCTemplate.close(conn);
+		
+		return at;
+	}
+	
+	
+	
+	
+	
+
 	}
 
 	

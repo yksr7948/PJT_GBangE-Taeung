@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.kh.common.JDBCTemplate;
+import com.kh.common.model.vo.PageInfo;
+import com.kh.notice.model.vo.Attachment;
 import com.kh.notice.model.vo.Notice;
 
 
@@ -33,16 +35,21 @@ public class NoticeDao {
 	}
 
 	//글목록
-	public ArrayList<Notice> selectNoticeList(Connection conn) {
+	public ArrayList<Notice> selectNoticeList(Connection conn, PageInfo pi) {
 		
 		ArrayList<Notice> list = new ArrayList<>();
 		ResultSet rset =null;
-		Statement stmt =null;
+		PreparedStatement pstmt = null;
 		String sql =prop.getProperty("selectNoticeList");
 		
+		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit()+1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+		
 		try {
-			stmt =conn.createStatement();
-			rset =stmt.executeQuery(sql);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset =pstmt.executeQuery();
 			
 			while(rset.next()){
 				list.add(new Notice(rset.getInt("NOTICE_ID")
@@ -57,37 +64,55 @@ public class NoticeDao {
 			e.printStackTrace();
 		}finally {
 			JDBCTemplate.close(rset);
-			JDBCTemplate.close(stmt);
+			JDBCTemplate.close(pstmt);
 		}
 		
 		return list;
 	}
-	//글 작성
-	public int insertNotice(Connection conn, Notice n) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("insertNotice");
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,n.getNoticeTitle());
-			pstmt.setString(2,n.getMemberName());
-			pstmt.setString(3,n.getNoticeContent());
-			
-			result = pstmt.executeUpdate();
-			
-			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			JDBCTemplate.close(pstmt);
+	//글 작성 
+	public int insertNotice(Connection conn, Notice n,Attachment at) {
+		 int result = 0;
+		    PreparedStatement pstmt = null;
+		    ResultSet rset = null;
+		    String sql = prop.getProperty("insertNotice");
+
+		    try {
+		        // 회원 이름으로 회원 번호 찾기
+		        String findMemberNoSql = "SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_NAME = ?";
+		        pstmt = conn.prepareStatement(findMemberNoSql);
+		        pstmt.setString(1, n.getMemberName());
+		        rset = pstmt.executeQuery();
+		      
+
+		        // 공지사항을 먼저 삽입
+		        pstmt = conn.prepareStatement(sql);
+		        pstmt.setString(1, n.getNoticeTitle());
+		        pstmt.setInt(2, n.getMemberNo()); // 회원 번호 추가
+		        pstmt.setString(3, n.getNoticeContent());
+		        
+		        result = pstmt.executeUpdate();
+		        
+
+				/*
+				 * if (result > 0) { pstmt.close(); sql = prop.getProperty("insertAttachment");
+				 * pstmt = conn.prepareStatement(sql); pstmt.setInt(1, at.getRefBno());
+				 * pstmt.setString(2, at.getOriginName()); pstmt.setString(3,
+				 * at.getChangeName()); pstmt.setString(4, at.getFilePath());
+				 * 
+				 * // 첨부파일 삽입 result = pstmt.executeUpdate(); }
+				 */
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        JDBCTemplate.close(rset);
+		        JDBCTemplate.close(pstmt);
+		    }
+		    return result;
 		}
 		
 		
 		
-		return result;
-	}
+	
 
 	//조회수 증가
 	public int increaseCount(Connection conn, int nno) {
@@ -267,6 +292,63 @@ public class NoticeDao {
 		    return list;
 	
 }
+	
+	//첨부파일 추가
+	public int insertAttachment(Connection conn, Attachment at) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, at.getRefBno());
+			pstmt.setString(2, at.getOriginName());
+			pstmt.setString(3, at.getChangeName());
+			pstmt.setString(4, at.getFilePath());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	public Attachment selectAttachment(Connection conn, int nno) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectAttachment");
+		Attachment at = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, nno);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				at = new Attachment(
+						rset.getInt("FILE_NO")
+						,rset.getString("ORIGIN_NAME")
+						,rset.getString("CHANGE_NAME")
+						,rset.getString("FILE_PATH")
+						);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return at;
+	}
+	
+	
+	
+
+
+	
 
 }
 
