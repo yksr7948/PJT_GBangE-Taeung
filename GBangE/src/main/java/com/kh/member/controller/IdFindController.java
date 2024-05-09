@@ -48,7 +48,7 @@ public class IdFindController extends HttpServlet {
 		Member m = new MemberService().findId(userName,userPno);
 		
 		System.out.println(m.getMemberId());
-		System.out.println(m.getMemberPno());
+		
 	}
 
 }
