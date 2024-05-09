@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.marathon.model.service.MarathonService;
 import com.kh.marathon.model.service.ParticipateService;
 import com.kh.marathon.model.service.RegionService;
+import com.kh.marathon.model.vo.Marathon;
 import com.kh.marathon.model.vo.Participate;
 
 /**
@@ -33,8 +34,9 @@ public class InsertParticipateController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int marathonNo = Integer.parseInt(request.getParameter("marathonNo"));
+		Marathon m = new MarathonService().marathonDetail(marathonNo);		
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-		request.setAttribute("marathonNo", marathonNo);
+		request.setAttribute("marathonName", m.getMarathonName());
 		request.setAttribute("memberNo", memberNo);
 		request.getRequestDispatcher("views/marathon/insertParticipateView.jsp").forward(request, response);
 	}

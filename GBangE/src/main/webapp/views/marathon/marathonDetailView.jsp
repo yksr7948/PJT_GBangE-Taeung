@@ -87,10 +87,10 @@
 </div>
 <!-- 관리자기능 -->
 <div class="admindiv" style="margin-left:300px">
-<%-- <c:if test="${memberNo==1}"> --%>
-<button onclick='checkdelete();' class="btn btn-outline-primary">대회정보 삭제</button>
-<button onclick='location.href="${contextPath }/update.ma?marathonNo=${mar.marathonNo }"' class="btn btn-outline-primary">대회정보 변경</button>
-<%-- </c:if> --%>
+<c:if test="${loginUser.memberId eq 'admin'}">
+	<button onclick='checkdelete();' class="btn btn-outline-primary">대회정보 삭제</button>
+	<button onclick='location.href="${contextPath }/update.ma?marathonNo=${mar.marathonNo }"' class="btn btn-outline-primary">대회정보 변경</button>
+</c:if>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a1b4846e472c7771e5d7f51cf184db58&libraries=services"></script>
 <script>
