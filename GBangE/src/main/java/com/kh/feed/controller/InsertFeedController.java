@@ -77,11 +77,11 @@ public class InsertFeedController extends HttpServlet {
 		
 		Feed f = new Feed();
 		f.setCategoryNo(category);
-		f.setFeedContent(content);
 		f.setFeedTitle(title);
+		f.setFeedContent(content);
 		f.setMemberNo(memberId);
 		f.setCompetition(competition);
-		
+				
 		
 		Attachment at = null;
 		
