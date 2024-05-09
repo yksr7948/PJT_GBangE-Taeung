@@ -3,21 +3,25 @@
 <properties>
 
 <entry key="selectNoticeList">
-SELECT NOTICE_ID
-      ,NOTICE_TITLE
-      ,MEMBER_NAME
-      ,CREATE_DATE
-      ,COUNT
-FROM NOTICE N
-JOIN MEMBER M ON N.MEMBER_NO = M.MEMBER_NO
-WHERE N.STATUS = 'Y'
-ORDER BY NOTICE_ID DESC
+ SELECT * FROM(
+ SELECT ROWNUM,S.* FROM (
+        SELECT N.NOTICE_ID,
+               N.NOTICE_TITLE,
+               M.MEMBER_NAME,
+               N.CREATE_DATE,
+               N.COUNT
+        FROM NOTICE N
+        JOIN MEMBER M ON N.MEMBER_NO = M.MEMBER_NO
+        WHERE N.STATUS = 'Y'
+        ORDER BY NOTICE_ID DESC
+    )S)WHERE "ROWNUM" BETWEEN ? AND ?
+    
 </entry>
 
 
 <entry key="insertNotice" >
-INSERT INTO NOTICE(NOTICE_ID, NOTICE_TITLE, NOTICE_CONTENT)
-VALUES(notice_seq.NEXTVAL,?,?)
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_TITLE,MEMBER_NO,NOTICE_CONTENT)
+VALUES(notice_seq.NEXTVAL,?,?,?)
 </entry>
 
 <entry key="increaseCount">
@@ -101,6 +105,28 @@ WHERE
 ORDER BY NOTICE_ID DESC
 
 </entry>
+
+<entry key="insertAttachment">
+INSERT INTO ATTACHMENT (FILE_NO
+                        ,REF_BNO
+                        ,ORIGIN_NAME
+                        ,CHANGE_NAME
+                        ,FILE_PATH)
+            VALUES(FILE_NO_SEQ.NEXTVAL
+                    ,?
+                    ,?
+                    ,?
+                    ,?)
+</entry>
+
+<entry key="selectAttachment">
+SELECT FILE_NO,ORIGIN_NAME,CHANGE_NAME,FILE_PATH
+FROM ATTACHMENT WHERE REF_BNO = ?
+
+
+</entry>
+
+
 
 
 

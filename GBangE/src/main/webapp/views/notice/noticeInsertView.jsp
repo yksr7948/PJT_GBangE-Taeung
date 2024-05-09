@@ -109,9 +109,10 @@
 	<div class="board_wrap">
 		<div class="board_title">
 			<h1>공지사항</h1>
-			<p>공지사항 페이지입니다.</p>
+			<p>공지사항 작성 페이지입니다.</p>
 		</div>
-		<form action="${contextPath}/insert.no" method="post" id="enroll-form">
+		<form action="${contextPath}/insert.no" method="post" id="enroll-form" enctype="multipart/form-data">
+		<input type="hidden" name="memberNo" value="${loginUser.memberNo }">
 			<div class="board_write_wrap">
 				<div class="board_write">
 					<div class="title">
@@ -125,8 +126,10 @@
 					<div class="info">
 						
 						<dl>
-							<dt></dt>
-							<dd></dd>
+							<dt>첨부파일</dt>
+						<dd>
+							<input type="file" name="uploadFile" class="btn btn-outline-secondary">
+						</dd>
 						</dl>
 					</div>
 					<div class="cont">

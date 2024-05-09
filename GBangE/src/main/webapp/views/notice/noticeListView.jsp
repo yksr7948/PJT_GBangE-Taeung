@@ -31,7 +31,7 @@ a {
 }
 
 .board_wrap {
-	width: 80%px;
+	width: 1000px;
 	margin: 100px auto;
 }
 
@@ -216,13 +216,29 @@ a {
     </div>
     </div>
 </div>
+		<div class="paging-area" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+    <c:choose>
+        <c:when test="${pi.currentPage eq 1}">
+            <button disabled style="font-size: 1.5rem; padding: 10px 20px;">이전</button>
+        </c:when>
+        <c:otherwise>
+            <button onclick="location.href='list.no?currentPage=${pi.currentPage-1}'" style="font-size: 1.5rem; padding: 10px 20px;">이전</button>
+        </c:otherwise>
+    </c:choose>
 
-			<div class="board_page">
-				<a href="#" class="btn frist"> &lt;&lt; </a> <a href="#"
-					class="btn prew"> &lt; </a> <a href="#" class="num selected">1</a>
-				<a href="#" class="num">2</a> <a href="#" class="btn next">&gt;</a>
-				<a href="#" class="btn last">&gt;&gt;</a>
-			</div>
+    <c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">
+        <button onclick="location.href='list.no?currentPage=${i}'" style="font-size: 1.5rem; padding: 10px 20px;">${i}</button>
+    </c:forEach>
+
+    <c:choose>
+        <c:when test="${pi.currentPage eq pi.maxPage}">
+            <button disabled style="font-size: 1.5rem; padding: 10px 20px;">다음</button>
+        </c:when>
+        <c:otherwise>
+            <button onclick="location.href='list.no?currentPage=${pi.currentPage+1}'" style="font-size: 1.5rem; padding: 10px 20px;">다음</button>
+        </c:otherwise>
+    </c:choose>
+	</div>
 			<br>
 			<div class="search_form" style="text-align: center; margin-bottom: 20px;">
             <form action="${contextPath}/search.no" method="get">
@@ -235,15 +251,17 @@ a {
                 <button type="submit" style="font-size: 1.6rem; padding: 10px; margin: 5px;">검색</button>
             </form>
 			
-			
+			<%if((loginUser != null) && loginUser.getMemberId().equals("admin")){ %>
 			<div class="bt_wrap">
+			
 				<a href="${contextPath}/insert.no" class="on">글쓰기</a> <a href="">수정</a>
 			</div>
+			 <%} %>
 		</div>
 		
 	
 		
-	</div>
+
 	<script>
     
     $(".list-area").click(function(){

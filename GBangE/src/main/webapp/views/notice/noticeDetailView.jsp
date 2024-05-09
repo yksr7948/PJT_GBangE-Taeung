@@ -131,12 +131,17 @@
                 </div>
                 <div class="cont">
                     ${notice.noticeContent}
+					<img alt="업로드이미지" src="${contextPath}${at.filePath}${at.changeName}" id="uploadFile">
+					${contextPath}${at.filePath}${at.changeName}
+				</div>
                 </div>
             </div>
             <br>
             <div class="bt_wrap">
+            <%if(loginUser!=null && loginUser.getMemberId().equals("admin")) {%>
                 <a href="" class="btn btn-outline-secondary" onclick="goToNoticeListView()">목록</a>
                 <a href="#" class="btn btn-success">수정</a>
+               <%} %>
             </div>
         </div>
     </div>
