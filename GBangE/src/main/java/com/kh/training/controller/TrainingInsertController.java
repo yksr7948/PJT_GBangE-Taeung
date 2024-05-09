@@ -91,22 +91,22 @@ public class TrainingInsertController extends HttpServlet {
 			} else {
 				t.setoCStatus("O");
 			}
-			
+
 			int memberNo = Integer.parseInt(multiRequest.getParameter("memberNo"));
-			
+
 			Attachment at = null;
-			if(multiRequest.getOriginalFileName("uploadImg")!=null) {
+			if (multiRequest.getOriginalFileName("uploadImg") != null) {
 				at = new Attachment();
 				at.setOriginName(multiRequest.getOriginalFileName("uploadImg"));
 				at.setChangeName(multiRequest.getFilesystemName("uploadImg"));
 				at.setFilePath("/views/training/uploadImg/");
 			}
-			int result = new TrainingService().insertTraining(t,at,memberNo);
+			int result = new TrainingService().insertTraining(t, at, memberNo);
 
 			HttpSession session = request.getSession();
 			if (result > 0) {
 				session.setAttribute("alertMsg", "게시글 작성 성공");
-				request.getRequestDispatcher("/detail.tr?tno="+t.getTrainingNo()).forward(request, response);
+				request.getRequestDispatcher("/detail.tr?tno=" + t.getTrainingNo()).forward(request, response);
 			} else {
 //				if(at!=null) {
 //					게시글 작성 실패시 파일 삭제하는 기능 구현
