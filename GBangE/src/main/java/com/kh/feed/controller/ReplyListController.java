@@ -1,6 +1,7 @@
-package com.kh.member.controller;
+package com.kh.feed.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,20 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.member.model.service.MemberService;
-import com.kh.member.model.vo.Member;
+import com.google.gson.Gson;
+import com.kh.feed.model.service.FeedService;
+import com.kh.feed.model.vo.Reply;
 
 /**
- * Servlet implementation class IdFindController
+ * Servlet implementation class ReplyListController
  */
-@WebServlet("/findId.me")
-public class IdFindController extends HttpServlet {
+@WebServlet("/replyList.fe")
+public class ReplyListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IdFindController() {
+    public ReplyListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,24 +32,23 @@ public class IdFindController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		request.getRequestDispatcher("views/member/findIdForm.jsp").forward(request, response);
+		
+		int refBno = Integer.parseInt(request.getParameter("fno"));
+		
+		ArrayList<Reply> list = new FeedService().replyList(refBno);
+		
+		response.setContentType("json/application; charset=UTF-8");
+		
+		new Gson().toJson(list,response.getWriter());
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String userName = request.getParameter("userName");
-		String userPno1 = request.getParameter("userPno1");
-		String userPno2 = request.getParameter("userPno2");
-		
-		String userPno = userPno1+"-"+userPno2;
-		
-		String userId = new MemberService().findId(userName,userPno);
-		
-		response.getWriter().print(userId);
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

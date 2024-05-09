@@ -2,20 +2,182 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">        
-    </head>
+<head>
+   <meta charset="utf-8">
+   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+   <style> 
+.packages .packages-item .packages-img {
+    position: relative;
+    overflow: hidden;
+    transition: 0.5s;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    z-index: 1;
+}
+
+.packages .packages-item .packages-img .packages-info {
+    background: rgba(0, 0, 0, .3);
+}
+
+.packages .packages-item .packages-img .packages-info small,
+.packages .packages-item .packages-img .packages-info small i {
+    color: var(--bs-white);
+    transition: 0.5s;
+}
+
+.packages .packages-item .packages-img::after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 0px solid;
+    border-radius: 10px !important;
+    visibility: hidden;
+    transition: 0.7s;
+    z-index: 3;
+}
+
+.packages .packages-item .packages-img:hover.packages-img::after {
+    width: 100%;
+    height: 100%;
+    border: 300px solid;
+    border-color: rgba(19, 53, 123, 0.6) rgba(19, 53, 123, 0.6) rgba(19, 53, 123, 0.6) rgba(19, 53, 123, 0.6);
+    visibility: visible;
+}
+
+.packages .packages-item .packages-img small,
+.packages .packages-item .packages-img small i {
+    transition: 0.5s;
+}
+
+.packages .packages-item .packages-img:hover small,
+.packages .packages-item .packages-img:hover small i {
+    color: var(--bs-white) !important;
+
+}
+
+.packages .packages-item .packages-img img {
+    transition: 0.5s;
+}
+
+.packages .packages-item .packages-img:hover img {
+    transform: scale(1.3);
+}
+
+.packages .packages-item .packages-img .packages-price {
+    position: absolute;
+    width: 100px; 
+    top: 0; 
+    left: 50%; 
+    transform: translateX(-50%);
+    display: inline-block;
+    background: var(--bs-primary);
+    color: var(--bs-white);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px; 
+    z-index: 5;
+}
+
+.packages .packages-carousel {
+    position: relative;
+}
+
+.packages .packages-carousel .owl-nav .owl-prev {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    padding: 5px 30px;
+    border: 1px solid var(--bs-primary);
+    border-radius: 30px;
+    transition: 0.5s;
+}
+
+.packages .packages-carousel .owl-nav .owl-next {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    padding: 5px 30px;
+    border: 1px solid var(--bs-primary);
+    border-radius: 30px;
+    transition: 0.5s;
+}
+
+.packages .packages-carousel .owl-nav .owl-prev i,
+.packages .packages-carousel .owl-nav .owl-next i {
+    color: var(--bs-primary);
+    font-size: 17px;
+    transition: 0.5s;
+}
+
+.packages .packages-carousel .owl-nav .owl-prev:hover,
+.packages .packages-carousel .owl-nav .owl-next:hover {
+    background: var(--bs-primary);
+}
+
+.packages .packages-carousel .owl-nav .owl-prev:hover i,
+.packages .packages-carousel .owl-nav .owl-next:hover i {
+    color: var(--bs-white);
+}
+.modal-body .marathonInfo td{
+	height: 40px;
+}
+.modal-body tbody tr{
+	border-bottom: 1px solid #999;
+}
+.modal-body tbody tr:hover{
+	border: 3px solid red;
+	cursor:pointer;
+}
+.searchArea {
+	position:relative;
+	align-self:center;
+	height:60px;	
+}
+.searchArea > input{
+	box-sizing: border-box;
+	position:relative;
+	transform:translateX(-200px);
+	left:50%;
+	width: 450px;
+    height: 51px;
+    padding: 5px 8px 0px 14px;
+    border-radius: 22px;
+    border:2px solid #464646;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin: 0 auto;
+    
+}
+.searchArea > span{
+	box-sizing: border-box;
+	position:absolute;
+	margin: auto;
+	margin-top:10px;
+	
+}
+.searchText >p span{
+	color:red;
+	font-weight: 300;
+}
+   </style>             
+</head>
 <body>
 <%@include file="/views/common/menubar.jsp"%>
 <div class="container-fluid packages py-5">
 	<div class="searchArea">			
-			<input type="search" name="searchName" id="searchName">
-			<span onclick="selectSearch();">
+		<input type="search" name="searchName" id="searchName">
+		<span onclick="selectSearch();" cursor="pointer";>
         	<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
   			<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
-			</span>
-        </div>
+		</span>
+		<br>
+		<div class="searchText" align="center";>
+			<p>test</p>			
+		</div>
+    </div>
     <div class="container py-5">        
         <div class="packages-carousel owl-carousel" data-packages-carousel-autoplay-status="Y">
             <c:choose>
@@ -102,11 +264,12 @@
                     </div>
                     <!-- 관리자전용 기능 -->
                     <div class="adminMenu">
-                    <c:if test="${loginUser.memberId eq 'admin'}">                    
-                    <br>                 
-                    	<button onclick='location.href="${contextPath }/insert.ma"' class="btn btn-outline-primary">대회정보 초기화</button>                    		
-                    	<button onclick='checkRestore();' class="btn btn-outline-primary">대회정보 복구</button>					
-                    </c:if>
+<%--                     	<c:if test="'${loginUser.memberId}'=='admin'"> --%>
+                    <br>
+                    <p> * 관리자용 메뉴</p>                   
+                    		<button onclick='location.href="${contextPath }/insert.ma"' class="btn btn-outline-primary">대회정보 초기화</button>                    		
+                    		<button onclick='checkRestore();' class="btn btn-outline-primary">대회정보 복구</button>
+<%--                     	</c:if> --%>
 					</div>
 					<div class="modal-footer">
                       <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">종료</button>
@@ -131,7 +294,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="views/marathon/lib/waypoints/waypoints.min.js"></script>
 <script src="views/marathon/lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="views/marathon/js/main.js"></script>
 <script type="text/javascript">
 function checkParticipate(e){
 	if('${loginUser.memberNo}'==""){
@@ -152,5 +314,55 @@ function selectSearch(){
 	console.log(searchName);
 	location.href="${contextPath }/search.ma?searchName="+searchName;
 }
+$(function(){;
+	$(".searchText").children().html("<span>\"${searchName}\"</span>"+" 검색어로 "+"<span>${contentCount}</span>"+" 개의 대회정보가 검색되었습니다.");
+});
+
+(function ($) {
+    function Carousel1__onTranslated() {
+        $(".packages-carousel").trigger('play.owl.autoplay');
+        
+        $(".packages-carousel").attr('data-packages-carousel-autoplay-status', 'Y');
+    }
+    "use strict";
+    $(".packages-carousel").owlCarousel({
+        autoplay: true,
+        autoplayTimeout:2000,        
+        center: false,
+        dots: true,
+        loop: false,
+        margin: 25,
+        nav : true,
+        navText : [
+            '<i class="bi bi-arrow-left"></i>',
+            '<i class="bi bi-arrow-right"></i>'
+        ],
+        responsiveClass: true,        
+        responsive: {
+            items:3,
+            autoplayHoverPause:false,
+            onTranslated: Carousel1__onTranslated,
+        }
+    });
+ 
+    $('#carouselplaybtn').on('click',function(){
+        $(".packages-carousel").trigger('play.owl.autoplay');
+    
+        $(".packages-carousel").attr('data-packages-carousel-autoplay-status', 'Y');
+        alert("스와이프가 실행되었습니다.");
+        $("#carouselstopbtn").css("display","");
+        $("#carouselplaybtn").css("display","none");
+    });
+
+    $('#carouselstopbtn').on('click',function(){
+        $(".packages-carousel").trigger('stop.owl.autoplay');
+    
+        $(".packages-carousel").attr('data-packages-carousel-autoplay-status', 'N');
+        alert("스와이프가 중지되었습니다.");
+        $("#carouselplaybtn").css("display","");
+        $("#carouselstopbtn").css("display","none");
+    });
+})(jQuery);
+
 </script>
 </html>

@@ -157,7 +157,7 @@ label {
 			<p>러닝일지 페이지입니다.</p>
 		</div>
 		<form action="/gbange/insert.tr" method="post" id="training-area" enctype="multipart/form-data">
-			<!-- <input type="hidden" name="memberNo" value=""> 나중에 로그인 기능 구현되면 가져올 것 -->
+			<input type="hidden" name="memberNo" value="${loginUser.memberNo}">
 			<div class="board_write_wrap">
 				<div class="board_write">
 					<div class="title">
@@ -191,13 +191,13 @@ label {
 								<td><input type="text" name="trainingPlace" required></td>
 								<th>운동거리(km)</th>
 								<td><input type="number" step="0.01" min="1" max="100"
-									name="trainingDistance">km</td>
+									name="trainingDistance" id="trainingDistance">km</td>
 							</tr>
 							<tr>
 								<th>운동시간</th>
-								<td><input type="number" step="0.1" name="trainingTime"></td>
+								<td><input type="number" step="0.1" name="trainingTime" id="trainingTime">분</td>
 								<th>평균페이스</th>
-								<td><input type="number" readonly value="">/km</td>
+								<td><input type="number" id="avgPace" readonly value="">/km</td>
 							</tr>
 							<tr>
 								<th>목표</th>
@@ -225,6 +225,16 @@ label {
 						<textarea name="trainingContent"
 							placeholder="달릴 때 심박은 어땠나요?&#13;&#10;함께 달리는 사람이 있었나요?&#13;&#10;그냥 달릴 때의 기분, 생각 등을 자유롭게 작성해보세요 :)"></textarea>
 					</div>
+					<script>
+					$(function() {
+						$("#trainingTime").keyup(function () {
+							var distance = $("#trainingDistance").val();
+							var time = $("#trainingTime").val();
+							var avgPace = (time/distance).toFixed(2);
+							$("#avgPace").val(avgPace);
+						});
+					});
+					</script>
 				</div>
 				<br>
 				<div class="bt_wrap">

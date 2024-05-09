@@ -6,7 +6,7 @@ SELECT TRAINING_KEY, TRAINING_NAME
 FROM TRAINING_CATEGORY
 </entry>
 <entry key="insertTraining">
-INSERT INTO TRAINING VALUES(?,1,?,DEFAULT,?,1,?,SYSDATE,?,?,?,?,?,?,'2',?,'Y')
+INSERT INTO TRAINING VALUES(?,?,?,DEFAULT,?,1,?,SYSDATE,?,?,?,?,?,?,'2',?,'Y')
 </entry>
 
 <entry key="increaseCount">
@@ -88,5 +88,10 @@ WHERE TRAINING_NO = ?
 UPDATE ATTACHMENT SET FILE_NAME = ? 
                     ,FILE_RENAME = ?
 WHERE FILE_NO = ?
+</entry>
+
+<entry key="deleteTraining">
+UPDATE TRAINING SET STATUS = 'N'
+WHERE TRAINING_NO = ?
 </entry>
 </properties>

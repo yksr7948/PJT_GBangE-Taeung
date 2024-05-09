@@ -1,27 +1,26 @@
-package com.kh.member.controller;
+package com.kh.feed.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.member.model.service.MemberService;
-import com.kh.member.model.vo.Member;
+import com.kh.feed.model.service.FeedService;
+import com.kh.feed.model.vo.Reply;
 
 /**
- * Servlet implementation class IdFindController
+ * Servlet implementation class ReplyInsetController
  */
-@WebServlet("/findId.me")
-public class IdFindController extends HttpServlet {
+@WebServlet("/insertReply.fe")
+public class ReplyInsetController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IdFindController() {
+    public ReplyInsetController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,24 +29,30 @@ public class IdFindController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		request.getRequestDispatcher("views/member/findIdForm.jsp").forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		
-		String userName = request.getParameter("userName");
-		String userPno1 = request.getParameter("userPno1");
-		String userPno2 = request.getParameter("userPno2");
+		String memberId = request.getParameter("memberNo");
+		int fno = Integer.parseInt(request.getParameter("fno"));
+		String content = request.getParameter("content");
 		
-		String userPno = userPno1+"-"+userPno2;
+		Reply r = new Reply();
+		r.setRefBno(fno);
+		r.setMemberNo(memberId);
+		r.setReplyContent(content);
 		
-		String userId = new MemberService().findId(userName,userPno);
+		int result = new FeedService().insertReply(r);
 		
-		response.getWriter().print(userId);
+		response.getWriter().print(result);
+		
+		
 	}
 
 }

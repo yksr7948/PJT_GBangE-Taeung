@@ -1,29 +1,26 @@
-package com.kh.marathon.controller;
+package com.kh.training.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-
-import com.google.gson.Gson;
-import com.kh.marathon.model.service.MarathonService;
+import com.kh.training.model.service.TrainingService;
 
 /**
- * Servlet implementation class SelectSearchMarathonController
+ * Servlet implementation class TrainingDeleteController
  */
-@WebServlet("/search.ma")
-public class SelectSearchMarathonController extends HttpServlet {
+@WebServlet("/delete.tr")
+public class TrainingDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectSearchMarathonController() {
+    public TrainingDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,14 +29,19 @@ public class SelectSearchMarathonController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String searchName = request.getParameter("searchName");
-		JSONArray searchArr = new MarathonService().selectSearch(searchName);
-		int contentCount= searchArr.size();
+		
+		int tno = Integer.parseInt(request.getParameter("tno"));
+		int result = new TrainingService().deleteTraining(tno);
+		
+		HttpSession session = request.getSession();
+		if(result>0) {
+			session.setAttribute("alertMsg", "일지가 삭제되었습니다");
+			request.getRequestDispatcher("/list.tr?currentPage=1").forward(request, response);
 
-		request.setAttribute("marathonArr", searchArr);
-		request.setAttribute("contentCount", contentCount);
-		request.setAttribute("searchName", searchName);
-		request.getRequestDispatcher("views/marathon/searchMarathon.jsp").forward(request, response);
+		}else {
+			session.setAttribute("alertMsg", "일지 삭제 실패ㅠㅠ");
+			response.sendRedirect(request.getHeader("referer"));
+		}
 	}
 
 	/**

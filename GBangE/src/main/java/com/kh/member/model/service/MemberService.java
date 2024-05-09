@@ -46,15 +46,26 @@ public class MemberService {
 		return flag;
 	}
 
-	public Member findId(String userName, String userPno) {
+	public String findId(String userName, String userPno) {
 
 		Connection conn = JDBCTemplate.getConnection();
 		
-		Member m =new MemberDao().findId(conn,userName,userPno);
+		String userId =new MemberDao().findId(conn,userName,userPno);
 		
 		JDBCTemplate.close(conn);
 		
-		return m;
+		return userId;
+	}
+
+	public boolean findPwd(String userId, String userName, String userPno) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		
+		boolean flag = new MemberDao().findPwd(conn,userId,userName,userPno);
+		
+		JDBCTemplate.close(conn);
+		
+		return flag;
 	}
 
 	
