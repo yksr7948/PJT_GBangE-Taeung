@@ -11,7 +11,7 @@
   	flex-direction: column;
   	align-items: center;
   	width: 670px;
-  	height: 800px;
+  	height: 900px;
   	margin: auto;
   	margin-top: 60px;
   	margin-bottom: 60px;
@@ -63,14 +63,6 @@
 .btn{
 	position: relative;
 }
-#user-info-findId{
-	position: relative;
-	margin: auto;
-	top: 50px;
-	left: 160px;
-	color: blue;
-	font-weight: 1000;
-}
 #user-info-noneId{
 	position: relative;
 	margin: auto;
@@ -80,7 +72,7 @@
 	font-weight: 1000;
 	display: none;
 }
-#search-btn {
+#check-btn {
 	position: absolute;
 	width: 230px;
 	height: 75px;
@@ -120,10 +112,15 @@
 <div id="container">
 	<div id="container2">
 		<div id="header">
-			<h1 align="center" style="font-size:48px; font-weight:700">아이디 찾기</h1>
+			<h1 align="center" style="font-size:48px; font-weight:700">비밀번호 찾기</h1>
 		</div>
 		<div>
 			<div class="user-info">
+				<div id="user-info-id">
+					<div style="font-weight:700">아이디</div>
+		            <input type="text" name="userId" id="userId"/>
+				</div>
+				<div id="hidden-idArea" style="display: none; margin-top:10px;"></div>
 				<div id="user-info-name">
 		        	<div style="font-weight:700">이름</div>
 		            <input type="text" name="userName" id="userName"/>
@@ -138,47 +135,63 @@
 				</div>
 				<div id="hidden-pnoArea" style="display: none; margin-top:10px;"></div>
 				
-				<div id="user-info-noneId">일치하는 아이디가 없습니다.</div>
-				<div id="user-info-findId"></div>
-			</div>
+				<div id="user-info-noneId">일치하는 정보가 없습니다.</div>
+			</div>	
 			
 			<br><br><br><br>
 			
 			<div class="btn">
-					<button type="button" id="search-btn" onclick="search();">검색</button>
-					<button type="submit" id="login-btn" onclick="login();">로그인페이지</button>
+					<button type="button" id="check-btn" onclick="check();">비밀번호 변경하기</button>
+					<button type="button" id="login-btn" onclick="login();">로그인페이지</button>
 			</div>
 		</div>
 	</div>
 </div>
 
 <script>
-	function search(){
+	function check(){
+		var id = $("#userId");
 		var name = $("#userName");
 		var pno1 = $("#userPno1");
 		var pno2 = $("#userPno2");
-		var tr = "";
 		
 		var regName = /^[가-힣a-zA-Z]{2,15}$/;
 		var regBirth = /^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))$/;
 		var regPno = /^[1-4]\d{6}$/;
+		var regIdPw = /^[a-zA-Z0-9]{4,15}$/;
 		
 		$.ajax({
-			url:"${contextPath}/findId.me",
-			type : "post",
-			data : {
+			url:"${contextPath}/findPwd.me",
+			type: "post",
+			data: {
+				userId : id.val(),
 				userName : name.val(),
 				userPno1 : pno1.val(),
 				userPno2 : pno2.val()
 			},
-			success : function(result){
+				success : function(result){			
+				//아이디 null값 비교
+				if (id.val() == "") {
+					$("#hidden-idArea").html("*아이디를 입력하세요.").show();
+					$("#hidden-idArea").css({"color" : "red"});
+					id.focus();
+					return false;
+				} else if (!regIdPw.test(id.val())) {
+					$("#hidden-idArea").html("*4~12자 영문 대소문자, 숫자만 입력하세요.").show();
+					$("#hidden-idArea").css({"color" : "red"});
+					id.focus();
+					return false;
+				} else{
+					$("#hidden-idArea").hide();
+				}
+				
 				//이름 null값 비교
 				if (name.val() == "") {
 					$("#hidden-nameArea").html("*이름을 입력하세요.").show();
 					$("#hidden-nameArea").css({"color" : "red"});
 					name.focus();
 					return false;
-					//이름 형식 비교
+				//이름 형식 비교
 				} else if (!regName.test(name.val())) {
 					$("#hidden-nameArea").html("*최소 2글자 이상, 한글과 영어만 입력하세요.").show();
 					$("#hidden-nameArea").css({"color" : "red"});
@@ -191,16 +204,12 @@
 				//주민번호 null값 체크
 				if (pno1.val() == "" && pno2.val() == "") {
 					$("#hidden-pnoArea").html("*주민번호를 입력하세요.").show();
-					$("#hidden-pnoArea").css({
-						"color" : "red"
-					});
+					$("#hidden-pnoArea").css({"color" : "red"});
 					pno1.focus();
 					return false;
 				} else if (!regBirth.test(pno1.val())) {
 					$("#hidden-pnoArea").html("*생년월일을 잘못입력했습니다.").show();
-					$("#hidden-pnoArea").css({
-						"color" : "red"
-					});
+					$("#hidden-pnoArea").css({"color" : "red"});
 					pno1.focus();
 					return false;
 				} else if (!regPno.test(pno2.val())) {
@@ -214,13 +223,12 @@
 					$("#hidden-pnoArea").hide();
 				}
 				
-				//아이디 보여주기
-				if(result == "null"){
+				if(result == "false"){
 					$("#user-info-noneId").show();
-					$("#user-info-findId").hide();
+					return false;
 				}else{
-					$("#user-info-findId").html("아이디: "+result).show();
-					$("#user-info-noneId").hide();
+					location.href="${contextPath}/changePwd.me?userId="+$("#userId").val();
+							
 				}
 				
 			},

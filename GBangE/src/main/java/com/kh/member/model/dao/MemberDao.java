@@ -124,9 +124,9 @@ public class MemberDao {
 		
 	}
 
-	public Member findId(Connection conn, String userName, String userPno) {
+	public String findId(Connection conn, String userName, String userPno) {
 
-		Member m = null;
+		String userId = null;
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
 		
@@ -140,8 +140,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Member(rset.getString("MEMBER_ID"),
-							   rset.getString("MEMBER_PNO"));	
+				userId = rset.getString("MEMBER_ID");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -151,6 +150,35 @@ public class MemberDao {
 			JDBCTemplate.close(pstmt);
 		}
 		
-		return m;
+		return userId;
+	}
+
+	public boolean findPwd(Connection conn, String userId, String userName, String userPno) {
+
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		boolean flag = false;
+		
+		String sql = prop.getProperty("findPwd");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userName);
+			pstmt.setString(3, userPno);
+			
+			rset = pstmt.executeQuery();
+			
+			flag = rset.next();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return flag;
+				
 	}
 }

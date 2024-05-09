@@ -8,20 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.member.model.service.MemberService;
 import com.kh.member.model.vo.Member;
 
 /**
- * Servlet implementation class IdFindController
+ * Servlet implementation class PwdChangeController
  */
-@WebServlet("/findId.me")
-public class IdFindController extends HttpServlet {
+@WebServlet("/changePwd.me")
+public class PwdChangeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IdFindController() {
+    public PwdChangeController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,24 +29,18 @@ public class IdFindController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		request.getRequestDispatcher("views/member/findIdForm.jsp").forward(request, response);
+		
+		String userId = request.getParameter("userId");
+		request.setAttribute("userId", userId);
+		request.getRequestDispatcher("/views/member/changePwdForm.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String userName = request.getParameter("userName");
-		String userPno1 = request.getParameter("userPno1");
-		String userPno2 = request.getParameter("userPno2");
-		
-		String userPno = userPno1+"-"+userPno2;
-		
-		String userId = new MemberService().findId(userName,userPno);
-		
-		response.getWriter().print(userId);
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
