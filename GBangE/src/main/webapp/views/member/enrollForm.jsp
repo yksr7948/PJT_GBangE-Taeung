@@ -229,7 +229,7 @@
 						<div style="font-weight:700">* 주민등록번호</div>
 						<input type="text" name="userPno1" id="userPno1" /> 
 						<font style="font-size: 30px">-</font> 
-						<input type="text"name="userPno2" id="userPno2" />
+						<input type="password"name="userPno2" id="userPno2" />
 					</div>
 					<div id="hidden-pnoArea" style="display: none; margin-top:10px;"></div>
 					
@@ -377,7 +377,7 @@
 				});
 				pwd.focus();
 				return false;
-				//비밀번호 형식 비교
+			//비밀번호 형식 비교
 			} else if (!regPwd.test(pwd.val())) {
 				$("#hidden-pwdArea").html("*4~15자 영문 대소문자, 숫자, 특수기호만 입력하세요.")
 						.show();

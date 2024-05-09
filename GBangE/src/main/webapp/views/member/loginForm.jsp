@@ -115,7 +115,7 @@ input:focus {
 			<br>
 			<br> <input type="submit" id="login-btn" value="Login">
 			<div align="center">
-				<a href="${contextPath}/findId.me">아이디 찾기</a> / <a href="">비밀번호 찾기</a> / <a href="${contextPath}/enrollCheck.me">회원가입</a>
+				<a href="${contextPath}/findId.me">아이디 찾기</a> / <a href="${contextPath}/findPwd.me">비밀번호 찾기</a> / <a href="${contextPath}/enrollCheck.me">회원가입</a>
 			</div>
 		</div>
 
