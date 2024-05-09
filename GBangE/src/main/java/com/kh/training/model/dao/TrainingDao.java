@@ -52,7 +52,7 @@ public class TrainingDao {
 		return tCList;
 	}
 
-	public int insertTraining(Connection conn, Training t) {
+	public int insertTraining(Connection conn, Training t, int memberNo) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertTraining");
@@ -75,16 +75,17 @@ public class TrainingDao {
 //			OCSTATUS
 //			STATUS
 			pstmt.setInt(1, t.getTrainingNo());
-			pstmt.setString(2, t.getTrainingTitle());
-			pstmt.setString(3, t.getTrainingKey());
-			pstmt.setString(4, t.getTrainingDate());
-			pstmt.setString(5, t.getTrainingPlace());
-			pstmt.setDouble(6, t.getTrainingTime());
-			pstmt.setString(7, t.getTrainingGoal());
-			pstmt.setDouble(8, t.getTrainingDistance());
-			pstmt.setDouble(9, t.getWeight());
-			pstmt.setString(10, t.getTrainingContent());
-			pstmt.setString(11, t.getoCStatus());
+			pstmt.setInt(2, memberNo);
+			pstmt.setString(3, t.getTrainingTitle());
+			pstmt.setString(4, t.getTrainingKey());
+			pstmt.setString(5, t.getTrainingDate());
+			pstmt.setString(6, t.getTrainingPlace());
+			pstmt.setDouble(7, t.getTrainingTime());
+			pstmt.setString(8, t.getTrainingGoal());
+			pstmt.setDouble(9, t.getTrainingDistance());
+			pstmt.setDouble(10, t.getWeight());
+			pstmt.setString(11, t.getTrainingContent());
+			pstmt.setString(12, t.getoCStatus());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

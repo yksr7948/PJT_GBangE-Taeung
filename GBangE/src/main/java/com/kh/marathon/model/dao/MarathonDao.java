@@ -246,6 +246,8 @@ public class MarathonDao{
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+searchName+"%");
+			pstmt.setString(2, "%"+searchName+"%");
+			pstmt.setString(3, "%"+searchName+"%");
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				JSONObject jobj = new JSONObject();

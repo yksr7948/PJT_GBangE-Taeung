@@ -3,6 +3,7 @@ package com.kh.marathon.model.service;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.Date;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -56,7 +57,7 @@ public class MarathonService {
             try {
                 String href = doc.select("td[width=29%] a").eq(i).attr("href");
                 if (href.isEmpty()) {
-                    System.out.println("종료");
+                    System.out.println("초기화"+new Date());
                     break;
                 }
                 String subHref = href.substring(href.indexOf(",") + 3, href.indexOf(",", href.indexOf(",") + 1) - 1);

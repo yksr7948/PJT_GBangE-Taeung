@@ -169,6 +169,13 @@ a {
 .board_page a.frist {
 	border-left: 1px solid #ddd;
 }
+ .list-area {
+      cursor: pointer;
+      transition: background-color 0.3s;
+}
+.list-area:hover{
+	background-color: #f0f0f0;
+}
 </style>
 </head>
 
@@ -244,6 +251,15 @@ a {
 		<div class="bt_wrap">
 				<a href="${contextPath}/insert.fe" class="on">글쓰기</a> <a href="">수정</a>
 			</div>
+			
+			<script>
+    
+    $(".list-area").click(function(){
+       ;
+        var fno = $(this).children().eq(0).text();
+        location.href='<%=request.getContextPath()%>/detail.fe?fno='+fno;
+    });
+</script>
    
 	
 </body>

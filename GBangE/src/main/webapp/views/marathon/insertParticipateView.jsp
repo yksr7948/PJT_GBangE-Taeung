@@ -60,7 +60,7 @@ body {
 	<form action="insert.pa" method="post">
 		<input type="hidden" name="memberNo" value="${memberNo }">
 		<input type="hidden" name="marathonNo" value="${marathonNo }">
-		선택한 대회 번호 : ${marathonNo}
+		선택한 대회 : ${marathonName}
 		<div>
 			<label for="participateName">* 이름</label>
 		</div>
@@ -68,7 +68,7 @@ body {
 		<div>
 			<label for="participatePwd">* 비밀번호</label>
 		</div>
-		<input type="text" class="form-control" id="participatePwd" name="participatePwd" placeholder="비밀번호를 입력하세요" required>
+		<input type="password" class="form-control" id="participatePwd" name="participatePwd" placeholder="비밀번호를 입력하세요" required>
 		<div>
 			<label for="registerationNo">* 주민번호</label>
 		</div>
