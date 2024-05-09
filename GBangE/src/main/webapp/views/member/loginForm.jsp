@@ -105,7 +105,7 @@ input:focus {
 	<div id="login-container">
 		<div id="container">
 			<div id="header">
-				<h1 align="center">로그인</h1>
+				<p align="center" style="font-size:60px; font-weight:700">로그인</p>
 			</div>
 		<form action="/gbange/login.me" method="post" id="login-form">
 				<input type="text" name="userId" placeholder="아이디"> 

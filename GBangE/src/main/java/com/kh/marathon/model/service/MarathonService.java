@@ -110,9 +110,9 @@ public class MarathonService {
 
 	public JSONArray selectMarathon() {
 		Connection conn = JDBCTemplate.getConnection();
-		JSONArray MarathonArr = new MarathonDao().selectMarathon(conn);
+		JSONArray marathonArr = new MarathonDao().selectMarathon(conn);
 		JDBCTemplate.close(conn);
-		return MarathonArr;
+		return marathonArr;
 	}
 
 	public Marathon marathonDetail(int marathonNo) {
@@ -169,5 +169,12 @@ public class MarathonService {
 		String regionName = new MarathonDao().selectMarathonRegionName(conn,marathonNo);
 		JDBCTemplate.close(conn);
 		return regionName;
+	}
+
+	public JSONArray selectSearch(String searchName) {
+		Connection conn = JDBCTemplate.getConnection();
+		JSONArray searchArr = new MarathonDao().selectSearch(conn,searchName);
+		JDBCTemplate.close(conn);
+		return searchArr;
 	}
 }
