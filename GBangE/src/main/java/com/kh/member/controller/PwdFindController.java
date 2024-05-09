@@ -9,19 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.member.model.service.MemberService;
-import com.kh.member.model.vo.Member;
 
 /**
- * Servlet implementation class IdFindController
+ * Servlet implementation class PwdFindController
  */
-@WebServlet("/findId.me")
-public class IdFindController extends HttpServlet {
+@WebServlet("/findPwd.me")
+public class PwdFindController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IdFindController() {
+    public PwdFindController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,8 +29,8 @@ public class IdFindController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		request.getRequestDispatcher("views/member/findIdForm.jsp").forward(request, response);
+		
+		request.getRequestDispatcher("views/member/findPwdForm.jsp").forward(request, response);
 	}
 
 	/**
@@ -39,15 +38,17 @@ public class IdFindController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String userId = request.getParameter("userId");
 		String userName = request.getParameter("userName");
 		String userPno1 = request.getParameter("userPno1");
 		String userPno2 = request.getParameter("userPno2");
 		
 		String userPno = userPno1+"-"+userPno2;
 		
-		String userId = new MemberService().findId(userName,userPno);
+		boolean flag = new MemberService().findPwd(userId,userName,userPno);
 		
-		response.getWriter().print(userId);
+		response.getWriter().print(flag);
+		
 	}
 
 }
