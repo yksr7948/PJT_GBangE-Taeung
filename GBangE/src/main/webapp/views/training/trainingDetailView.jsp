@@ -295,8 +295,11 @@
 			let open = "${training.oCStatus}"=='C';
 			let writer = "${loginUser.memberName}"!="${training.trainingWriter}";
 			if(open&&writer){
- 				alert("작성자만 볼 수 있는 일지입니다.");
+				$("#board_wrap").css("display","none");
+			setTimeout(() => {
+				alert("작성자만 볼 수 있는 일지입니다.");
  				history.back();
+			}, 100);
 			}
 		});
 	</script>
