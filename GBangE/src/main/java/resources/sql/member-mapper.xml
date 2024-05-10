@@ -48,4 +48,10 @@
 		  MEMBER_NAME = ? AND 
 		  MEMBER_PNO = ?
 	</entry>
+	
+	<entry key="changePwd">
+	UPDATE MEMBER 
+	SET MEMBER_PWD= ?
+	WHERE MEMBER_ID= ?
+	</entry>
 </properties>

@@ -68,5 +68,22 @@ public class MemberService {
 		return flag;
 	}
 
+	public int changePwd(String userId, String userPwd) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new MemberDao().changePwd(conn,userId,userPwd);
+		
+		if(result > 0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
 	
 }

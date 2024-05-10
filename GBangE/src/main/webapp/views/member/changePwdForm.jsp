@@ -11,7 +11,7 @@
   	flex-direction: column;
   	align-items: center;
   	width: 670px;
-  	height: 900px;
+  	height: 800px;
   	margin: auto;
   	margin-top: 60px;
   	margin-bottom: 60px;
@@ -95,9 +95,10 @@
 			<h1 align="center" style="font-size:48px; font-weight:700">비밀번호 찾기</h1>
 		</div>
 		<form action="${contextPath}/changePwd.me" method="post">
+			<input type="hidden" name="userId" value="${userId }">
 			<div class="user-info">
 				<div class="user-info-pw">
-					<div style="font-weight:700">* 비밀번호</div>
+					<div style="font-weight:700">* 변경할 비밀번호</div>
 					<input type="password" name="userPwd" id="userPwd" />
 				</div>
 				<div id="hidden-pwdArea" style="display: none; margin-top:10px;"></div>
