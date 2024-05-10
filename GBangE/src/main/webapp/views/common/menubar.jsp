@@ -93,10 +93,10 @@ alert(msg);
 <nav id="nav2">
       <a href="${contextPath}"> <img src="/gbange/views/common/resources/img/Logo-Black.png" alt="지방이" class="logo"></a>
         <ul>
-          <li><a href="/gbange/list.no">공지사항</a></li>
+          <li><a href="/gbange/list.no?currentPage=1">공지사항</a></li>
           <li><a href="${contextPath}/list.tr?currentPage=1">러닝일지 게시판</a></li>
           <li><a href="/gbange/list.fe?currentPage=1">대회참여인증 게시판</a></li>
-          <li><a href="#">Q/A</a></li>
+          <li><a href="${contextPath }/list.qu">Q/A</a></li>
         </ul>
       </nav>
       
