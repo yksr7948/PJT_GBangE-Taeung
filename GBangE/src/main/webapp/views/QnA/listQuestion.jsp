@@ -118,19 +118,69 @@ a {
 	width: 10%;
 }
 
-.board_list .count {
-	width: 8%;
-}
 .content-area{
 	display: none;
-	height:360px;
 }
-.content {
-	text-align: left;
+.question {
 	font-size: 3.0rem;
+	width:800px;
+	height:250px;
+	border-bottom: 3px solid #999;
+}
+.answer{
+	width:800px;
+	height:50px;
 }
 .answerDiv {
 	margin-top:40px;
+}
+.answer>div {
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+}
+
+.answer>div.top {
+	border-bottom: 1px solid #999;
+}
+.answer>div {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 15px 0;
+	font-size: 1.4rem;
+}
+
+.answer>div.top>div {
+	font-weight: 600;
+}
+
+.answer .num {
+	width: 10%;
+}
+
+.answer .title {
+	width: 60%;
+	text-align: left;
+}
+
+.answer .top .title {
+	text-align: center;
+}
+
+.answer .writer {
+	width: 10%;
+}
+
+.answer .date {
+	width: 10%;
+}
+.answerContent{
+	margin-top:30px;
+	height: 100px;
+	border-bottom: 1px solid #999;
+}
+div.deleteBtn{
+	margin-left:5px;
+	height:52px;
 }
 </style>
 </head>
@@ -165,12 +215,16 @@ a {
 					<div class="date">${q.createDate }</div>
 				</div>
 				<div class="content-area">
-					<div class="content">${q.questionContent }</div>
+					<div class="question">${q.questionContent }</div>					
+					<div class="answer-wrap">
+					</div>					
 					<br>
 					<div class="answerDiv">
 						<textarea style="width:800px; height:200px;"></textarea>
 						<br>
+						<c:if test="${! empty loginUser.memberNo }">
 						<button type="button" class="btn btn-lg btn-dark">답변 작성하기</button>
+						</c:if>
 					</div>
 				</div>
 				</c:forEach>
@@ -186,33 +240,99 @@ a {
          </div>
 <script>
     $(function(){
-        $("div.list-area").click(function(){                
+        $("div.list-area").click(function(){        
+        	$(".content-area .answer-wrap").html("");
+        	var questionId = $(this).find('.num').text();
+        	$.ajax({
+        		url:"list.an",
+        		data:{
+        			"questionId":questionId,        			
+        		},
+        		success:function(answerArr){
+        			for(let i=0; i<answerArr.length; i++){
+        				let tmp="";
+        					tmp += "<div class='answer'>";
+        					tmp += "<div class='title'>"+answerArr[i].answerTitle+"</div>";
+                        	tmp += "<div class='writer'>"+answerArr[i].memberName+"</div>";
+                        	tmp += "<div class='date'>"+answerArr[i].createDate+"</div>";
+                        	tmp += "<div class='deleteBtn'><button type='button' class='btn btn-lg btn-dark' onclick='deleteAnswer("+answerArr[i].answerId+");'>삭제</button></div>";                        	
+                        	tmp += "</div>";
+                        	tmp += "<div class='answerContent'>"+answerArr[i].answerContent+"</div>";
+    					$(".content-area .answer-wrap").append(tmp);
+        			}        			
+        		},
+        		error:function(){
+        			console.log("error");
+        		}
+        	});
             if($(this).next().css("display")=="none"){
                 $(this).next().slideDown();
-                // 지금 보여지는 p태그를 제외한 나머지는 다시 올려주기
                 $(this).next().siblings("div.content-area").slideUp();
             }else{
                 $(this).next().slideUp();
             }
         });
         $(".answerDiv .btn").click(function() {
-        	var answerContent = $(this).closest('.answerDiv').find('textarea').val()
-            var questionId = $(this).closest('.content-area').prev('.list-area').find('.num').text()
+        	var questionId = $(this).closest('.content-area').prev('.list-area').find('.num').text();
+        	var answerContent = $(this).closest('.answerDiv').find('textarea').val()            
+        	var answerTitle = "RE: "+$(this).closest('.content-area').prev('.list-area').find('.title').text();        	
         	$.ajax({
         		url:"insert.an",
         		data:{
         			"questionId":questionId,
-        			"answerContent":answerContent
+        			"memberNo":"${loginUser.memberNo}",
+        			"answerContent":answerContent,
+        			"answerTitle":answerTitle,
         		},
-        		success:function(){
-        			
+        		success:function(answerArr){
+        			test(questionId);
         		},
-        		erroe:function(){
-        			
+        		error:function(){
+        			console.log("error");
         		}
         	});
         });
     });
+    function test(questionId){    	
+    	$.ajax({
+    		url:"list.an",
+    		data:{
+    			"questionId":questionId,        			
+    		},
+    		success:function(answerArr){
+    			for(let i=0; i<answerArr.length; i++){
+    				let tmp="";
+    					tmp += "<div class='answer'>";
+    					tmp += "<div class='title'>"+answerArr[i].answerTitle+"</div>";
+                    	tmp += "<div class='writer'>"+answerArr[i].memberName+"</div>";
+                    	tmp += "<div class='date'>"+answerArr[i].createDate+"</div>";
+                    	tmp += "<div class='deleteBtn'><button type='button' class='btn btn-lg btn-dark' onclick='deleteAnswer("+answerArr[i].answerId+");'>삭제</button></div>";                    	
+                    	tmp += "</div>";
+                    	tmp += "<div class='answerContent'>"+answerArr[i].answerContent+"</div>";                    	
+					$(".content-area .answer-wrap").append(tmp);
+    			}        			
+    		},
+    		error:function(){
+    			console.log("error");
+    		}
+    	});
+    }
+    function deleteAnswer(e){
+		$.ajax({
+			url:"delete.an",
+			data:{
+				"answerId":e
+			},
+			success:function(result){
+				if(result>0){
+					test();	
+				}				
+			},
+			error:function(){
+				console.log("error");
+			}
+		});
+    }
 </script>	
 </body>
 </html>

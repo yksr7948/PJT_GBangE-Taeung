@@ -31,7 +31,9 @@ public class ListQuestionController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		JSONArray questionArr = new QnAService().selectQuestion();
+		JSONArray answerArr = new QnAService().selectAllAnswer();
 		request.setAttribute("questionArr",questionArr);
+		request.setAttribute("answerArr",answerArr);
 		request.getRequestDispatcher("views/QnA/listQuestion.jsp").forward(request, response);
 	}
 
