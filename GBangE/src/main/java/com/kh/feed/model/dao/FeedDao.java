@@ -281,7 +281,6 @@ public class FeedDao {
 	}
 
 	public int insertReply(Connection conn, Reply r) {
-		System.out.println(r);
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertReply");
@@ -330,6 +329,73 @@ public class FeedDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return list;
+	}
+
+	public int updateFeed(Connection conn, Feed f) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateFeed");
+		
+			try {
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, f.getCategory());
+				pstmt.setString(2, f.getCompetition());
+				pstmt.setString(3, f.getFeedTitle());
+				pstmt.setString(4, f.getFeedContent());
+				pstmt.setInt(5, f.getFeedNo());
+				
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+		return result;
+	}
+
+	public int updateAttachment(Connection conn, Attachment at) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateAttachment");
+		
+			try {
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, at.getOriginName());
+				pstmt.setString(2, at.getChangeName());
+				pstmt.setString(3, at.getFilePath());
+				pstmt.setInt(4, at.getFileNo());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+		return result;
+	}
+
+	public int deleteFeed(Connection conn, int feedNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteFeed");
+		
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, feedNo);
+				
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+		return result;
 	}
 
 

@@ -159,9 +159,20 @@
             </div>
             <br><br>
             <div class="bt_wrap">
-                <a href="" class="btn btn-outline-secondary" onclick="goToFeedListView()">목록</a>
-                <a href="#" class="btn btn-success">수정</a>
+                <a href="#" class="btn btn-outline-secondary" onclick="goToFeedListView()">목록</a>
+                <a href="${contextPath}/update.fe?fno=${f.feedNo}" class="btn btn-success">수정</a>
+                <a href="${contextPath}/delete.fe?fno=${f.feedNo}" onclick="deleteFeed()" class="btn btn-danger">삭제</a>
             </div>
+            <script>
+            	function deleteFeed(){
+            		var flag = confirm("삭제하면 마일리지가 날라가요~");
+        
+            		if(flag){
+            			location.href="${contextPath}/delete.fe?fno=${f.feedNo}";
+            		}
+            	}
+            		
+            </script>
      		<br><br>
             <div id="reply-area" align="center">
             	<table border="1">
@@ -202,7 +213,7 @@
     				memberNo : "${loginUser.memberNo}"
     			},
     			success : function(result){
-    			console.log(result);
+   
     			
     				console.log(result);
     				if(result>0){
@@ -251,7 +262,7 @@
     
    <script>
     function goToFeedListView() {
-        window.location.href = 'views/feed/feedListView.jsp';
+        window.location.href = '/gbange/list.fe?currentPage=1';
     }
 </script>
 </body>
