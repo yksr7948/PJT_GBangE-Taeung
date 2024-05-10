@@ -7,8 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.kh.member.model.vo.Member;
+import com.kh.member.model.service.MemberService;
 
 /**
  * Servlet implementation class PwdChangeController
@@ -39,8 +40,21 @@ public class PwdChangeController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		String userId = request.getParameter("userId");
+		String userPwd = request.getParameter("userPwd");
+		
+		int result = new MemberService().changePwd(userId,userPwd);
+		
+		if(result > 0) {
+			HttpSession session = request.getSession();
+			
+			session.setAttribute("alertMsg", "비밀번호가 정상적으로 변경되었습니다.");
+			response.sendRedirect(request.getContextPath());
+		}else {
+			request.setAttribute("alertMsg", "비밀번호 변경이 완료되지 않았습니다.");
+			request.getRequestDispatcher("views/member/findPwdForm.jsp").forward(request, response);
+		}
 	}
 
 }

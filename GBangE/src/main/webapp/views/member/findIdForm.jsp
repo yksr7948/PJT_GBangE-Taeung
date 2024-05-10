@@ -64,12 +64,17 @@
 	position: relative;
 }
 #user-info-findId{
+	border: 1px solid #0068ff;
+	height: 100px;
 	position: relative;
 	margin: auto;
+	text-align : center;
+  	line-height : 100px;
 	top: 50px;
-	left: 160px;
 	color: blue;
 	font-weight: 1000;
+	font-size: 24px;
+	display: none;
 }
 #user-info-noneId{
 	position: relative;
