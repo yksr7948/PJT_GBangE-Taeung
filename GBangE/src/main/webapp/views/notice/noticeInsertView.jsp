@@ -21,6 +21,16 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.btn-cancel').click(function() {
+            if (confirm('정말 취소하시겠습니까?')) {
+                window.location.href = "<%= request.getContextPath() %>/list.no?currentPage=1";
+            }
+        });
+    });
+    
+</script>
 <style>
 .board_wrap {
 	margin: 30px;
@@ -138,8 +148,8 @@
 				</div>
 				<br>
 				<div class="bt_wrap">
-					<button type="submit" class="btn btn-success">등록</button> <button type="reset"
-						class="btn btn-outline-secondary">취소</button>
+					<button type="submit" class="btn btn-success">등록</button> 
+						<button type="button" class="btn btn-outline-secondary btn-cancel">취소</button>
 				</div>
 			</div>
 		</form>

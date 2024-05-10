@@ -254,7 +254,7 @@ a {
 			<%if((loginUser != null) && loginUser.getMemberId().equals("admin")){ %>
 			<div class="bt_wrap">
 			
-				<a href="${contextPath}/insert.no" class="on">글쓰기</a> <a href="">수정</a>
+				<a href="${contextPath}/insert.no" class="on">글쓰기</a> 
 			</div>
 			 <%} %>
 		</div>

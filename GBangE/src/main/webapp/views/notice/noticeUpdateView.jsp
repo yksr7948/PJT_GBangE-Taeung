@@ -19,6 +19,7 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <title>Insert title here</title>
 <style>
 .board_wrap {
@@ -139,8 +140,9 @@
 			
 			<br>
 			<div class="bt_wrap">
-				<button type="submit" class="btn btn-success">등록</button>
-					<button href="${contextPath }/list.no" class="btn btn-outline-secondary">취소</button>
+				    <button type="submit" class="btn btn-success btn-lg">등록</button>
+				    <a href="${contextPath}/list.no?currentPage=1" class="btn btn-secondary btn-lg">취소</a>
+				</div>
 			</div>
 		</div>
 		</form>

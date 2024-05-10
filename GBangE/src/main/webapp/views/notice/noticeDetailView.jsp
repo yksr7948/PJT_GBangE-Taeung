@@ -1,3 +1,7 @@
+<%@ page import="java.sql.Connection" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@page import="com.kh.notice.model.vo.Notice"%>
+<%@page import="com.kh.notice.model.dao.NoticeDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -87,17 +91,41 @@
 }
 
  /* 공유 아이콘 스타일 */
-        .social-share {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
+ .social-share {
+    position: absolute;
+    top: 160px; /* Adjust this value to move the icons slightly up */
+    right: 20px;
+}
 
-        .social-share img {
-            width: 30px;
-            height: 30px;
-            margin-left: 10px;
-        }
+.social-share img {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.link-icon { 
+    display: inline-block; 
+    width: auto; 
+    font-size: 14px; 
+    font-weight: 500; 
+    color: #333; 
+    margin-right: 10px; 
+}
+
+.link-icon.twitter { 
+    background-image: url(./img/icon-twitter.png); 
+    background-repeat: no-repeat; 
+}
+
+.link-icon.facebook { 
+    background-image: url(./img/icon-facebook.png); 
+    background-repeat: no-repeat; 
+} 
+
+.link-icon.kakao { 
+    background-image: url(./img/icon-kakao.png); 
+    background-repeat: no-repeat; 
+}
 </style>
 </head>
 <body>
@@ -129,16 +157,23 @@
                         <dd>${notice.count}</dd>
                     </dl>
                 </div>
+               
                 <div class="cont">
                     ${notice.noticeContent}
-					<img alt="업로드이미지" src="${contextPath}${at.filePath}${at.changeName}" id="uploadFile">
+                     <div class="social-share">
+        <a id="btnTwitter" class="link-icon twitter" href="javascript:shareTwitter();">트위터</a>
+        <a id="btnFacebook" class="link-icon facebook" href="javascript:shareFacebook();">페이스북</a>
+        <a id="btnKakao" class="link-icon kakao" href="javascript:shareKakao();">카카오톡</a>
+    </div>
+    <img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile">
+					<img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile">
 				</div>
                 </div>
             </div>
             <br>
             <div class="bt_wrap">
-            <% if(loginUser != null && loginUser.getMemberId().equals("admin")) { %>
 			    <a href="${contextPath}/list.no?currentPage=1" class="btn btn-outline-secondary">목록</a>
+			    <% if(loginUser != null && loginUser.getMemberId().equals("admin")) { %>
 			    <a href="${contextPath}/update.no?nno=${notice.noticeId}" class="btn btn-success">수정</a>
 			    <a href="${contextPath}/delete.no?nno=${notice.noticeId}" class="btn btn-danger" onclick="return confirmDelete()">삭제</a>
 			<% } %>
@@ -156,6 +191,26 @@
             return false;
         }
     }
+   /*  function shareKakao() {
+
+    	  // 사용할 앱의 JavaScript 키 설정
+    	  Kakao.init('카카오에서_발급받은_API키');
+
+    	  // 카카오링크 버튼 생성
+    	  Kakao.Link.createDefaultButton({
+    	    container: '#btnKakao', // 카카오공유버튼ID
+    	    objectType: 'content',
+    	    content: {
+    	      title: "공지사항", // 보여질 제목
+    	      description: "지방이 공지사항", // 보여질 설명
+    	      imageUrl: "gbangE/", // 콘텐츠 URL
+    	      link: {
+    	         mobileWebUrl: "gbangE/",
+    	         webUrl: "gbangE/"
+    	      }
+    	    }
+    	  });
+    	}   */
 </script>
    
 </body>

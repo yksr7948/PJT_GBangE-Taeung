@@ -110,9 +110,6 @@ public class NoticeDao {
 		    return result;
 		}
 		
-		
-		
-	
 
 	//조회수 증가
 	public int increaseCount(Connection conn, int nno) {
