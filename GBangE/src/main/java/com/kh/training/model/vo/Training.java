@@ -66,13 +66,14 @@ public class Training {
 		this.status = status;
 	}
 
-	public Training(int trainingNo, String trainingTitle, String trainingWriter, Date recordDate, int count) {
+	public Training(int trainingNo, String trainingTitle, String trainingWriter, Date recordDate, int count, String oCStatus) {
 		super();
 		this.trainingTitle = trainingTitle;
 		this.count = count;
 		this.trainingNo = trainingNo;
 		this.trainingWriter = trainingWriter;
 		this.recordDate = recordDate;
+		this.oCStatus = oCStatus;
 	}
 
 	public String getTrainingTitle() {
