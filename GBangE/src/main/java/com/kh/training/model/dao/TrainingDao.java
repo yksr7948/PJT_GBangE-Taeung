@@ -159,7 +159,7 @@ public class TrainingDao {
 
 			while (rset.next()) {
 				list.add(new Training(rset.getInt("TRAINING_NO"), rset.getString("TRAINING_TITLE"),
-						rset.getString("MEMBER_NAME"), rset.getDate("RECORD_DATE"), rset.getInt("COUNT")));
+						rset.getString("MEMBER_NAME"), rset.getDate("RECORD_DATE"), rset.getInt("COUNT"),rset.getString("OCSTATUS")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
