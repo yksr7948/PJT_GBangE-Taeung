@@ -13,6 +13,7 @@ import java.util.Properties;
 import com.kh.common.JDBCTemplate;
 import com.kh.common.model.vo.PageInfo;
 import com.kh.training.model.vo.Attachment;
+import com.kh.training.model.vo.Reply;
 import com.kh.training.model.vo.Training;
 import com.kh.training.model.vo.TrainingCategory;
 
@@ -251,6 +252,8 @@ public class TrainingDao {
 				t.setWeight(rset.getDouble("WEIGHT"));
 //				TRAINING_CONTENT
 				t.setTrainingContent(rset.getString("TRAINING_CONTENT"));
+//				OCSTATUS
+				t.setoCStatus(rset.getString("oCStatus"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -342,6 +345,46 @@ public class TrainingDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
+	}
+
+	public int insertReply(Connection conn, Reply r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertReply");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, r.getreplyContent());
+			pstmt.setInt(2, r.getRefTno());
+			pstmt.setString(3, r.getreplyWriter());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public ArrayList<Reply> selectReplyList(Connection conn, int refTno) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		ArrayList<Reply>list = new ArrayList<>();
+		String sql = prop.getProperty("selectReplyList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, refTno);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Reply(
+						rset.getString("REPLY_CONTENT")
+						,rset.getString("MEMBER_NAME")
+						,rset.getDate("CREATE_DATE")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 

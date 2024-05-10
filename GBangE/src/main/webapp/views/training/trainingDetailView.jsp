@@ -95,23 +95,23 @@
 	float: right;
 }
 /* 댓글 기능 */
-.comment-area {
+.reply-area {
 	border: 1px solid lightslategray;
 	border-radius: 10px;
 	width: 100%;
 }
 
-.comment-write {
+.reply-write {
 	margin: 10px;
 }
 
-.comment-write>textarea {
+.reply-write>textarea {
 	border: none;
 	width: 100%;
 	margin-top: 10px;
 }
 
-.comment-btn {
+.reply-btn {
 	display: flex;
 	margin: 10px;
 }
@@ -132,7 +132,7 @@
 			<div class="board_view">
 				<div class="title">${training.trainingTitle}</div>
 				<div class="info">
-				<input type="hidden" value="${loginUser.memberName }" id="memberName">
+					<%-- <input type="hidden" value="${loginUser.memberName }" id="memberName"> --%>
 					<dl>
 						<dt>번호</dt>
 						<dd>${training.trainingNo}</dd>
@@ -205,9 +205,9 @@
 								});
 			</script>
 			<br>
-			<div class="comment">
+			<div class="reply">
 				<h4>댓글</h4>
-				<div class="comment-list">
+				<div class="reply-list" id="reply-list">
 					<!-- 댓글 하나 -->
 					<hr>
 					<dl>
@@ -224,49 +224,77 @@
 					</dl>
 				</div>
 			</div>
-			<div class="comment-area">
+			<div class="reply-area">
 				<c:if test="${empty loginUser}">
-				<div class="comment-write">
-					<textarea name="" id="" cols="200" rows="1" style="resize: none;"
-						placeholder="로그인 후 댓글입력이 가능합니다 :&#41;"></textarea>
-				</div>
+					<div class="reply-write">
+						<textarea name="" id="" cols="200" rows="1" style="resize: none;"
+							placeholder="로그인 후 댓글입력이 가능합니다 :&#41;"></textarea>
+					</div>
 				</c:if>
-					<div class="comment-write">
-						<b id="memberName">${loginUser.memberName }</b>
-						<textarea name="comment" id="comment" cols="200" rows="1"
-							style="resize: none;" placeholder="댓글을 남겨보세요 :&#41;"></textarea>
-					</div>
-					<div class="comment-btn right">
-						<button class="btn btn-outline-info" id="comment-btn">등록</button>
-					</div>
+				<div class="reply-write">
+					<b id="memberName">${loginUser.memberName }</b>
+					<textarea name="reply" id="reply" cols="200" rows="1"
+						style="resize: none;" placeholder="댓글을 남겨보세요 :&#41;"></textarea>
+				</div>
+				<div class="reply-btn right">
+					<button class="btn btn-outline-info" id="reply-btn">등록</button>
+				</div>
 			</div>
 
 		</div>
 	</div>
 	<script>
 		$(function() {
-			$("#comment-btn").click(function() {
+			$("#reply-btn").click(function() {
 				var memberName = $("#memberName").val();
-				let comment = $("#comment").val();
-				$("#comment").val("");
+				let reply = $("#reply").val();
+				
  				$.ajax({
  					type: "post",
-					url : "comment.tr",
+					url : "reply.tr",
 					data : {
-						comment : comment
+						memberNo : ${loginUser.memberNo},
+ 						tno : ${training.trainingNo},
+						reply : reply
 					},
-					success : function(comment) {
-						let print = "<hr><dl>";
-						print+="<dt>"+memberName+"<dt>";
-						print+="<dd>"+comment+"<dd>";
-						print+="</dl>"
-						$(".comment-list").html(print);
+					success : function(result) {
+						$("#reply").val("");
+						replyList();
 					},
 					error : function() {
-						console.log("댓글작성 실패ㅠㅠ");
+						alert("댓글작성 실패ㅠㅠ 다시 시도해보세요");
 					}
 				});
 			});
+		});
+		
+		function replyList() {
+			$.ajax({
+				url : "reply.tr",
+				data : {
+						tno : ${training.trainingNo}
+				},
+				success : function(list){
+					var dl = "";
+					for(var i in list){
+						dl += "<hr><dl>"
+							+ "<dt>"+list[i].replyWriter+"</dt>"
+							+ "<dd>"+list[i].replyContent+"</dd>"
+							+ "<dd>"+list[i].createDate+"</dd>"
+							+ "</dl>";
+					}
+					$("#reply-list").html(dl);						
+				},
+				error : function(){
+				alert("통신오류,댓글목록 조회 실패... 다시 시도해주세요");	
+				}
+				});
+		}
+		$(function() {
+			replyList();
+			if(${training.oCStatus}){
+				
+			}
 		});
 	</script>
 </body>

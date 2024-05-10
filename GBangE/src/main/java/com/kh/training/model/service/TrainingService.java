@@ -10,6 +10,7 @@ import com.kh.common.JDBCTemplate;
 import com.kh.common.model.vo.PageInfo;
 import com.kh.training.model.dao.TrainingDao;
 import com.kh.training.model.vo.Attachment;
+import com.kh.training.model.vo.Reply;
 import com.kh.training.model.vo.Training;
 import com.kh.training.model.vo.TrainingCategory;
 
@@ -119,6 +120,25 @@ public class TrainingService {
 		}
 		JDBCTemplate.close(conn);
 		return result;
+	}
+
+	public int insertReply(Reply r) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new TrainingDao().insertReply(conn,r);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public ArrayList<Reply> selectReplyList(int refTno) {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Reply> list = new TrainingDao().selectReplyList(conn,refTno);
+			JDBCTemplate.close(conn);
+		return list;
 	}
 
 }
