@@ -1,19 +1,19 @@
 package com.kh.qna.model.dao;
 
-import java.beans.Statement;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.google.gson.Gson;
 import com.kh.common.JDBCTemplate;
+import com.kh.qna.model.vo.Answer;
 import com.kh.qna.model.vo.Question;
 
 public class QnADao {
@@ -67,6 +67,92 @@ public class QnADao {
 			JDBCTemplate.close(stmt);
 		}
 		return questionArr;
+	}
+	public int insertAnswer(Connection conn, Answer a) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertAnswer");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, a.getMemberNo());
+			pstmt.setInt(2, a.getRefQno());
+			pstmt.setString(3, a.getAnswerTitle());
+			pstmt.setString(4, a.getAnswerContent());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	public JSONArray selectAnswer(Connection conn, int questionId) {
+		JSONArray answerArr = new JSONArray();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectAnswer");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, questionId);
+			rset=pstmt.executeQuery();
+			while(rset.next()) {
+				JSONObject jobj = new JSONObject();
+				jobj.put("answerId",rset.getInt("ANSWER_ID"));
+				jobj.put("memberName",rset.getString("MEMBER_NAME"));
+				jobj.put("refQno", rset.getInt("REF_QNO"));
+				jobj.put("answerTitle",rset.getString("ANSWER_TITLE"));
+				jobj.put("answerContent",rset.getString("ANSWER_CONTENT"));
+				jobj.put("createDate",rset.getDate("CREATE_DATE"));
+				answerArr.add(jobj);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return answerArr;
+	}
+	public JSONArray selectAllAnswer(Connection conn) {
+		JSONArray answerArr = new JSONArray();
+		Statement stmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectAllAnswer");
+		try {
+			stmt = conn.createStatement();			
+			rset = stmt.executeQuery(sql);
+			while(rset.next()) {
+				JSONObject jobj = new JSONObject();
+				jobj.put("answerId",rset.getInt("ANSWER_ID"));
+				jobj.put("memberName",rset.getString("MEMBER_NAME"));
+				jobj.put("refQno", rset.getInt("REF_QNO"));
+				jobj.put("answerTitle",rset.getString("ANSWER_TITLE"));
+				jobj.put("answerContent",rset.getString("ANSWER_CONTENT"));
+				jobj.put("createDate",rset.getDate("CREATE_DATE"));
+				answerArr.add(jobj);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(stmt);
+		}
+		return answerArr;
+	}
+	public int deleteAnswer(Connection conn, int answerId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteAnswer");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, answerId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
 	}
 
 }
