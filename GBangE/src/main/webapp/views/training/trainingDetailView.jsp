@@ -123,7 +123,7 @@
 </head>
 <body>
 	<%@include file="/views/common/menubar.jsp"%>
-	<div class="board_wrap">
+	<div class="board_wrap" id="board_wrap">
 		<div class="board_title">
 			<h1>러닝일지</h1>
 			<p>러닝일지 페이지입니다.</p>
@@ -292,8 +292,11 @@
 		}
 		$(function() {
 			replyList();
-			if(${training.oCStatus}){
-				
+			let open = "${training.oCStatus}"=='C';
+			let writer = "${loginUser.memberName}"!="${training.trainingWriter}";
+			if(open&&writer){
+ 				alert("작성자만 볼 수 있는 일지입니다.");
+ 				history.back();
 			}
 		});
 	</script>

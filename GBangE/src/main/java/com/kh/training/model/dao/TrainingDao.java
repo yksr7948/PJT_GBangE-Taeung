@@ -253,7 +253,7 @@ public class TrainingDao {
 //				TRAINING_CONTENT
 				t.setTrainingContent(rset.getString("TRAINING_CONTENT"));
 //				OCSTATUS
-				t.setoCStatus(rset.getString("oCStatus"));
+				t.setoCStatus(rset.getString("OCSTATUS"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
