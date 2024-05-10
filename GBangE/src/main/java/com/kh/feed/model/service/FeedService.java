@@ -128,6 +128,50 @@ public class FeedService {
 		return list;
 	}
 
+	public int updateFeed(Feed f, Attachment at) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int feedNo = new FeedDao().selectFeedNo(conn);
+		
+		int result = new FeedDao().updateFeed(conn,f);
+		
+		int result2 = 1;
+		
+		
+		
+		if(at!=null) {
+			if(at.getFileNo()!=0) {
+				result2 = new FeedDao().updateAttachment(conn,at);
+			}else {
+				result2 = new FeedDao().insertAttachment(conn, at,feedNo);
+			}
+		}
+		
+		if(result*result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result*result2;
+	}
+
+	public int deleteFeed(int feedNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new FeedDao().deleteFeed(conn,feedNo);
+		
+		if(result>0) {
+			
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
 
 
 

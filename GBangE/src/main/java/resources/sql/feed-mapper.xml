@@ -111,4 +111,29 @@ INSERT INTO REPLY(REPLY_NO
 	AND REF_BNO = ?
 </entry>
 
+<entry key="updateFeed">
+	UPDATE FEED SET CATEGORY_NO = ?
+	,COMPETITION_NO =?
+	,FEED_TITLE = ?
+	,FEED_CONTENT =?
+	WHERE FEED_NO = ?
+	 
+     
+</entry>
+
+<entry key="updateAttachment">
+		UPDATE ATTACHMENT
+		SET ORIGIN_NAME = ?
+			,CHANGE_NAME = ?
+			,FILE_PATH = ?
+			,UPLOAD_DATE = SYSDATE
+		WHERE FILE_NO = ?
+		AND STATUS = 'Y'
+</entry>
+
+<entry key="deleteFeed">
+		UPDATE FEED
+		SET STATUS = 'N'
+		WHERE FEED_NO = ?
+</entry>
 </properties>
