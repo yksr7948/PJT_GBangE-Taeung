@@ -54,4 +54,19 @@
 	SET MEMBER_PWD= ?
 	WHERE MEMBER_ID= ?
 	</entry>
+	
+	<entry key="updateMember">
+	UPDATE MEMBER SET MEMBER_NAME = ?,
+                      GENDER = ?,
+                      ADDRESS = ?,
+                      SHOES = ?,
+                      WEIGHT = ?
+	WHERE MEMBER_ID = ?
+	</entry>
+	
+	<entry key="selectMember">
+	SELECT *
+	FROM MEMBER
+	WHERE MEMBER_ID = ?
+	</entry>
 </properties>

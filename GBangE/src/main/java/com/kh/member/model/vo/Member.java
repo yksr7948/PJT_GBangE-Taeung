@@ -47,6 +47,18 @@ public class Member {
 		this.shoes = shoes;
 		this.weight = weight;
 	}
+	
+	
+
+	public Member(String memberName, String memberId, String gender, String address, String shoes, double weight) {
+		super();
+		this.memberName = memberName;
+		this.memberId = memberId;
+		this.gender = gender;
+		this.address = address;
+		this.shoes = shoes;
+		this.weight = weight;
+	}
 
 	public Member(String memberId, String memberPno) {
 		super();

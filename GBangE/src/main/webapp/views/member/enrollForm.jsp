@@ -187,6 +187,10 @@
 	border: 1px solid gray;
 	border-radius: 10px;
 }
+#hidden-shoseArea{
+	display:none;
+	margin-top: -20px;
+}
 </style>
 </head>
 <body>
@@ -248,11 +252,12 @@
 					</div>
 
 					<div class="user-info-shoes" style="font-weight:700">
-						러닝화 <select name="shoes">
-							<option value="기타">기타</option>
-							<option value="맨발">맨발</option>
-							<option value="운동화">운동화</option>
-							<option value="스니커즈">스니커즈</option>
+						러닝화 
+						<select name="shoes" id="shose">
+							<option value="0">맨발</option>
+							<option value="1">운동화</option>
+							<option value="2">스니커즈</option>
+							<option value="3">기타</option>
 						</select>
 					</div>
 				</div>
@@ -260,11 +265,12 @@
 					<br><br>
 					
 				<div class="gender">			
-					<input type="radio" name="gender" id="women" value="W" />
+					<input type="radio" name="gender" id="men"value="0" />
+					<label for="men" style="font-weight:700">남성</label>
+					
+					<input type="radio" name="gender" id="women" value="1" />
 					<label for="women" style="font-weight:700">여성</label> 
 					
-					<input type="radio" name="gender" id="men"value="M" />
-					<label for="men" style="font-weight:700">남성</label>
 				</div>
 				<div class="btn">
 					<button type="submit" id="enroll-btn" onclick="return enroll();"
@@ -333,6 +339,7 @@
 	</script>
 
 	<script>
+		
 		//회원가입 정규표현식
 		function enroll() {
 			var id = $("#userId");
