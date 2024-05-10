@@ -24,66 +24,81 @@
 .board_wrap {
 	margin: 30px;
 }
-/*기본 구조*/
-.board_view {
-	width: 100%;
+
+.board_write {
 	border-top: 2px solid #000;
-	font-size: 1.4rem;
 }
 
-.board_view .title {
-	padding: 20px 15px;
-	border-bottom: 1px solid #ddd;
-	font-size: 2rem;
-}
-
-.board_view .info {
+.board_write .title, .board_write .info {
 	padding: 15px;
-	border-bottom: 1px solid #999;
 	font-size: 0;
 }
 
-.board_view .cont {
-	padding: 15px;
+.board_write .info {
+	border-top: 1px dashed #ddd;
+	border-bottom: 1px solid #000;
+}
+
+.board_write .cont {
 	border-bottom: 2px solid #000;
-	line-height: 160%;
-	font-size: 1.4rem;
 }
 
-/*info 설정*/
-.board_view .info dl {
-	display: inline-block;
-	padding: 0 20px;
-	position: relative;
-}
-
-.board_view .info dl:first-child {
-	padding-left: 0;
-}
-
-.board_view .info dl::before {
-	content: "";
-	position: absolute;
-	top: 3px;
-	left: 0;
+/*textarea*/
+.board_write .cont textarea {
 	display: block;
-	width: 1px;
-	height: 13px;
-	background-color: #ddd;
+	width: 100%;
+	height: 300px;
+	padding: 15px;
+	box-sizing: border-box;
+	border: 0;
+	resize: vertical;
 }
 
-.board_view .info dl:first-child::before {
-	display: none;
-}
-
-.board_view .info dl dd, .board_view .info dl dt {
+/*title, info 설정*/
+.board_write .title dt, .board_write .title dd, .board_write .info dt,
+	.board_write .info dd {
 	display: inline-block;
+	vertical-align: middle;
 	font-size: 1.4rem;
 }
 
-.board_view .info dl dd {
+.board_write .title dt, .board_write .info dt {
+	width: 100px;
+}
+
+.board_write .title dd {
+	width: calc(100% - 100px);
+}
+
+.board_write .info dl {
+	display: inline-block;
+	width: 50%;
+	vertical-align: middle;
+}
+
+.board_write .title input[type="text"] {
+	width: 80%;
+}
+
+.board_write input[type="text"], .board_write input[type="password"] {
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.bt_wrap {
+	margin-top: 30px;
+	text-align: center;
+	font-size: 0;
+}
+
+.bt_wrap a {
+	display: inline-block;
+	min-width: 100px;
 	margin-left: 10px;
-	color: #777;
+	padding: 10px;
+	border-radius: 2px;
+	font-size: 1.4rem;
+	text-decoration: none;
 }
 </style>
 </head>
@@ -94,40 +109,41 @@
 			<h1>공지사항</h1>
 			<p>공지사항 수정 페이지입니다.</p>
 		</div>
+		<form action="${contextPath}/update.no" method="post" id="enroll-form" enctype="multipart/form-data">
+		<input type="hidden" name="memberNo" value="${loginUser.memberNo }">
+		<input type="hidden" name="noticeId" value="${noticeId}">
 		<div class="board_view_wrap">
-			<div class="board_view">
-				<div class="title">글 제목이 들어갑니다.</div>
-				<div class="info">
+			<div class="board_write">
+				<div class="title">
 					<dl>
-						<dt>번호</dt>
-						<dd>3</dd>
-					</dl>
-					<dl>
-						<dt>글쓴이</dt>
-						<dd>홍길순</dd>
-					</dl>
-					<dl>
-						<dt>작성일</dt>
-						<dd>2023-07-27</dd>
-					</dl>
-					<dl>
-						<dt>조회</dt>
-						<dd>32</dd>
-					</dl>
+							<dt>제목</dt>
+							<dd>
+								<input type="text" name="title" placeholder="제목 입력">
+							</dd>
+						</dl>
+					</div>
+					<div class="info">
+						
+						<dl>
+							<dt>첨부파일</dt>
+						<dd>
+							<input type="file" name="uploadFile" class="btn btn-outline-secondary">
+						</dd>
+						</dl>
+					</div>
+					<div class="cont">
+						<textarea name="content" placeholder="내용 입력"></textarea>
+					</div>
+     
 				</div>
-				<div class="cont">
-
-					글 내용이 들어갑니다<br> 글 내용이 들어갑니다<br> 글 내용이 들어갑니다<br> 글
-					내용이 들어갑니다<br> 글 내용이 들어갑니다<br> 글 내용이 들어갑니다<br> 글 내용이
-					들어갑니다
-				</div>
-			</div>
+			
 			<br>
 			<div class="bt_wrap">
-				<a href="" class="btn btn-outline-secondary">목록</a> <a href=""
-					class="btn btn-success">수정</a>
+				<button type="submit" class="btn btn-success">등록</button>
+					<button href="${contextPath }/list.no" class="btn btn-outline-secondary">취소</button>
 			</div>
 		</div>
+		</form>
 	</div>
 </body>
 </html>

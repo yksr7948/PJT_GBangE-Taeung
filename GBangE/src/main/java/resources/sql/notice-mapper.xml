@@ -127,7 +127,36 @@ FROM ATTACHMENT WHERE REF_BNO = ?
 </entry>
 
 
+<entry key="updateNotice">
+	UPDATE NOTICE
+	SET NOTICE_TITLE = ?
+	   ,NOTICE_CONTENT = ?
+	   WHERE NOTICE_ID = ?
+	   AND STATUS ='Y'
 
+
+</entry>
+
+
+	<entry key="updateAttachment">
+		UPDATE ATTACHMENT 
+		SET ORIGIN_NAME = ?
+			,CHANGE_NAME = ?
+			,FILE_PATH = ?
+			,UPLOAD_DATE = SYSDATE
+		WHERE FILE_NO = ?
+		AND STATUS ='Y'
+	</entry>
+
+
+	
+	<entry key="deleteNotice">
+	UPDATE NOTICE
+		SET STATUS = 'N'
+		WHERE NOTICE_ID = ?
+	
+	
+	</entry>
 
 
 </properties>

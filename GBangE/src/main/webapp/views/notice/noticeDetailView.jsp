@@ -132,24 +132,31 @@
                 <div class="cont">
                     ${notice.noticeContent}
 					<img alt="업로드이미지" src="${contextPath}${at.filePath}${at.changeName}" id="uploadFile">
-					${contextPath}${at.filePath}${at.changeName}
 				</div>
                 </div>
             </div>
             <br>
             <div class="bt_wrap">
-            <%if(loginUser!=null && loginUser.getMemberId().equals("admin")) {%>
-                <a href="" class="btn btn-outline-secondary" onclick="goToNoticeListView()">목록</a>
-                <a href="#" class="btn btn-success">수정</a>
-               <%} %>
+            <% if(loginUser != null && loginUser.getMemberId().equals("admin")) { %>
+			    <a href="${contextPath}/list.no?currentPage=1" class="btn btn-outline-secondary">목록</a>
+			    <a href="${contextPath}/update.no?nno=${notice.noticeId}" class="btn btn-success">수정</a>
+			    <a href="${contextPath}/delete.no?nno=${notice.noticeId}" class="btn btn-danger" onclick="return confirmDelete()">삭제</a>
+			<% } %>
             </div>
         </div>
-    </div>
-    
+   
    <script>
-    function goToNoticeListView() {
-        window.location.href = 'views/notice/noticeListView.jsp';
+    function confirmDelete() {
+        var confirmDelete = confirm("정말 삭제하시겠습니까?");
+        if (confirmDelete) {
+            // 삭제 처리하는 코드
+            window.location.href = "${contextPath}/delete.no?nno=${notice.noticeId}";
+        } else {
+            // 삭제 취소할 때 처리할 코드
+            return false;
+        }
     }
 </script>
+   
 </body>
 </html>
