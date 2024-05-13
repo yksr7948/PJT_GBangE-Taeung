@@ -116,4 +116,12 @@ SET STATUS = 'N'
 WHERE REPLY_CONTENT = ?
 AND REPLY_WRITER = ?
 </entry>
+
+<entry key="updateReply">
+UPDATE REPLY
+SET REPLY_CONTENT = ?
+WHERE REPLY_CONTENT = ?
+AND REF_TNO = ?
+AND REPLY_WRITER = ?
+</entry>
 </properties>

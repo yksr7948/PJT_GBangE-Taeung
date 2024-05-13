@@ -132,19 +132,14 @@ label {
 }
 
 .bt_wrap {
-	margin-top: 30px;
-	text-align: center;
+	/* margin-top: 30px; */
+	margin : 10px;
+	text-align: left;
 	font-size: 0;
+	
 }
-
-.bt_wrap a {
-	display: inline-block;
-	min-width: 100px;
-	margin-left: 10px;
-	padding: 10px;
-	border-radius: 2px;
-	font-size: 1.4rem;
-	text-decoration: none;
+.bt_wrap button {
+	margin: 5px;
 }
 </style>
 </head>
@@ -238,8 +233,9 @@ label {
 				</div>
 				<br>
 				<div class="bt_wrap">
-					<button type="submit" class="btn btn-success">등록</button>
-					<button href="" class="btn btn-outline-secondary">취소</button>
+				<a></a>
+					<button type="submit" class="btn btn-info">등록</button>
+					<button onclick="history.back(1);" class="btn btn-secondary">취소</button>
 				</div>
 			</div>
 		</form>

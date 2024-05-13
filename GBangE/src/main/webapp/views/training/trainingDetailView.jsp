@@ -129,6 +129,10 @@
 	background-color: white;
 	color: gray;
 }
+#replyContent{
+border: none;
+outline: none;
+}
 </style>
 </head>
 <body>
@@ -193,7 +197,7 @@
 				<div class="cont">
 					${training.trainingContent} <img alt="업로드이미지"
 						src="${contextPath}${attachment.filePath}${attachment.changeName}"
-						id="uploadImg">
+						id="uploadImg" width="50%">
 
 				</div>
 			</div>
@@ -218,27 +222,13 @@
 			<div class="reply">
 				<h4>댓글</h4>
 				<div class="reply-list" id="reply-list">
-					<!-- 댓글 하나 -->
-					<hr>
-					<dl>
-						<dt>러닝맨</dt>
-						<dd>러닝 정말 너무 재밌어요!</dd>
-						<dd>2024.04.17</dd>
-					</dl>
-					<!-- 댓글 하나 -->
-					<hr>
-					<dl>
-						<dt>태양네</dt>
-						<dd>온 가족 함께 공원에서 뛰었습니다. 가족 러닝 강추!</dd>
-						<dd>2024.04.17</dd>
-					</dl>
 				</div>
 			</div>
 			<div class="reply-area">
 				<c:if test="${empty loginUser}">
 					<div class="reply-write">
 						<textarea name="" id="" cols="200" rows="1" style="resize: none;"
-							placeholder="로그인 후 댓글입력이 가능합니다 :&#41;"></textarea>
+							placeholder="로그인 후 댓글입력이 가능합니다 :&#41;" readonly></textarea>
 					</div>
 				</c:if>
 				<div class="reply-write">
@@ -290,9 +280,10 @@
 						if("${loginUser.memberName}"==list[i].replyWriter){
 						dl += "<hr><dl>"
 							+ "<dt>"+ list[i].replyWriter+"</dt>"
-							+ "<dd><div class='reply-info'><input type='hidden' id='replyContent' value='"+list[i].replyContent+"'>"
-							+ list[i].replyContent+"</div>"
-							+ "<div class='reply-info'><button onclick='deleteReply();'>&ensp;|&ensp;삭제</button></div></dd>"
+							+ "<dd><div class='reply-info'><input type='text' id='replyContent' value='"+list[i].replyContent+"' readonly>"
+							+ "<input type='hidden' id='originReply' value='"+list[i].replyContent+"'></div>"
+							+ "<div class='reply-info'><button onclick='deleteReply();'>&ensp;|&ensp;삭제</button></div>"
+							+ "<div class='reply-info'><button onclick='updateReply();' id='update-btn'>&ensp;|&ensp;수정</button></div></dd>"
 							+ "<dd><input type='hidden' id='replyDate' value='"+list[i].createDate+"'"
 							+ list[i].createDate+"</dd>"
 							+ "</dl>";
@@ -331,6 +322,32 @@
 					}
 				});
 		}
+
+function updateReply(){
+			let originReply = $("#originReply").val();
+			let changeReply = $("#replyContent").val();
+			$("#replyContent").attr("readonly",false);
+			$("#replyContent").focus();
+			/* 		$("#update-btn").click(function(){
+				$.ajax({
+ 					type: "post",
+					url : "ureply.tr",
+					data : {
+						replyWriter : ${loginUser.memberNo},
+						originReply : originReply,
+						changeReply : changeReply
+						refTno : ${training.trainingNo}
+					},
+					success : function(result) {
+						console.log(changeReply);
+					},
+					error : function() {
+						alert("댓글삭제 실패ㅠㅠ 다시 시도해보세요");
+					}
+				});
+			});*/
+		} 
+		
 		$(function() {
 			replyList();
 			let open = "${training.oCStatus}"=='C';

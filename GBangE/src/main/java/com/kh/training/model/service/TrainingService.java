@@ -149,6 +149,19 @@ public class TrainingService {
 		}else {
 			JDBCTemplate.rollback(conn);
 		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int updateReply(String originReply, String changeReply, String replyWriter, int refTno) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new TrainingDao().updateReply(conn, originReply, changeReply, refTno,replyWriter);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
 		return result;
 	}
 
