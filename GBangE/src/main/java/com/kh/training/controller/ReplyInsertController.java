@@ -35,9 +35,6 @@ public class ReplyInsertController extends HttpServlet {
 		int refTno = Integer.parseInt(request.getParameter("tno"));
 		
 		ArrayList<Reply> list = new TrainingService().selectReplyList(refTno);
-		for(Reply r : list) {
-			System.out.println(r);
-		}
 		response.setContentType("json/application; charset=UTF-8");
 		
 		new Gson().toJson(list,response.getWriter());
@@ -57,7 +54,6 @@ public class ReplyInsertController extends HttpServlet {
 		r.setreplyContent(reply);
 		
 		int result = new TrainingService().insertReply(r);
-		System.out.println(result);
 		response.getWriter().print(result);
 	}
 
