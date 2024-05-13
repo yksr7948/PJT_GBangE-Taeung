@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="/views/common/menubar.jsp" %>
+	<jsp:forward page="list.ma"></jsp:forward>
 </body>
 </html>

@@ -242,6 +242,7 @@ div.deleteBtn{
     $(function(){
         $("div.list-area").click(function(){        
         	$(".content-area .answer-wrap").html("");
+        	var memNo = "${loginUser.memberNo}";
         	var questionId = $(this).find('.num').text();
         	$.ajax({
         		url:"list.an",
@@ -255,9 +256,9 @@ div.deleteBtn{
         					tmp += "<div class='title'>"+answerArr[i].answerTitle+"</div>";
                         	tmp += "<div class='writer'>"+answerArr[i].memberName+"</div>";
                         	tmp += "<div class='date'>"+answerArr[i].createDate+"</div>";
-                        	tmp += '<c:if test="${loginUser.memberName eq answerArr[i].memberName}">'
-                        	tmp += "<div class='deleteBtn'><button type='button' class='btn btn-lg btn-dark' onclick='deleteAnswer("+answerArr[i].answerId+");'>삭제</button></div>";
-                        	tmp += '</c:if>'
+                        	if(memNo == answerArr[i].memberNo){
+                        		tmp += "<div class='deleteBtn'><button type='button' class='btn btn-lg btn-dark' onclick='deleteAnswer("+answerArr[i].answerId+");'>삭제</button></div>";	
+                        	}                        	
                         	tmp += "</div>";
                         	tmp += "<div class='answerContent'>"+answerArr[i].answerContent+"</div>";
     					$(".content-area .answer-wrap").append(tmp);
@@ -275,7 +276,7 @@ div.deleteBtn{
                 $(this).next().slideUp();
             }
         });
-        $(".answerDiv .btn").click(function() {        	
+        $(".answerDiv .btn").click(function() {
         	var questionId = $(this).closest('.content-area').prev('.list-area').find('.num').text();
         	var answerContent = $(this).closest('.answerDiv').find('textarea').val()            
         	var answerTitle = "RE: "+$(this).closest('.content-area').prev('.list-area').find('.title').text();        	
@@ -288,6 +289,7 @@ div.deleteBtn{
         			"answerTitle":answerTitle,
         		},
         		success:function(answerArr){
+        			alert("등록완료");
 					$('textarea').val('');
         			test(questionId);        			
         		},
@@ -299,6 +301,7 @@ div.deleteBtn{
     });
     function test(questionId){
     	$(".content-area .answer-wrap").html("");
+    	var memNo = "${loginUser.memberNo}";
     	$.ajax({
     		url:"list.an",
     		data:{
@@ -311,7 +314,9 @@ div.deleteBtn{
     					tmp += "<div class='title'>"+answerArr[i].answerTitle+"</div>";
                     	tmp += "<div class='writer'>"+answerArr[i].memberName+"</div>";
                     	tmp += "<div class='date'>"+answerArr[i].createDate+"</div>";
-                    	tmp += "<div class='deleteBtn'><button type='button' class='btn btn-lg btn-dark' onclick='deleteAnswer("+answerArr[i].answerId+");'>삭제</button></div>";                    	
+                    	if(memNo == answerArr[i].memberNo){
+                    		tmp += "<div class='deleteBtn'><button type='button' class='btn btn-lg btn-dark' onclick='deleteAnswer("+answerArr[i].answerId+");'>삭제</button></div>";	
+                    	}
                     	tmp += "</div>";
                     	tmp += "<div class='answerContent'>"+answerArr[i].answerContent+"</div>";                    	
 					$(".content-area .answer-wrap").append(tmp);
@@ -329,6 +334,7 @@ div.deleteBtn{
 				"answerId":e
 			},
 			success:function(refQno){
+				alert("삭제완료");
 				test(refQno);					
 			},
 			error:function(){
