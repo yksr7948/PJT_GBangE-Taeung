@@ -119,7 +119,7 @@
 					<dl>
 							<dt>제목</dt>
 							<dd>
-								<input type="text" name="title" placeholder="제목 입력">
+								<input type="text" name="title" placeholder="제목 입력" required>
 							</dd>
 						</dl>
 					</div>
@@ -145,6 +145,15 @@
 				</div>
 			</div>
 		</div>
+		<script>
+    $(document).ready(function() {
+        $('#enroll-form').submit(function() {
+            return confirm('정말 수정하시겠습니까?');
+        });
+    });
+	</script>
+		
+		
 		</form>
 	</div>
 </body>

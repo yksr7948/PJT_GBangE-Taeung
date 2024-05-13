@@ -70,7 +70,7 @@ public class NoticeDao {
 		return list;
 	}
 	//글 작성 
-	public int insertNotice(Connection conn, Notice n,Attachment at) {
+	public int insertNotice(Connection conn, Notice n) {
 		 int result = 0;
 		    PreparedStatement pstmt = null;
 		    ResultSet rset = null;
@@ -92,15 +92,6 @@ public class NoticeDao {
 		        
 		        result = pstmt.executeUpdate();
 		        
-
-				/*
-				 * if (result > 0) { pstmt.close(); sql = prop.getProperty("insertAttachment");
-				 * pstmt = conn.prepareStatement(sql); pstmt.setInt(1, at.getRefBno());
-				 * pstmt.setString(2, at.getOriginName()); pstmt.setString(3,
-				 * at.getChangeName()); pstmt.setString(4, at.getFilePath());
-				 * 
-				 * // 첨부파일 삽입 result = pstmt.executeUpdate(); }
-				 */
 		    } catch (SQLException e) {
 		        e.printStackTrace();
 		    } finally {
@@ -292,7 +283,6 @@ public class NoticeDao {
 	
 	//첨부파일 추가
 	public int insertAttachment(Connection conn, Attachment at) {
-		
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertAttachment");
@@ -412,6 +402,31 @@ public class NoticeDao {
 		return result;
 	}
 	
+	//이전글 , 다음글 메소드
+	public int[] getPrevAndNextNoticeId(Connection conn, int currentNoticeId) {
+	    int[] prevAndNextNoticeId = new int[2];
+	    ResultSet rset = null;
+	    PreparedStatement pstmt = null;
+	    String sql = prop.getProperty("nextNotice");
+
+	    try {
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, currentNoticeId);
+	        rset = pstmt.executeQuery();
+
+	        if (rset.next()) {
+	            prevAndNextNoticeId[0] = rset.getInt("PREV"); // 이전 글의 ID
+	            prevAndNextNoticeId[1] = rset.getInt("NEXT"); // 다음 글의 ID
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        JDBCTemplate.close(rset);
+	        JDBCTemplate.close(pstmt);
+	    }
+
+	    return prevAndNextNoticeId;
+	}
 	
 	
 
