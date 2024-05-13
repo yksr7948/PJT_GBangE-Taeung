@@ -424,5 +424,42 @@ public class TrainingDao {
 		return result;
 	}
 
+	public int updateLikes(Connection conn, int tno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateLikes");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tno);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int selectLikes(Connection conn, int tno) {
+		ResultSet rset = null;
+		int likes = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectLikes");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tno);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				likes = rset.getInt("LIKES");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return likes;
+	}
+
 
 }

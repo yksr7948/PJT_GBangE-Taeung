@@ -142,10 +142,12 @@ label {
 #uploadImg {
 	display: none;
 }
-
+#imgArea{
+float: right;
+}
 .bt_wrap {
-	margin-top: 30px;
-	text-align: center;
+	margin : 10px;
+	text-align: left;
 	font-size: 0;
 }
 
@@ -249,12 +251,12 @@ label {
 					</div>
 				</div>
 					<div class="cont">
-					<img alt="업로드이미지" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="imgArea">
+					<img alt="업로드이미지" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="imgArea" width="50%">
 					</div>
 				<br>
 				<div class="bt_wrap">
-					<button type="submit" class="btn btn-success">등록</button>
-					<button href="${contextPath }/list.tr" class="btn btn-outline-secondary">취소</button>
+					<button type="submit" class="btn btn-info">등록</button>
+					<button href="${contextPath }/list.tr" class="btn btn-secondary">취소</button>
 				</div>
 			</div>
 		</form>

@@ -94,6 +94,35 @@
 #uploadImg {
 	float: right;
 }
+
+#like-btn {
+	position: relative;
+	width: 100px;
+	height: 90px;
+	border: none;
+	background: none;
+	float: right;
+}
+
+#like-btn::before, #like-btn::after {
+	position: absolute;
+	content: "";
+	left: 30px;
+	top: 0;
+	width: 30px;
+	height: 50px;
+	background: red;
+	border-radius: 30px 30px 0 0;
+	transform: rotate(-45deg);
+	transform-origin: 0 100%;
+}
+
+#like-btn::after {
+	left: 0;
+	transform: rotate(45deg);
+	transform-origin: 100% 100%;
+}
+
 /* 댓글 기능 */
 .reply-area {
 	border: 1px solid lightslategray;
@@ -129,9 +158,10 @@
 	background-color: white;
 	color: gray;
 }
-#replyContent{
-border: none;
-outline: none;
+
+#replyContent {
+	border: none;
+	outline: none;
 }
 </style>
 </head>
@@ -208,6 +238,7 @@ outline: none;
 					href="${contextPath}/update.tr?tno=${training.trainingNo}"
 					class="btn btn-info">수정</a>
 				<button class="btn btn-secondary" id="deleteTr">삭제</button>
+				<button onclick="like();" id="like-btn"></button>
 			</div>
 			<script>
 				$("#deleteTr")
@@ -217,12 +248,41 @@ outline: none;
 										location.href = "${contextPath}/delete.tr?tno=${training.trainingNo}";
 									}
 								});
+				function like() {
+	 				$.ajax({
+	 					type: "get",
+						url : "ureply.tr",
+						data : {
+							tno : ${training.trainingNo},
+						},
+						success : function(result) {
+							selectLike();
+						},
+						error : function() {
+							alert("좋아요 실패ㅠㅠ 다시 시도해보세요");
+						}
+					});
+				}
+				function selectLike() {
+	 				$.ajax({
+	 					type: "get",
+						url : "likes.tr",
+						data : {
+							tno : ${training.trainingNo},
+						},
+						success : function(likes) {
+							$("#like-btn").html(likes);
+						},
+						error : function() {
+							alert("좋아요 실패ㅠㅠ 다시 시도해보세요");
+						}
+					});
+				}
 			</script>
 			<br>
 			<div class="reply">
 				<h4>댓글</h4>
-				<div class="reply-list" id="reply-list">
-				</div>
+				<div class="reply-list" id="reply-list"></div>
 			</div>
 			<div class="reply-area">
 				<c:if test="${empty loginUser}">
@@ -282,7 +342,7 @@ outline: none;
 							+ "<dt>"+ list[i].replyWriter+"</dt>"
 							+ "<dd><div class='reply-info'><input type='text' id='replyContent' value='"+list[i].replyContent+"' readonly>"
 							+ "<input type='hidden' id='originReply' value='"+list[i].replyContent+"'></div>"
-							+ "<div class='reply-info'><button onclick='deleteReply();'>&ensp;|&ensp;삭제</button></div>"
+							+ "<div class='reply-info'><button onclick='deleteReply();'>&ensp;삭제</button></div>"
 							+ "<div class='reply-info'><button onclick='updateReply();' id='update-btn'>&ensp;|&ensp;수정</button></div></dd>"
 							+ "<dd><input type='hidden' id='replyDate' value='"+list[i].createDate+"'"
 							+ list[i].createDate+"</dd>"

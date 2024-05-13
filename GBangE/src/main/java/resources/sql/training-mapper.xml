@@ -6,7 +6,7 @@ SELECT TRAINING_KEY, TRAINING_NAME
 FROM TRAINING_CATEGORY
 </entry>
 <entry key="insertTraining">
-INSERT INTO TRAINING VALUES(?,?,?,DEFAULT,?,1,?,SYSDATE,?,?,?,?,?,?,'2',?,'Y')
+INSERT INTO TRAINING VALUES(?,?,?,DEFAULT,?,1,?,SYSDATE,?,?,?,?,?,?,'2',?,'Y',DEFAULT)
 </entry>
 
 <entry key="increaseCount">
@@ -123,5 +123,17 @@ SET REPLY_CONTENT = ?
 WHERE REPLY_CONTENT = ?
 AND REF_TNO = ?
 AND REPLY_WRITER = ?
+</entry>
+
+<entry key="updateLikes">
+UPDATE TRAINING
+SET LIKES = LIKES +1
+WHERE TRAINING_NO = ?
+</entry>
+
+<entry key="selectLikes">
+SELECT LIKES
+FROM TRAINING
+WHERE TRAINING_NO = ?
 </entry>
 </properties>
