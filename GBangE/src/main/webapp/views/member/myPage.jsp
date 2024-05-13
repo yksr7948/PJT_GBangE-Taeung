@@ -18,20 +18,8 @@ pageEncoding="UTF-8"%>
     box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
     border-radius: 20px;
 }
-#my-info{
-	width: 700px;
-    height: 800px;
-	margin-top: 42px;
-	margin-bottom: 70px;
-    border: 2px solid lightgray;
-    border-radius: 20px;
-}
-#my-info-title{
-    border-bottom: 2px solid lightgray;
-    height: 60px;
-    margin: auto;
-    margin-top: 10px;
-}
+
+
 #header{
     margin: auto;
     margin-top: 50px;
@@ -57,21 +45,64 @@ pageEncoding="UTF-8"%>
 	border: 1px solid black;
 	cursor : pointer;
 }
-#title{
+
+
+#my-mileage{
+	width: 700px;
+    height: 400px;
+	margin-top: 42px;
+	margin-bottom: 40px;
+    border: 2px solid lightgray;
+    border-radius: 20px;
+}
+.my-title{
+    border-bottom: 2px solid lightgray;
+    height: 60px;
+    margin: auto;
+    margin-top: 10px;
+}
+.title{
     margin-left: 30px;
     font-size: 32px;
     font-weight: 900;
 }
-#my-into-body{
+#my-mileage-body{
+	position: relative;
+}
+#gbange-run{
+	width: 150px;
+	height: 150px;
+	position: absolute;
+	right: 30px;
+	top: 0px;
+}
+#maile-body-info{
+	margin-top: 100px;
+}
+#maile-bar{
+	margin-top: 10px;
+	width: 630px;
+	height:90px;
+}
+
+
+#my-info{
+	width: 700px;
+    height: 800px;
+	margin-bottom: 70px;
+    border: 2px solid lightgray;
+    border-radius: 20px;
+}
+#my-info-body{
 	margin-left: 30px;
 }
-#my-into-body th{
+#my-info-body th{
     font-size: 24px;
     margin-left: 30px;
     width: 120px;
     height: 70px;
 }
-#my-into-body td>input{
+#my-info-body td>input{
 	border:none;
 	border-bottom: 1px solid lightgray;
 	outline: none;
@@ -81,7 +112,7 @@ pageEncoding="UTF-8"%>
     height: 50px;
     cursor: auto;
 }
-#my-into-body td>select{
+#my-info-body td>select{
 	border:none;
 	border-bottom: 1px solid lightgray;
 	outline: none;
@@ -127,6 +158,7 @@ pageEncoding="UTF-8"%>
 	border-radius: 10px;
 	cursor : pointer;
 }
+
 </style>
 </head>
 <body>
@@ -139,13 +171,31 @@ pageEncoding="UTF-8"%>
         <button class="profile-btn" onclick="logout();">로그아웃</button>
     </div>
     
+    <div id="my-mileage">
+    	<div class="my-title">
+	    	<font class="title">마일리지</font>
+    	</div>
+    	<div id="my-mileage-body"><br>
+    		<div id="maile-body-title">
+	    		<font class="title">내가 총 달린 거리는?</font>
+    		</div>
+    		<img id="gbange-run" src="views/member/img/gbangrun.gif">
+    		
+    		<div id="maile-body-info" align="center">
+	    		<font style="font-size: 21px; font-weight:900">
+	    		<%=loginUser.getMemberId() %>님은 <%=loginUser.getMileage() %>KM만큼 달렸어요!!
+	    		</font><br>
+	    		<progress id="maile-bar" value="50" min="0" max="100"></progress>
+    		</div>
+    	</div>
+    </div>
+    
     <div id="my-info">
-        <div id="my-info-title">
-            <font id="title">내 정보</font>
+        <div class="my-title">
+            <font class="title">내 정보</font>
         </div>
-        <div id="my-into-body">
+        <div id="my-info-body">
             <form action="${contextPath}/update.me" method="post">
-            
             <table>
                 <tr>
                     <th>아이디</th>
@@ -163,8 +213,8 @@ pageEncoding="UTF-8"%>
                     <th>성별</th>
                     <td>
                     <select name="gender" id="gender">
-                    	<option value="1">남자</option>
-                    	<option value="2">여자</option>
+                    	<option value="0">남자</option>
+                    	<option value="1">여자</option>
                     </select>
                     </td>
                 </tr>

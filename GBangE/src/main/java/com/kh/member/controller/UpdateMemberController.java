@@ -43,7 +43,7 @@ public class UpdateMemberController extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String name = request.getParameter("userName");
 		String gender = request.getParameter("gender");
-		String address = request.getParameter("addres");
+		String address = request.getParameter("address");
 		String shose = request.getParameter("shoes");
 		double weight = Double.parseDouble(request.getParameter("weight"));
 		
@@ -53,12 +53,11 @@ public class UpdateMemberController extends HttpServlet {
 		
 		if(updateMem != null) {
 			
-			
 			HttpSession session = request.getSession();
-			session.setAttribute("alertMsg", "정보수정이 성공적으로 작동하였습니다.");
+			session.setAttribute("alertMsg", "정보수정이 성공적으로 완료했습니다.");
 			session.setAttribute("loginUser", updateMem);
 			
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(request.getContextPath()+"/mypage.me");
 		}else {
 			request.setAttribute("alertMsg", "정보수정이 완료되지 않았습니다.");
 			request.getRequestDispatcher("views/member/myPage.jsp").forward(request, response);
