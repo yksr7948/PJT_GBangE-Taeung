@@ -264,12 +264,12 @@
                     </div>
                     <!-- 관리자전용 기능 -->
                     <div class="adminMenu">
-<%--                     	<c:if test="'${loginUser.memberId}'=='admin'"> --%>
+                    	<c:if test="${loginUser.memberId eq 'admin'}">
                     <br>
                     <p> * 관리자용 메뉴</p>                   
                     		<button onclick='location.href="${contextPath }/insert.ma"' class="btn btn-outline-primary">대회정보 초기화</button>                    		
                     		<button onclick='checkRestore();' class="btn btn-outline-primary">대회정보 복구</button>
-<%--                     	</c:if> --%>
+                    	</c:if>
 					</div>
 					<div class="modal-footer">
                       <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">종료</button>

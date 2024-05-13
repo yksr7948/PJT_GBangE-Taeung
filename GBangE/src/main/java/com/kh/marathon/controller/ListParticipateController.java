@@ -31,9 +31,6 @@ public class ListParticipateController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int memberNo = Integer.parseInt(request.getParameter("memberNo")); 
-		JSONArray participateList = new ParticipateService().listParticipate(memberNo);
-		//나중에요청하면 맞춰서 보내기
 	}
 
 	/**
