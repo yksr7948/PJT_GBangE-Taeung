@@ -154,5 +154,25 @@ public class QnADao {
 		}
 		return result;
 	}
+	public int selectRefQno(Connection conn, int answerId) {
+		int refQno =0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectRefQno");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, answerId);
+			rset=pstmt.executeQuery();
+			if(rset.next()) {
+				refQno=rset.getInt("REF_QNO");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}	
+		return refQno;
+	}
 
 }
