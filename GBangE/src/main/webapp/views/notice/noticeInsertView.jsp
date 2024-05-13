@@ -28,8 +28,10 @@
                 window.location.href = "<%= request.getContextPath() %>/list.no?currentPage=1";
             }
         });
+        $('#enroll-form').submit(function() {
+            return confirm('정말 등록하시겠습니까?');
+        });
     });
-    
 </script>
 <style>
 .board_wrap {
@@ -153,6 +155,7 @@
 				</div>
 			</div>
 		</form>
+		
 	</div>
 </body>
 </html>

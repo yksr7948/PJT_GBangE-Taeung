@@ -23,20 +23,23 @@ public class NoticeService {
 			return list;
 		}
 	//공지사항 글작성
-	public int insertNotice(Notice n,Attachment at) {
-		Connection conn = JDBCTemplate.getConnection();
-		
-		int result = new NoticeDao().insertNotice(conn,n,at);
-	
-		if(result>0) {
-			JDBCTemplate.commit(conn);
-		}else {
-			JDBCTemplate.rollback(conn);
-		}
-		
-		JDBCTemplate.close(conn);
-		
-		return result;
+	public int insertNotice(Notice n, Attachment at) {
+	    Connection conn = JDBCTemplate.getConnection();
+	    
+	    int result = new NoticeDao().insertNotice(conn, n);
+	    if(result > 0 && at != null) {
+	        result = new NoticeDao().insertAttachment(conn, at);
+	    }
+	    
+	    if(result > 0) {
+	        JDBCTemplate.commit(conn);
+	    } else {
+	        JDBCTemplate.rollback(conn);
+	    }
+	    
+	    JDBCTemplate.close(conn);
+	    
+	    return result;
 	}
 	//조회수 증가
 	public int increaseCount(int nno) {
@@ -152,7 +155,13 @@ public class NoticeService {
 		
 		
 	}
-	
+	//이전글, 다음글로 가기 
+	public int[] getPrevAndNextNoticeId(int currentNoticeId) {
+	    Connection conn = JDBCTemplate.getConnection();
+	    int[] prevAndNextNoticeId = new NoticeDao().getPrevAndNextNoticeId(conn, currentNoticeId);
+	    JDBCTemplate.close(conn);
+	    return prevAndNextNoticeId;
+	}
 	
 	
 	

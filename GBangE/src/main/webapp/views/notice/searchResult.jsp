@@ -1,9 +1,11 @@
+<%@page import="com.kh.member.model.vo.Member"%>
 <%@page import="com.kh.notice.model.vo.Notice"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
     ArrayList<Notice> list = (ArrayList<Notice>) request.getAttribute("searchList");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -145,9 +147,11 @@ a {
 </head>
 
 <body>
+<%@include file="/views/common/menubar.jsp"%>
 <div class="board_wrap">
     <div class="board_title">
         <h1>검색 결과</h1>
+        <p>검색된 결과: <%= list.size() %>개</p>
     </div>
     <div class="board_list">
         <div class="top">
@@ -177,18 +181,32 @@ a {
         <!-- 페이지 링크는 여기에 들어갑니다 --> 
     </div>
     <div class="search_form" style="text-align: center; margin-bottom: 20px;">
-            <form action="${contextPath}/search.no" method="get">
-                <select name="searchType" style="font-size: 1.6rem; padding: 10px; margin: 5px;">
-                    <option value="title">제목</option>
-                    <option value="content">내용</option>
-                    <option value="titleContent">제목+내용</option>
-                </select>
-                <input type="text" name="keyword" placeholder="검색어를 입력하세요" style="font-size: 1.6rem; padding: 10px; margin: 5px;">
-                <button type="submit" style="font-size: 1.6rem; padding: 10px; margin: 5px;">검색</button>
-            </form>
-    <div class="bt_wrap">
-        <!-- 버튼은 여기에 들어갑니다 -->
+        <form action="${contextPath}/search.no" method="get">
+            <select name="searchType" style="font-size: 1.6rem; padding: 10px; margin: 5px;">
+                <option value="title">제목</option>
+                <option value="content">내용</option>
+                <option value="titleContent">제목+내용</option>
+            </select>
+            <input type="text" name="keyword" placeholder="검색어를 입력하세요" style="font-size: 1.6rem; padding: 10px; margin: 5px;">
+            <button type="submit" style="font-size: 1.6rem; padding: 10px; margin: 5px;">검색</button>
+           
+        </form>
+        <%if((loginUser != null) && loginUser.getMemberId().equals("admin")){ %>
+        <div class="bt_wrap">
+        	<br>
+            <a href="${contextPath}/insert.no" class="on">글쓰기</a> 
+        </div>
+        <%} %>
     </div>
+    
+    <script>
+    
+    $(".list-area").click(function(){
+       ;
+        var nno = $(this).children().eq(0).text();
+        location.href='<%=request.getContextPath()%>/detail.no?nno='+nno;
+    });
+</script>
 </div>
 </body>
 </html>
