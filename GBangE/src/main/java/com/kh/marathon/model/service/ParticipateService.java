@@ -1,6 +1,7 @@
 package com.kh.marathon.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 
@@ -21,9 +22,9 @@ public class ParticipateService {
 		return result;
 	}
 
-	public JSONArray listParticipate(int memberNo) {
+	public ArrayList<Participate> listParticipate(int marathonNo) {
 		Connection conn = JDBCTemplate.getConnection();
-		JSONArray participateList = new ParticipateDao().listParticipate(conn,memberNo);
+		ArrayList<Participate> participateList = new ParticipateDao().listParticipate(conn,marathonNo);
 		JDBCTemplate.close(conn);
 		return participateList;
 	}

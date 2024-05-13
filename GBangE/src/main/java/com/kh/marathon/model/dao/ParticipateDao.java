@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import org.json.simple.JSONArray;
@@ -52,24 +53,24 @@ private Properties prop = new Properties();
 		return result;
 	}
 
-	public JSONArray listParticipate(Connection conn, int memberNo) {
-		JSONArray participateList = new JSONArray();
+	public ArrayList<Participate> listParticipate(Connection conn, int marathonNo) {
+		ArrayList<Participate> participateList = new JSONArray();
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		Participate p = new Participate();
+		ResultSet rset = null;		
 		String sql = prop.getProperty("listParticipate");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, memberNo);
+			pstmt.setInt(1, marathonNo);
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
+				Participate p = new Participate();
 				p.setParticipateNo(rset.getInt("PARTICIPATE_NO"));
 				p.setName(rset.getString("NAME"));
 				p.setMarathonName(rset.getString("MARATHON_NAME"));					
 				p.setRegionName(rset.getString("REGION_NAME"));
 				p.setParticipateDate(rset.getDate("PARTICIPATE_DATE"));
 				p.setPhone(rset.getString("PHONE"));
-				participateList.add(new Gson().toJson(p));
+				participateList.add(p);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -19,7 +19,7 @@ body {
   	flex-direction: column;
 	align-items: center;
 	width: 670px;
-	height: 1000px;
+	height: 1200px;
 	margin: auto;
 	margin-top: 60px;
 	margin-bottom: 60px;
@@ -52,6 +52,19 @@ body {
 #sample6_detailAddress {
 	width:350px;
 }
+h3{
+	font-family: "Jua", sans-serif;
+}
+.registerationNo{
+	position: relative;
+	width: 470px;
+	align-self:center;
+}
+#registerationNo1, #registerationNo2{
+	display:inline-block;
+	width: 220px;
+	height: 35px;
+}
 </style>
 </head>
 <body>
@@ -60,19 +73,29 @@ body {
 	<form action="insert.pa" method="post">
 		<input type="hidden" name="memberNo" value="${memberNo }">
 		<input type="hidden" name="marathonNo" value="${marathonNo }">
-		선택한 대회 : ${marathonName}
+		<h3>대회명 : ${marathonName}</h3>
 		<div>
 			<label for="participateName">* 이름</label>
 		</div>
 		<input type="text" class="form-control" id="participateName" name="participateName" placeholder="이름을 입력하세요" required>
 		<div>
-			<label for="participatePwd">* 비밀번호</label>
+			<label for="participatePwd">* 비밀번호</label>			
 		</div>
-		<input type="password" class="form-control" id="participatePwd" name="participatePwd" placeholder="비밀번호를 입력하세요" required>
+		<input type="password" class="form-control" id="participatePwd" name="participatePwd" placeholder="비밀번호를 입력하세요" required>		
 		<div>
-			<label for="registerationNo">* 주민번호</label>
+			<label for="checkPwd">* 비밀번호 확인</label>
+			<label id="hidden-checkPwdArea"></label>
 		</div>
-		<input type="text" class="form-control" id="registerationNo" name="registerationNo" placeholder="주민번호을 입력하세요" required>
+		<input type="password" class="form-control" id="checkPwd" placeholder="동일한 비밀번호를 입력하세요" required>
+		<div>
+			<label for="registerationNo1">* 주민번호</label>
+			<label id="hidden-pnoArea"></label>
+		</div>
+		<div class="registerationNo">
+			<input type="text" class="form-control" id="registerationNo1" name="registerationNo1" required>
+			<font style="font-size: 30px; color:black;">-</font>
+			<input type="password" class="form-control" id="registerationNo2" name="registerationNo2" required>
+		</div>
 		<div class="genderDiv">
 		* 성별
 		</div>
@@ -101,13 +124,54 @@ body {
 		</div>
 		<br><br><br><br>
 		<div class="submitDiv">
-		<button type="submit" class="btn btn-success" style="width:570px; height:80px; font-size:27px" >제출하기</button>
+		<button type="submit" class="btn btn-success" onclick="return test();" style="width:570px; height:80px; font-size:27px" >제출하기</button>
 		</div>
 	</form>
 	</div>	
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	function test(){
+		var regBirth = /^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))$/;
+		var regPno = /^[1-4]\d{6}$/;
+		
+		if ($("#checkPwd").val() != $("#participatePwd").val()) {
+			$("#hidden-checkPwdArea").html("*비밀번호가 다릅니다.").show();
+			$("#hidden-checkPwdArea").css({
+				"color" : "red"
+			});
+			$("#participatePwd").focus();
+			return false;
+		} else {
+			$("#hidden-checkPwdArea").hide();
+		}
+
+		//주민번호 null값 체크
+		if ($("#registerationNo1").val() == "" && $("#registerationNo2").val() == "") {
+			$("#hidden-pnoArea").html("*주민번호를 입력하세요.").show();
+			$("#hidden-pnoArea").css({
+				"color" : "red"
+			});
+			$("#registerationNo1").focus();
+			return false;
+		} else if (!regBirth.test($("#registerationNo1").val())) {
+			$("#hidden-pnoArea").html("*생년월일을 잘못입력했습니다.").show();
+			$("#hidden-pnoArea").css({
+				"color" : "red"
+			});
+			$("#registerationNo1").focus();
+			return false;
+		} else if (!regPno.test($("#registerationNo2").val())) {
+			$("#hidden-pnoArea").html("*주민등록번호를 잘못입력했습니다.").show();
+			$("#hidden-pnoArea").css({
+				"color" : "red"
+			});
+			$("#registerationNo2").focus();
+			return false;
+		} else {
+			$("#hidden-pnoArea").hide();
+		}
+	}
     function sample6_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {

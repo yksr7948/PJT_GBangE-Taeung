@@ -37,6 +37,7 @@ public class InsertParticipateController extends HttpServlet {
 		Marathon m = new MarathonService().marathonDetail(marathonNo);		
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		request.setAttribute("marathonName", m.getMarathonName());
+		request.setAttribute("marathonNo", m.getMarathonNo());
 		request.setAttribute("memberNo", memberNo);
 		request.getRequestDispatcher("views/marathon/insertParticipateView.jsp").forward(request, response);
 	}
@@ -46,15 +47,14 @@ public class InsertParticipateController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		int memberNo=Integer.parseInt(request.getParameter("memberNo"));
-		
+		int memberNo=Integer.parseInt(request.getParameter("memberNo"));		
 		int marathonNo = Integer.parseInt(request.getParameter("marathonNo"));
 		String regionName = new MarathonService().selectMarathonRegionName(marathonNo);
 		int regionId = new RegionService().selectRegionId(regionName);
 		
 		String Name = request.getParameter("participateName");
 		String Pwd = request.getParameter("participatePwd");
-		String registerationNo = request.getParameter("registerationNo");
+		String registerationNo = request.getParameter("registerationNo1")+"-"+request.getParameter("registerationNo2");
 		String gender = request.getParameter("gender");
 		String participatePhone = request.getParameter("participatePhone");
 		

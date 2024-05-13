@@ -98,6 +98,7 @@ public class QnADao {
 			while(rset.next()) {
 				JSONObject jobj = new JSONObject();
 				jobj.put("answerId",rset.getInt("ANSWER_ID"));
+				jobj.put("memberNo",rset.getInt("MEMBER_NO"));
 				jobj.put("memberName",rset.getString("MEMBER_NAME"));
 				jobj.put("refQno", rset.getInt("REF_QNO"));
 				jobj.put("answerTitle",rset.getString("ANSWER_TITLE"));
