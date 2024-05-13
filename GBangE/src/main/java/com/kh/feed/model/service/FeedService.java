@@ -172,7 +172,40 @@ public class FeedService {
 		return result;
 	}
 
+	public int deleteReply(Reply r) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new FeedDao().deleteReply(conn,r);
+		
+		if(result>0) {
+			
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
 
-
+	public int addLike(int feedNo, String memberId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new FeedDao().addLike(conn,feedNo,memberId);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+	
 
 }
+
+
+

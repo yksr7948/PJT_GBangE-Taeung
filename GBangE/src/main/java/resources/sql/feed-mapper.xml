@@ -136,4 +136,13 @@ INSERT INTO REPLY(REPLY_NO
 		SET STATUS = 'N'
 		WHERE FEED_NO = ?
 </entry>
+
+<entry key="deleteReply">
+	UPDATE REPLY
+	SET STATUS = 'N'
+	WHERE MEMBER_NO = ?
+	AND REPLY_CONTENT = ?
+	
+</entry>
+
 </properties>
