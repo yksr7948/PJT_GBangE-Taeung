@@ -31,8 +31,9 @@ public class DeleteAnswerController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int answerId = Integer.parseInt(request.getParameter("answerId"));
 		int result = new QnAService().deleteAnswer(answerId);
+		int refQno = new QnAService().selectRefQno(answerId);
 		if(result>0) {
-			new Gson().toJson(result,response.getWriter());
+			new Gson().toJson(refQno,response.getWriter());
 		}else {
 			System.out.println("error");
 		}
