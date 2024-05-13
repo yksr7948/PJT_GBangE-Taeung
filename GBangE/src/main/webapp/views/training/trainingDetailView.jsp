@@ -169,7 +169,7 @@
 						<th>운동시간</th>
 						<td>${training.trainingTime }분</td>
 						<th>평균페이스</th>
-						<td>${training.trainingTime div training.trainingDistance}
+						<td id="avgPace">${training.trainingTime div training.trainingDistance}
 							분/km</td>
 					</tr>
 					<tr>
@@ -302,6 +302,11 @@
 			}, 100);
 			}
 		});
+		$(function(){
+			var avgPace = $("#avgPace").html().substring(0,4);
+			$("#avgPace").html(avgPace+"분/km");
+		});
+
 	</script>
 </body>
 </html>
