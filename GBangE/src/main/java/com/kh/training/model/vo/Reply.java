@@ -12,7 +12,7 @@ public class Reply {
 //	reply_WRITER
 	private String replyWriter;
 //	CREATE_DATE
-	private Date createDate;
+	private String createDate;
 //	STATUS
 	private String status;
 
@@ -21,7 +21,7 @@ public class Reply {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reply(int replyNo, String replyContent, int refTno, String replyWriter, Date createDate, String status) {
+	public Reply(int replyNo, String replyContent, int refTno, String replyWriter, String createDate, String status) {
 		super();
 		this.replyNo = replyNo;
 		this.replyContent = replyContent;
@@ -33,7 +33,7 @@ public class Reply {
 
 	
 	
-	public Reply(String replyContent, String replyWriter, Date createDate) {
+	public Reply(String replyContent, String replyWriter, String createDate) {
 		super();
 		this.replyContent = replyContent;
 		this.replyWriter = replyWriter;
@@ -72,11 +72,11 @@ public class Reply {
 		this.replyWriter = replyWriter;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
