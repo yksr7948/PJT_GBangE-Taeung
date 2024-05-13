@@ -1,5 +1,6 @@
 package com.kh.notice.controller;
 
+import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -91,8 +92,12 @@ public class InsertNoticeController extends HttpServlet {
 
 		        if (result > 0) {
 		            session.setAttribute("alertMsg", "게시글 작성 성공");
+		            
 		            response.sendRedirect(request.getContextPath() + "/list.no?currentPage=1");
 		        } else {
+		        	if(attachment!=null) {
+						new File(savePath+attachment.getChangeName()).delete();
+					}
 		            session.setAttribute("alertMsg", "게시글 작성 실패");
 		            response.sendRedirect(request.getContextPath() + "/list.no?currentPage=1");
 		        }

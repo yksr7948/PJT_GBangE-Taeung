@@ -126,6 +126,13 @@
     background-image: url(./img/icon-kakao.png); 
     background-repeat: no-repeat; 
 }
+
+.zbange {
+    width: 100px; 
+    position: relative;
+    top: -80px;
+    left: 150px;
+}
 </style>
 </head>
 <body>
@@ -133,6 +140,7 @@
 	  <div class="board_wrap">
         <div class="board_title">
             <h1>공지사항</h1>
+            <a href="${contextPath}"> <img src="/gbange/views/notice/img/image_360-removebg-preview.png" alt="지방이" class="zbange"></a>
             <p>공지사항 페이지입니다.</p>
         </div>
         
@@ -165,20 +173,37 @@
         <a id="btnFacebook" class="link-icon facebook" href="javascript:shareFacebook();">페이스북</a>
         <a id="btnKakao" class="link-icon kakao" href="javascript:shareKakao();">카카오톡</a>
     </div>
-    <img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile">
-					<img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile">
-				</div>
+    <img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile" style="width: 100%; cursor:pointer;">
+					
+			
                 </div>
-            </div>
+    	        </div>
             <br>
-            <div class="bt_wrap">
-			    <a href="${contextPath}/list.no?currentPage=1" class="btn btn-outline-secondary">목록</a>
-			    <% if(loginUser != null && loginUser.getMemberId().equals("admin")) { %>
-			    <a href="${contextPath}/update.no?nno=${notice.noticeId}" class="btn btn-success">수정</a>
-			    <a href="${contextPath}/delete.no?nno=${notice.noticeId}" class="btn btn-danger" onclick="return confirmDelete()">삭제</a>
-			<% } %>
-            </div>
-        </div>
+            <div class="bt_wrap" style="display: flex; justify-content: space-between;">
+    <div>
+      	<a href="${contextPath}/list.no?currentPage=1" class="btn btn-outline-secondary">목록</a>
+
+        <% 
+            int[] noticeNext = (int[])request.getAttribute("NoticeNext");
+            if (noticeNext[0] != 0) { 
+        %>
+            <a href="${contextPath}/detail.no?nno=<%= noticeNext[0] %>" class="btn btn-outline-secondary">이전글</a>
+        <% } %>
+    
+        <% 
+            if (noticeNext[1] != 0) { 
+        %>
+            <a href="${contextPath}/detail.no?nno=<%= noticeNext[1] %>" class="btn btn-outline-secondary">다음글</a>
+        <% } %>
+    </div>
+    <% if(loginUser != null && loginUser.getMemberId().equals("admin")) { %>
+    <div>
+        <a href="${contextPath}/update.no?nno=${notice.noticeId}" class="btn btn-success">수정</a>
+        <a href="${contextPath}/delete.no?nno=${notice.noticeId}" class="btn btn-danger" onclick="return confirmDelete()">삭제</a>
+    </div>
+    <% } %>
+</div>
+            
    
    <script>
     function confirmDelete() {
@@ -191,6 +216,8 @@
             return false;
         }
     }
+    
+    
    /*  function shareKakao() {
 
     	  // 사용할 앱의 JavaScript 키 설정
@@ -211,6 +238,14 @@
     	    }
     	  });
     	}   */
+</script>
+
+<script>
+    // ...
+    // 이미지 클릭 시 이미지 확대 표시
+    $("#uploadFile").click(function() {
+        window.open(this.src, '_blank');
+    });
 </script>
    
 </body>

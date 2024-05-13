@@ -169,16 +169,24 @@ a {
 .board_page a.frist {
 	border-left: 1px solid #ddd;
 }
+
+.zbange {
+    width: 100px; 
+    position: relative;
+    top: -80px;
+    left: 150px;
+}
+
 </style>
 </head>
 
-<body>
+
 <body>
 <%@include file="/views/common/menubar.jsp"%>
     <div class="board_wrap">
         <div class="board_title">
             <h1>지방이 공지</h1>
-            <br>
+            <a href="${contextPath}"> <img src="/gbange/views/notice/img/image_360-removebg-preview.png" alt="지방이" class="zbange"></a>
             <p>지방이 공지사항 페이지입니다.</p>
         </div>
         <div class="board_list_wrap">
