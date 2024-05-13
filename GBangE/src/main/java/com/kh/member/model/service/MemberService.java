@@ -91,7 +91,6 @@ public class MemberService {
 		
 		int result = new MemberDao().updateMember(conn, m);
 		
-		System.out.println(result);
 		Member updateMem = null;
 		
 		if(result > 0) {

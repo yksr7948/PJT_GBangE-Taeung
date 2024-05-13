@@ -50,10 +50,10 @@ public class Member {
 	
 	
 
-	public Member(String memberName, String memberId, String gender, String address, String shoes, double weight) {
+	public Member(String memberId, String memberName, String gender, String address, String shoes, double weight) {
 		super();
-		this.memberName = memberName;
 		this.memberId = memberId;
+		this.memberName = memberName;
 		this.gender = gender;
 		this.address = address;
 		this.shoes = shoes;
