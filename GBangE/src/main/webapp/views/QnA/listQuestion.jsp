@@ -255,13 +255,16 @@ div.deleteBtn{
         					tmp += "<div class='title'>"+answerArr[i].answerTitle+"</div>";
                         	tmp += "<div class='writer'>"+answerArr[i].memberName+"</div>";
                         	tmp += "<div class='date'>"+answerArr[i].createDate+"</div>";
-                        	tmp += "<div class='deleteBtn'><button type='button' class='btn btn-lg btn-dark' onclick='deleteAnswer("+answerArr[i].answerId+");'>삭제</button></div>";                        	
+                        	tmp += '<c:if test="${loginUser.memberName eq answerArr[i].memberName}">'
+                        	tmp += "<div class='deleteBtn'><button type='button' class='btn btn-lg btn-dark' onclick='deleteAnswer("+answerArr[i].answerId+");'>삭제</button></div>";
+                        	tmp += '</c:if>'
                         	tmp += "</div>";
                         	tmp += "<div class='answerContent'>"+answerArr[i].answerContent+"</div>";
     					$(".content-area .answer-wrap").append(tmp);
+    					
         			}        			
         		},
-        		error:function(){
+        		error:function(){	
         			console.log("error");
         		}
         	});
@@ -272,7 +275,7 @@ div.deleteBtn{
                 $(this).next().slideUp();
             }
         });
-        $(".answerDiv .btn").click(function() {
+        $(".answerDiv .btn").click(function() {        	
         	var questionId = $(this).closest('.content-area').prev('.list-area').find('.num').text();
         	var answerContent = $(this).closest('.answerDiv').find('textarea').val()            
         	var answerTitle = "RE: "+$(this).closest('.content-area').prev('.list-area').find('.title').text();        	
@@ -285,7 +288,8 @@ div.deleteBtn{
         			"answerTitle":answerTitle,
         		},
         		success:function(answerArr){
-        			test(questionId);
+					$('textarea').val('');
+        			test(questionId);        			
         		},
         		error:function(){
         			console.log("error");
@@ -293,7 +297,8 @@ div.deleteBtn{
         	});
         });
     });
-    function test(questionId){    	
+    function test(questionId){
+    	$(".content-area .answer-wrap").html("");
     	$.ajax({
     		url:"list.an",
     		data:{
@@ -323,10 +328,8 @@ div.deleteBtn{
 			data:{
 				"answerId":e
 			},
-			success:function(result){
-				if(result>0){
-					test();	
-				}				
+			success:function(refQno){
+				test(refQno);					
 			},
 			error:function(){
 				console.log("error");

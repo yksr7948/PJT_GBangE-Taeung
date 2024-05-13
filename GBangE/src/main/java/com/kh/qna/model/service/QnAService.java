@@ -67,5 +67,10 @@ public class QnAService {
 		JDBCTemplate.close(conn);
 		return result;
 	}
-
+	public int selectRefQno(int answerId) {
+		Connection conn = JDBCTemplate.getConnection();
+		int refQno = new QnADao().selectRefQno(conn,answerId);
+		JDBCTemplate.close(conn);		
+		return refQno;
+	}
 }

@@ -36,4 +36,9 @@ UPDATE ANSWER
 SET STATUS = 'N'
 WHERE ANSWER_ID = ?
 </entry>
+<entry key="selectRefQno">
+SELECT REF_QNO
+FROM ANSWER
+WHERE ANSWER_ID = ?
+</entry>
 </properties>
