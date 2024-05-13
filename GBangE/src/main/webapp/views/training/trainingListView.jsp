@@ -242,7 +242,6 @@ a {
 			</div>
 			<div class="bt_wrap">
 				<a href="${contextPath}/insert.tr" class="on">글쓰기</a> 
-				<a href="" style="background: gray;">수정</a>
 			</div>
 		</div>
 	</div>
