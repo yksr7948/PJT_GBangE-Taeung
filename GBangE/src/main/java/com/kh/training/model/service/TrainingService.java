@@ -141,4 +141,15 @@ public class TrainingService {
 		return list;
 	}
 
+	public int deleteReply(Reply r) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new TrainingDao().deleteReply(conn,r);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		return result;
+	}
+
 }

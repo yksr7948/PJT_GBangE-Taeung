@@ -119,6 +119,16 @@
 .right {
 	justify-content: right;
 }
+
+.reply-info {
+	display: inline-block;
+}
+
+.reply-info>button {
+	border: none;
+	background-color: white;
+	color: gray;
+}
 </style>
 </head>
 <body>
@@ -169,7 +179,7 @@
 						<th>운동시간</th>
 						<td>${training.trainingTime }분</td>
 						<th>평균페이스</th>
-						<td>${training.trainingTime div training.trainingDistance}
+						<td id="avgPace">${training.trainingTime div training.trainingDistance}
 							분/km</td>
 					</tr>
 					<tr>
@@ -277,11 +287,22 @@
 				success : function(list){
 					var dl = "";
 					for(var i in list){
+						if("${loginUser.memberName}"==list[i].replyWriter){
 						dl += "<hr><dl>"
-							+ "<dt>"+list[i].replyWriter+"</dt>"
-							+ "<dd>"+list[i].replyContent+"</dd>"
-							+ "<dd>"+list[i].createDate+"</dd>"
+							+ "<dt>"+ list[i].replyWriter+"</dt>"
+							+ "<dd><div class='reply-info'><input type='hidden' id='replyContent' value='"+list[i].replyContent+"'>"
+							+ list[i].replyContent+"</div>"
+							+ "<div class='reply-info'><button onclick='deleteReply();'>&ensp;|&ensp;삭제</button></div></dd>"
+							+ "<dd><input type='hidden' id='replyDate' value='"+list[i].createDate+"'"
+							+ list[i].createDate+"</dd>"
 							+ "</dl>";
+						}else{
+							dl += "<hr><dl>"
+								+ "<dt>"+list[i].replyWriter+"</dt>"
+								+ "<dd><div class='reply-info'>"+list[i].replyContent+"</div></dd>"
+								+ "<dd>"+list[i].createDate+"</dd>"
+								+ "</dl>";
+						}
 					}
 					$("#reply-list").html(dl);						
 				},
@@ -290,15 +311,43 @@
 				}
 				});
 		}
+
+		function deleteReply() {
+			let replyContent = $("#replyContent").val();
+			let replyDate = $("#replyDate").val();
+			$.ajax({
+ 					type: "post",
+					url : "dreply.tr",
+					data : {
+						replyWriter : ${loginUser.memberNo},
+						replyContent : replyContent,
+						replyDate : replyDate
+					},
+					success : function(result) {
+						replyList();
+					},
+					error : function() {
+						alert("댓글삭제 실패ㅠㅠ 다시 시도해보세요");
+					}
+				});
+		}
 		$(function() {
 			replyList();
 			let open = "${training.oCStatus}"=='C';
 			let writer = "${loginUser.memberName}"!="${training.trainingWriter}";
 			if(open&&writer){
- 				alert("작성자만 볼 수 있는 일지입니다.");
+				$("#board_wrap").css("display","none");
+			setTimeout(() => {
+				alert("작성자만 볼 수 있는 일지입니다.");
  				history.back();
+			}, 100);
 			}
 		});
+		$(function(){
+			var avgPace = $("#avgPace").html().substring(0,4);
+			$("#avgPace").html(avgPace+"분/km");
+		});
+
 	</script>
 </body>
 </html>

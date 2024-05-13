@@ -109,4 +109,11 @@ JOIN MEMBER M ON(R.REPLY_WRITER = M.MEMBER_NO)
 WHERE R.REF_TNO = ?
 AND R.STATUS = 'Y' 
 </entry>
+
+<entry key="deleteReply">
+UPDATE REPLY
+SET STATUS = 'N'
+WHERE REPLY_CONTENT = ?
+AND REPLY_WRITER = ?
+</entry>
 </properties>

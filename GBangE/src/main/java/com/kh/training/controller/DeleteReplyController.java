@@ -1,7 +1,8 @@
 package com.kh.training.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.Date;
+import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
 import com.kh.training.model.service.TrainingService;
 import com.kh.training.model.vo.Reply;
 
 /**
- * Servlet implementation class ReplyInsertController
+ * Servlet implementation class DeleteReplyController
  */
-@WebServlet("/reply.tr")
-public class ReplyInsertController extends HttpServlet {
+@WebServlet("/dreply.tr")
+public class DeleteReplyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReplyInsertController() {
+    public DeleteReplyController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,28 +32,21 @@ public class ReplyInsertController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int refTno = Integer.parseInt(request.getParameter("tno"));
 		
-		ArrayList<Reply> list = new TrainingService().selectReplyList(refTno);
-		response.setContentType("json/application; charset=UTF-8");
-		
-		new Gson().toJson(list,response.getWriter());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String memberNo = request.getParameter("memberNo");
-		int tno = Integer.parseInt(request.getParameter("tno"));
-		String reply = request.getParameter("reply");
-
+		String writer = request.getParameter("replyWriter");
+		String content = request.getParameter("replyContent");
+		String date = request.getParameter("replyDate");
 		Reply r = new Reply();
-		r.setRefTno(tno);
-		r.setreplyWriter(memberNo);
-		r.setreplyContent(reply);
-		
-		int result = new TrainingService().insertReply(r);
+		r.setreplyWriter(writer);
+		r.setreplyContent(content);
+		r.setCreateDate(date);
+		int result = new TrainingService().deleteReply(r);
 		response.getWriter().print(result);
 	}
 

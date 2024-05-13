@@ -378,13 +378,30 @@ public class TrainingDao {
 				list.add(new Reply(
 						rset.getString("REPLY_CONTENT")
 						,rset.getString("MEMBER_NAME")
-						,rset.getDate("CREATE_DATE")
+						,rset.getString("CREATE_DATE")
 						));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	public int deleteReply(Connection conn, Reply r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteReply");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, r.getreplyContent());
+			pstmt.setString(2, r.getreplyWriter());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
 	}
 
 
