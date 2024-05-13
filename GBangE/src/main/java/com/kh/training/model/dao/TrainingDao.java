@@ -404,5 +404,25 @@ public class TrainingDao {
 		return result;
 	}
 
+	public int updateReply(Connection conn, String originReply, String changeReply, int refTno, String replyWriter) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateReply");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, changeReply);
+			pstmt.setString(2, originReply);
+			pstmt.setInt(3, refTno);
+			pstmt.setString(4, replyWriter);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
 
 }
