@@ -50,6 +50,8 @@ public class PwdChangeController extends HttpServlet {
 			HttpSession session = request.getSession();
 			
 			session.setAttribute("alertMsg", "비밀번호가 정상적으로 변경되었습니다.");
+			session.removeAttribute("loginUser");
+			
 			response.sendRedirect(request.getContextPath());
 		}else {
 			request.setAttribute("alertMsg", "비밀번호 변경이 완료되지 않았습니다.");

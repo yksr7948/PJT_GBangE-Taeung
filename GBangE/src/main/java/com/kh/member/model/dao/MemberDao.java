@@ -55,7 +55,10 @@ public class MemberDao {
 							   rset.getString("SHOES"),
 							   rset.getDouble("WEIGHT"),
 							   rset.getDate("ENROLL_DATE"),
-							   rset.getString("STATUS"));
+							   rset.getString("STATUS"),
+							   rset.getString("PROFILE_IMAGE"),
+							   rset.getString("FILE_PATH"),
+							   rset.getString("CHANGE_NAME"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -258,7 +261,10 @@ public class MemberDao {
 							   rset.getString("SHOES"),
 							   rset.getDouble("WEIGHT"),
 							   rset.getDate("ENROLL_DATE"),
-							   rset.getString("STATUS"));
+							   rset.getString("STATUS"),
+							   rset.getString("PROFILE_IMAGE"),
+							   rset.getString("FILE_PATH"),
+							   rset.getString("CHANGE_NAME"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -270,4 +276,30 @@ public class MemberDao {
 		
 		return m;
 	}
+
+	public int updateProfile(Connection conn, Member m) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateProfile");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m.getProfileImage());
+			pstmt.setString(2, m.getFilePath());
+			pstmt.setString(3, m.getChangeName());
+			pstmt.setString(4, m.getMemberId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+	
 }

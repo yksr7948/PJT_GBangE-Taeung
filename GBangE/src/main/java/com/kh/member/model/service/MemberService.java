@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import com.kh.common.JDBCTemplate;
 import com.kh.member.model.dao.MemberDao;
+
 import com.kh.member.model.vo.Member;
 
 public class MemberService {
@@ -104,6 +105,25 @@ public class MemberService {
 		
 		return updateMem;
 	}
+
+	public int updateProfile(Member m) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new MemberDao().updateProfile(conn, m);
+		
+		if(result > 0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		return result;
+	}
+
+	
+
+	
 
 	
 }

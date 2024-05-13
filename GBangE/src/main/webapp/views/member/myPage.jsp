@@ -1,10 +1,14 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<html lang="en">
+  <head profile="http://www.w3.org/2005/10/profile">
+    <link rel="icon" type="image/png" href="http://example.com/myicon.png">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
 <style>
 #container {
     display: flex;
@@ -27,25 +31,17 @@ pageEncoding="UTF-8"%>
 #user-profile{
     width: 100px;
     height: 100px;
+    border: 3px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
 }
 #profile-id{
     margin: auto;
     margin-bottom: 20px;
     font-size: 24px;
+    font-weight: 900;
     color:#0068ff
 }
-.profile-btn{
-	width: 80px;
-	height: 35px;
-	font-size: 13px;
-	font-weight: 900;
-	line-height: 27px;
-	color: #000;
-	background: #fff;
-	border: 1px solid black;
-	cursor : pointer;
-}
-
 
 #my-mileage{
 	width: 700px;
@@ -159,17 +155,39 @@ pageEncoding="UTF-8"%>
 	cursor : pointer;
 }
 
+.modal-body input{
+	margin-left: 10px;
+	margin-bottom: 10px;
+	border: none;
+	border-bottom: 1px solid;
+	outline: none;
+}
+
 </style>
 </head>
 <body>
 	<%@include file="/views/common/menubar.jsp"%>
 <div id="container">
-    <div id="header" align="center">
-        <img id="user-profile" src="views/member/img/user_profile.png"> <br><br>
-        <p id="profile-id"><%=loginUser.getMemberId() %></p>
-        <button class="profile-btn">프로필 변경</button>
-        <button class="profile-btn" onclick="logout();">로그아웃</button>
-    </div>
+    	<form action="${contextPath }/profile.me" method="post" name="myPageFrm" id="profileFrm" enctype="multipart/form-data">
+		    <div id="header" align="center">
+		    	<input type="hidden" name="userId" value="<%=loginUser.getMemberId()%>">
+		    	<c:if test="${empty loginUser.profileImage }">
+		    		<div>
+			        	<img id="user-profile" src="views/member/img/user_profile.png"> <br><br>
+				        <input type="file" name="profile-input" id="profile-input" style="display:none" onchange="loadImg(this,1);"><br>
+		    		</div>
+		    	</c:if>
+		    	<c:if test="${!empty loginUser.profileImage }">
+		    		<div>
+		    		<img id="user-profile" src="views/member/img/<%=loginUser.getChangeName()%>">
+		    		<input type="file" name="profile-input" id="profile-input" style="display:none" onchange="loadImg(this,1);"><br>
+		    		</div>
+		    	</c:if>
+		        <p id="profile-id"><%=loginUser.getMemberId() %></p>
+		        <input class="btn btn-primary" type="submit" value="프로필 변경"/>
+		        <button class="btn btn-danger" type="button" onclick="logout();">로그아웃</button>
+		    </div>
+    	</form>
     
     <div id="my-mileage">
     	<div class="my-title">
@@ -185,7 +203,7 @@ pageEncoding="UTF-8"%>
 	    		<font style="font-size: 21px; font-weight:900">
 	    		<%=loginUser.getMemberId() %>님은 <%=loginUser.getMileage() %>KM만큼 달렸어요!!
 	    		</font><br>
-	    		<progress id="maile-bar" value="50" min="0" max="100"></progress>
+	    		<progress id="maile-bar" value="<%=loginUser.getMileage() %>" min="0" max="100"></progress>
     		</div>
     	</div>
     </div>
@@ -251,7 +269,7 @@ pageEncoding="UTF-8"%>
             </table>
             <div class="info-btn">
                 <button id="update-info-btn" type="submit" onclick="return update();">정보수정</button>
-                <button id="update-pwd-btn" type="button">비밀번호 변경</button>
+                <button id="update-pwd-btn" type="button" data-toggle="modal" data-target="#updatePwdForm">비밀번호 변경</button>
             </div>
             </form>
         </div>
@@ -261,6 +279,25 @@ pageEncoding="UTF-8"%>
 	
 	document.getElementById('shose').options[<%=loginUser.getShoes()%>].selected = true
 	document.getElementById('gender').options[<%=loginUser.getGender()%>].selected = true
+	
+	$(function(){
+		$("#user-profile").click(function(){
+			$("#profile-input").click();
+		});
+	});
+	
+	function loadImg(inputFile,num){
+		
+		if(inputFile.files.length == 1){
+			
+			var reader = new FileReader();
+			reader.readAsDataURL(inputFile.files[0]);
+			
+			reader.onload = function(e){
+				$("#user-profile").attr("src",e.target.result);
+			}
+		}
+	}
 	
 	function logout(){
 		location.href = "${contextPath}/logout.me";
@@ -298,9 +335,73 @@ pageEncoding="UTF-8"%>
 			$("#weight").val(0);
 		}
 	}
-	
-
-
 </script>
+
+	<!-- 비밀번호 변경 모달 -->
+	<div class="modal" id="updatePwdForm">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	
+	      <!-- Modal Header -->
+	      <div class="modal-header" style="background-color:lightblue">
+	        <h4 class="modal-title">비밀번호 변경</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	      <div class="modal-body" align="center">
+	       	<form action="<%=contextPath%>/changePwd.me" method="post">
+					<input type="hidden" name="userId" value="<%=loginUser.getMemberId() %>">
+					
+					<table>
+						<tr>
+							<td>현재 비밀번호</td>
+							<td><input type="password" name="nowPwd" required> </td>
+						</tr>
+						<tr></tr>
+						<tr>
+							<td>변경할 비밀번호</td>
+							<td><input type="password" name="userPwd" required> </td>
+						</tr>
+						<tr></tr>
+						<tr>
+							<td>비밀번호 확인</td>
+							<td><input type="password" id="chkPwd" required> </td>
+						</tr>
+						<tr></tr>
+					</table>		
+					<br>
+					<button type="submit" class="btn btn-danger" onclick="return checkPwd();">비밀번호 변경</button>
+	       		</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	 <script>
+	 	function checkPwd(){
+	 		var nowPwd = $("input[name=nowPwd]").val();
+	      	var updatePwd = $("input[name=userPwd]").val();
+	      	var checkPwd = $("#chkPwd").val();
+	      	
+	      	var regPwd = /^[a-zA-Z0-9!@#$%^&*]{4,15}$/;
+	      	
+	      	if(nowPwd != "<%=loginUser.getMemberPwd() %>"){
+	      		alert("현재 비밀번호가 일치하지 않습니다.")
+	      		return false;
+	      	}else if(!regPwd.test(updatePwd)){
+	      		alert("4~15자 영문 대소문자, 숫자, 특수기호만 입력하세요.")
+	      		return false;
+	      	}else if(updatePwd == "<%=loginUser.getMemberId() %>"){
+	      		alert("아이디와 동일한 비밀번호를 사용할 수 없습니다.")
+	      		return false;
+	      	}
+	      	else if(updatePwd != checkPwd){
+	      		alert("변경할 비밀번호와 확인이 일치하지 않습니다.");
+	      		return false;
+	      	}
+	      }
+	      </script>
 </body>
 </html>
