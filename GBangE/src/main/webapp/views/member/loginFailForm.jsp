@@ -123,10 +123,11 @@ input:focus {
 			</div>
 		<form action="/gbange/login.me" method="post" id="login-form">
 			<input type="text" name="userId" id="loginId" placeholder="아이디"> 
-			<input type="password" name="userPwd" id="loginPwd" placeholder="비밀번호"> 
+			<input type="password" name="userPwd" id="loginPwd placeholder="비밀번호"> 
 			<label for="saveId"><input type="checkbox" id="saveId" name="saveId"> 아이디 저장</label> 
 			<br>
 			<br>
+			<div align="center" style="color:red;">아이디와 비밀번호가 일치하지 않습니다.</div>	
 			<br> <input type="submit" id="login-btn" value="Login">
 			<div align="center">
 				<a href="${contextPath}/findId.me">아이디 찾기</a> / <a href="${contextPath}/findPwd.me">비밀번호 찾기</a> / <a href="${contextPath}/enrollCheck.me">회원가입</a>
