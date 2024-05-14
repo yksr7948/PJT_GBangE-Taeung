@@ -201,7 +201,7 @@
 						<td>${training.trainingKey}</td>
 						<th>착용신발</th>
 						<td>
-							<!-- shoes 조회 기능 구현되면 가져올 것 -->
+							${shoes.shoesName }
 						</td>
 					</tr>
 					<tr>
@@ -228,7 +228,7 @@
 				<div class="cont">
 					${training.trainingContent} <img alt="업로드이미지"
 						src="${contextPath}${attachment.filePath}${attachment.changeName}"
-						id="uploadImg" width="50%">
+						id="uploadImg" width="30%">
 
 				</div>
 			</div>
@@ -247,6 +247,8 @@
 								function() {
 									if (confirm("정말 삭제하시겠습니까?")) {
 										location.href = "${contextPath}/delete.tr?tno=${training.trainingNo}";
+									}else{
+										return false;
 									}
 								});
 				function like() {

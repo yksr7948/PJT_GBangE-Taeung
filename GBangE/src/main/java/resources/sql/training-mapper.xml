@@ -6,7 +6,7 @@ SELECT TRAINING_KEY, TRAINING_NAME
 FROM TRAINING_CATEGORY
 </entry>
 <entry key="insertTraining">
-INSERT INTO TRAINING VALUES(?,?,?,DEFAULT,?,1,?,SYSDATE,?,?,?,?,?,?,'2',?,'Y',DEFAULT)
+INSERT INTO TRAINING VALUES(?,?,?,DEFAULT,?,?,?,SYSDATE,?,?,?,?,?,?,'2',?,'Y',DEFAULT)
 </entry>
 
 <entry key="increaseCount">
@@ -136,4 +136,17 @@ SELECT LIKES
 FROM TRAINING
 WHERE TRAINING_NO = ?
 </entry>
+
+<entry key="selectShoesList">
+SELECT SHOES_NO,SHOES_NAME,STATUS
+FROM SHOES
+</entry>
+
+<entry key="selectShoes">
+SELECT SHOES_NO,SHOES_NAME
+FROM SHOES
+RIGHT JOIN TRAINING USING(SHOES_NO)
+WHERE TRAINING_NO = ?
+</entry>
+
 </properties>
