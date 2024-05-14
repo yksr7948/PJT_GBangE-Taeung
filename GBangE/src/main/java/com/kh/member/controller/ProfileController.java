@@ -51,6 +51,7 @@ public class ProfileController extends HttpServlet {
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize,"UTF-8",new MyFileRenamePolicy());
 			
 			String userId = multiRequest.getParameter("userId");
+			String userPwd = multiRequest.getParameter("userPwd");
 			
 			Member m = null;
 			
@@ -65,16 +66,20 @@ public class ProfileController extends HttpServlet {
 			
 			
 			int result = new MemberService().updateProfile(m);
+			Member loginUser = new MemberService().loginMember(userId, userPwd);
+			
 			
 			HttpSession session = request.getSession();
 			
 			if(result>0) {
-				System.out.println("성공");
 				session.setAttribute("alertMsg", "프로필 변경 성공");
-				response.sendRedirect(request.getContextPath());
+				session.removeAttribute("loginUser");
+				session.setAttribute("loginUser", loginUser);
+				response.sendRedirect(request.getContextPath()+"/mypage.me");
 			}else {
 				System.out.println("실패");
 			}
+			
 		}
 	}
 

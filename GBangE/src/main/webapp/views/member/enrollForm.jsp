@@ -254,10 +254,14 @@
 					<div class="user-info-shoes" style="font-weight:700">
 						러닝화 
 						<select name="shoes" id="shose">
-							<option value="0">맨발</option>
-							<option value="1">운동화</option>
-							<option value="2">스니커즈</option>
-							<option value="3">기타</option>
+							<option value="0">알파플라이3</option>
+							<option value="1">알파플라이2</option>
+							<option value="2">베이퍼플라이3</option>
+							<option value="3">베이퍼플라이2</option>
+							<option value="4">서코니트라이엄프21</option>
+							<option value="5">호카클리프톤9</option>
+							<option value="6">아디오스프로3</option>
+							<option value="7">기타</option>
 						</select>
 					</div>
 				</div>
