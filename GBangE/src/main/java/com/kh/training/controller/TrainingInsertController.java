@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.tomcat.jni.File;
 
 import com.kh.training.model.service.TrainingService;
 import com.kh.training.model.vo.Attachment;
+import com.kh.training.model.vo.Shoes;
 import com.kh.training.model.vo.Training;
 import com.kh.training.model.vo.TrainingCategory;
 import com.kh.training.model.vo.TrainingImgNamePolicy;
@@ -43,8 +43,9 @@ public class TrainingInsertController extends HttpServlet {
 			throws ServletException, IOException {
 		// 훈련종류 리스트 DB에서 가져오는 메서드
 		ArrayList<TrainingCategory> tCList = new TrainingService().selectCategoryList();
-
+		ArrayList<Shoes> sList = new TrainingService().selectShoesList();
 		request.setAttribute("tCList", tCList);
+		request.setAttribute("sList", sList);
 
 		request.getRequestDispatcher("views/training/trainingInsertView.jsp").forward(request, response);
 
@@ -66,6 +67,7 @@ public class TrainingInsertController extends HttpServlet {
 
 			String trainingTitle = multiRequest.getParameter("trainingTitle");
 			String trainingKey = multiRequest.getParameter("category");
+			int shoesNo = Integer.parseInt(multiRequest.getParameter("shoes"));
 			String trainingDate = multiRequest.getParameter("trainingDate");
 			// String shoes = request.getParameter("shoes"); 러닝화 기능 구현되면 가져올 것
 			String trainingPlace = multiRequest.getParameter("trainingPlace");
@@ -78,6 +80,7 @@ public class TrainingInsertController extends HttpServlet {
 
 			Training t = new Training();
 			t.setTrainingTitle(trainingTitle);
+			t.setShoesNo(shoesNo);
 			t.setTrainingKey(trainingKey);
 			t.setTrainingDate(trainingDate);
 			t.setTrainingPlace(trainingPlace);

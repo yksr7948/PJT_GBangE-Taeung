@@ -14,6 +14,7 @@ import com.kh.common.JDBCTemplate;
 import com.kh.common.model.vo.PageInfo;
 import com.kh.training.model.vo.Attachment;
 import com.kh.training.model.vo.Reply;
+import com.kh.training.model.vo.Shoes;
 import com.kh.training.model.vo.Training;
 import com.kh.training.model.vo.TrainingCategory;
 
@@ -79,14 +80,15 @@ public class TrainingDao {
 			pstmt.setInt(2, memberNo);
 			pstmt.setString(3, t.getTrainingTitle());
 			pstmt.setString(4, t.getTrainingKey());
-			pstmt.setString(5, t.getTrainingDate());
-			pstmt.setString(6, t.getTrainingPlace());
-			pstmt.setDouble(7, t.getTrainingTime());
-			pstmt.setString(8, t.getTrainingGoal());
-			pstmt.setDouble(9, t.getTrainingDistance());
-			pstmt.setDouble(10, t.getWeight());
-			pstmt.setString(11, t.getTrainingContent());
-			pstmt.setString(12, t.getoCStatus());
+			pstmt.setInt(5, t.getShoesNo());
+			pstmt.setString(6, t.getTrainingDate());
+			pstmt.setString(7, t.getTrainingPlace());
+			pstmt.setDouble(8, t.getTrainingTime());
+			pstmt.setString(9, t.getTrainingGoal());
+			pstmt.setDouble(10, t.getTrainingDistance());
+			pstmt.setDouble(11, t.getWeight());
+			pstmt.setString(12, t.getTrainingContent());
+			pstmt.setString(13, t.getoCStatus());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -459,6 +461,54 @@ public class TrainingDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return likes;
+	}
+
+	public ArrayList<Shoes> selectShoesList(Connection conn) {
+		ResultSet rset = null;
+		Statement stmt = null;
+		ArrayList<Shoes> sList = new ArrayList<>();
+		String sql = prop.getProperty("selectShoesList");
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(sql);
+			while(rset.next()) {
+				sList.add(new Shoes(
+						rset.getInt("SHOES_NO")
+						,rset.getString("SHOES_NAME")
+						,rset.getString("STATUS")
+						));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(stmt);
+		}
+		return sList;
+	}
+
+	public Shoes selectShoes(Connection conn, int tno) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		Shoes s = null;
+		String sql = prop.getProperty("selectShoes");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tno);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				s = new Shoes(
+						rset.getInt("SHOES_NO")
+						,rset.getString("SHOES_NAME")
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return s;
 	}
 
 

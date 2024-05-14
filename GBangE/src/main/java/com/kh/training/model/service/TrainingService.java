@@ -11,6 +11,7 @@ import com.kh.common.model.vo.PageInfo;
 import com.kh.training.model.dao.TrainingDao;
 import com.kh.training.model.vo.Attachment;
 import com.kh.training.model.vo.Reply;
+import com.kh.training.model.vo.Shoes;
 import com.kh.training.model.vo.Training;
 import com.kh.training.model.vo.TrainingCategory;
 
@@ -182,6 +183,20 @@ public class TrainingService {
 		int likes = new TrainingDao().selectLikes(conn, tno);
 		JDBCTemplate.close(conn);
 		return likes;
+	}
+
+	public ArrayList<Shoes> selectShoesList() {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Shoes> sList = new TrainingDao().selectShoesList(conn);
+		JDBCTemplate.close(conn);
+		return sList;
+	}
+
+	public Shoes selectShoes(int tno) {
+		Connection conn = JDBCTemplate.getConnection();
+		Shoes s = new TrainingDao().selectShoes(conn, tno);
+		JDBCTemplate.close(conn);
+		return s;
 	}
 
 }
