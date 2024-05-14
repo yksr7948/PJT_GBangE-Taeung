@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.training.model.service.TrainingService;
 import com.kh.training.model.vo.Attachment;
+import com.kh.training.model.vo.Shoes;
 import com.kh.training.model.vo.Training;
 
 /**
@@ -37,10 +38,10 @@ public class TrainingDetailController extends HttpServlet {
 		if (result>0) {
 			Training t = new TrainingService().selectTraining(tno);
 			Attachment at = new TrainingService().selectAttachment(tno);
-			
+			Shoes s = new TrainingService().selectShoes(tno);
 			request.setAttribute("training", t);
 			request.setAttribute("attachment", at);
-			
+			request.setAttribute("shoes", s);
 			request.getRequestDispatcher("views/training/trainingDetailView.jsp").forward(request, response);
 			
 		}else {
