@@ -265,6 +265,7 @@ public class MarathonDao{
 					otherIntroduction = otherIntroduction.substring(0,50);
 				}
 				jobj.put("otherIntroduction", otherIntroduction);
+				jobj.put("imageNo", rset.getInt("IMAGE_NO"));
 				searchArr.add(jobj);
 			}
 		} catch (SQLException e) {
