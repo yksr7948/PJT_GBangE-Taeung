@@ -77,18 +77,14 @@ public class NoticeDao {
 		    String sql = prop.getProperty("insertNotice");
 
 		    try {
-		        // 회원 이름으로 회원 번호 찾기
-		        String findMemberNoSql = "SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_NAME = ?";
-		        pstmt = conn.prepareStatement(findMemberNoSql);
-		        pstmt.setString(1, n.getMemberName());
-		        rset = pstmt.executeQuery();
-		      
+//		   
 
 		        // 공지사항을 먼저 삽입
 		        pstmt = conn.prepareStatement(sql);
-		        pstmt.setString(1, n.getNoticeTitle());
-		        pstmt.setInt(2, n.getMemberNo()); // 회원 번호 추가
-		        pstmt.setString(3, n.getNoticeContent());
+		        pstmt.setInt(1,n.getNoticeId());
+		        pstmt.setString(2, n.getNoticeTitle());
+		        pstmt.setInt(3, n.getMemberNo()); // 회원 번호 추가
+		        pstmt.setString(4, n.getNoticeContent());
 		        
 		        result = pstmt.executeUpdate();
 		        
@@ -282,14 +278,14 @@ public class NoticeDao {
 }
 	
 	//첨부파일 추가
-	public int insertAttachment(Connection conn, Attachment at) {
+	public int insertAttachment(Connection conn, Attachment at,int NoticeId) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertAttachment");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, at.getRefBno());
+			pstmt.setInt(1, NoticeId);
 			pstmt.setString(2, at.getOriginName());
 			pstmt.setString(3, at.getChangeName());
 			pstmt.setString(4, at.getFilePath());
@@ -426,6 +422,32 @@ public class NoticeDao {
 	    }
 
 	    return prevAndNextNoticeId;
+	}
+
+	public int selectNoticeNo(Connection conn) {
+		int noticeId = 0;
+		ResultSet rset = null;
+		Statement stmt = null;
+		
+		String sql = prop.getProperty("selectNoticeId");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				noticeId = rset.getInt("NNO");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(stmt);
+		}
+		
+		return noticeId;
+		
 	}
 	
 	
