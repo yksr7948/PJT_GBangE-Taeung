@@ -165,4 +165,23 @@ public class TrainingService {
 		return result;
 	}
 
+	public int updateLikes(int tno) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new TrainingDao().updateLikes(conn,tno);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int selectLikes(int tno) {
+		Connection conn = JDBCTemplate.getConnection();
+		int likes = new TrainingDao().selectLikes(conn, tno);
+		JDBCTemplate.close(conn);
+		return likes;
+	}
+
 }

@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.training.model.service.TrainingService;
 
 /**
- * Servlet implementation class UpdateReplyController
+ * Servlet implementation class TrainingLikesController
  */
-@WebServlet("/ureply.tr")
-public class UpdateReplyController extends HttpServlet {
+@WebServlet("/likes.tr")
+public class TrainingLikesController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateReplyController() {
+    public TrainingLikesController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,20 +29,16 @@ public class UpdateReplyController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int tno = Integer.parseInt(request.getParameter("tno"));
-		int result = new TrainingService().updateLikes(tno);
-		response.getWriter().print(result);
+		int likes = new TrainingService().selectLikes(tno);
+		response.getWriter().print(likes);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String replyWriter = request.getParameter("replyWriter");
-		String originReply = request.getParameter("originReply");
-		String changeReply = request.getParameter("changeReply");
-		int refTno = Integer.parseInt(request.getParameter("refTno"));
-		int result = new TrainingService().updateReply(replyWriter,originReply,changeReply,refTno);
-		response.getWriter().print(result);
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
