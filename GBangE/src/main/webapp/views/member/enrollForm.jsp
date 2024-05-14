@@ -261,6 +261,7 @@
 							<option value="4">서코니트라이엄프21</option>
 							<option value="5">호카클리프톤9</option>
 							<option value="6">아디오스프로3</option>
+							<option value="7">기타타</option>
 						</select>
 					</div>
 				</div>
