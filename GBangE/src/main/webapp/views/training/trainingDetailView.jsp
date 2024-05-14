@@ -235,10 +235,12 @@
 			<br>
 			<div class="bt_wrap">
 				<a href="${contextPath}/list.tr?currentPage=1"
-					class="btn btn-outline-secondary">목록</a> <a
-					href="${contextPath}/update.tr?tno=${training.trainingNo}"
+					class="btn btn-outline-secondary">목록</a> 
+					<c:if test="${loginUser.memberName eq training.trainingWriter}">
+					<a href="${contextPath}/update.tr?tno=${training.trainingNo}"
 					class="btn btn-info">수정</a>
 				<button class="btn btn-secondary" id="deleteTr">삭제</button>
+				</c:if>
 				<button onclick="like();" id="like-btn"></button>
 			</div>
 			<script>
