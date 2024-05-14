@@ -42,6 +42,10 @@ pageEncoding="UTF-8"%>
     font-weight: 900;
     color:#0068ff
 }
+#deleteImage{
+	margin-left: 90px;
+	cursor: pointer;
+}
 
 #my-mileage{
 	width: 700px;
@@ -170,21 +174,27 @@ pageEncoding="UTF-8"%>
 <div id="container">
     	<form action="${contextPath }/profile.me" method="post" name="myPageFrm" id="profileFrm" enctype="multipart/form-data">
 		    <div id="header" align="center">
+		    
 		    	<input type="hidden" name="userId" value="<%=loginUser.getMemberId()%>">
+		    	<input type="hidden" name="userPwd" value="<%=loginUser.getMemberPwd()%>">
+		    	<span id="deleteImage" onclick="deleteProfile();">x</span>
+		    	
 		    	<c:if test="${empty loginUser.profileImage }">
 		    		<div>
 			        	<img id="user-profile" src="views/member/img/user_profile.png"> <br><br>
 				        <input type="file" name="profile-input" id="profile-input" style="display:none" onchange="loadImg(this,1);"><br>
 		    		</div>
 		    	</c:if>
+			    		
 		    	<c:if test="${!empty loginUser.profileImage }">
 		    		<div>
-		    		<img id="user-profile" src="views/member/img/<%=loginUser.getChangeName()%>">
-		    		<input type="file" name="profile-input" id="profile-input" style="display:none" onchange="loadImg(this,1);"><br>
+			    		<img id="user-profile" src="views/member/img/<%=loginUser.getChangeName()%>">
+			    		<input type="file" name="profile-input" id="profile-input" style="display:none" onchange="loadImg(this,1);"><br>
 		    		</div>
 		    	</c:if>
+		    	
 		        <p id="profile-id"><%=loginUser.getMemberId() %></p>
-		        <input class="btn btn-primary" type="submit" value="프로필 변경"/>
+		        <input class="btn btn-primary" type="submit" id="change-btn" value="프로필 변경"/>
 		        <button class="btn btn-danger" type="button" onclick="logout();">로그아웃</button>
 		    </div>
     	</form>
@@ -245,10 +255,13 @@ pageEncoding="UTF-8"%>
                     <td>
                     
                     <select name="shoes" id="shose">
-						<option value="0">맨발</option>
-						<option value="1">운동화</option>
-						<option value="2">스니커즈</option>
-						<option value="3">기타</option>
+						<option value="0">알파플라이3</option>
+						<option value="1">알파플라이2</option>
+						<option value="2">베이퍼플라이3</option>
+						<option value="3">베이퍼플라이2</option>
+						<option value="4">서코니트라이엄프21</option>
+						<option value="5">호카클리프톤9</option>
+						<option value="6">아디오스프로3</option>
 					</td>
                 </tr>
                 <tr>
@@ -280,11 +293,23 @@ pageEncoding="UTF-8"%>
 	document.getElementById('shose').options[<%=loginUser.getShoes()%>].selected = true
 	document.getElementById('gender').options[<%=loginUser.getGender()%>].selected = true
 	
+	//input 파일 열기
 	$(function(){
 		$("#user-profile").click(function(){
 			$("#profile-input").click();
 		});
 	});
+	
+	//이미지 파일을 변경안하고 버튼을 눌렀을때 처리
+	$(function(){
+		$("#change-btn").click(function(){
+			if($("#profile-input").val() == ""){
+				$("#profile-input").click();
+				return false;
+			}	
+		});
+	});
+	    
 	
 	function loadImg(inputFile,num){
 		
@@ -299,8 +324,14 @@ pageEncoding="UTF-8"%>
 		}
 	}
 	
+	//로그아웃 
 	function logout(){
 		location.href = "${contextPath}/logout.me";
+	}
+	
+	//프로필이미지 -> 기본이미지
+	function deleteProfile(){
+		
 	}
 	
 	function update(){
