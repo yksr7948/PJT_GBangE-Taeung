@@ -102,6 +102,7 @@
 	border: none;
 	background: none;
 	float: right;
+	outline: none;
 }
 
 #like-btn::before, #like-btn::after {
