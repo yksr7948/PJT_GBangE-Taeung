@@ -167,17 +167,21 @@
                 </div>
                
                 <div class="cont">
-                    ${notice.noticeContent}
-                     <div class="social-share">
-        <a id="btnTwitter" class="link-icon twitter" href="javascript:shareTwitter();">트위터</a>
-        <a id="btnFacebook" class="link-icon facebook" href="javascript:shareFacebook();">페이스북</a>
-        <a id="btnKakao" class="link-icon kakao" href="javascript:shareKakao();">카카오톡</a>
-    </div>
-    <img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile" style="width: 100%; cursor:pointer;">
-					
-			
-                </div>
-    	        </div>
+			    <!-- 이미지를 글보다 먼저 표시합니다. -->
+			    <div>
+			        <img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile" style="max-width: 50%; max-height: 50%; cursor:pointer;">
+			    </div>
+			    
+			    <div>
+			        ${notice.noticeContent}
+			    </div>
+			    
+			    <div class="social-share">
+			        <a id="btnTwitter" class="link-icon twitter" href="javascript:shareTwitter();">트위터</a>
+			        <a id="btnFacebook" class="link-icon facebook" href="javascript:shareFacebook();">페이스북</a>
+			        <a id="btnKakao" class="link-icon kakao" href="javascript:shareKakao();">카카오톡</a>
+			    </div>
+			</div>
             <br>
             <div class="bt_wrap" style="display: flex; justify-content: space-between;">
     <div>
@@ -218,10 +222,10 @@
     }
     
     
-   /*  function shareKakao() {
+     function shareKakao() {
 
     	  // 사용할 앱의 JavaScript 키 설정
-    	  Kakao.init('카카오에서_발급받은_API키');
+    	  Kakao.init('7b2f63182410e1f62d8617d11a6a95ad');
 
     	  // 카카오링크 버튼 생성
     	  Kakao.Link.createDefaultButton({
@@ -237,7 +241,7 @@
     	      }
     	    }
     	  });
-    	}   */
+    	}   
 </script>
 
 <script>
