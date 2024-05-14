@@ -8,6 +8,7 @@ import com.kh.common.model.vo.PageInfo;
 import com.kh.notice.model.dao.NoticeDao;
 import com.kh.notice.model.vo.Attachment;
 import com.kh.notice.model.vo.Notice;
+import com.kh.training.model.dao.TrainingDao;
 
 
 public class NoticeService {
@@ -24,23 +25,28 @@ public class NoticeService {
 		}
 	//공지사항 글작성
 	public int insertNotice(Notice n, Attachment at) {
-	    Connection conn = JDBCTemplate.getConnection();
+		Connection conn = JDBCTemplate.getConnection();
 	    
-	    int result = new NoticeDao().insertNotice(conn, n);
-	    if(result > 0 && at != null) {
-	        result = new NoticeDao().insertAttachment(conn, at);
-	    }
-	    
-	    if(result > 0) {
-	        JDBCTemplate.commit(conn);
-	    } else {
-	        JDBCTemplate.rollback(conn);
-	    }
-	    
-	    JDBCTemplate.close(conn);
-	    
-	    return result;
-	}
+		  int NoticeId = new NoticeDao().selectNoticeNo(conn);
+		    
+		    n.setNoticeId(NoticeId);
+		    int result = new NoticeDao().insertNotice(conn, n);
+		    int result2 = 1;
+		    if (result > 0 && at != null) { // Attachment 객체가 null이 아닌 경우에만 첨부 파일을 삽입
+		        result2 = new NoticeDao().insertAttachment(conn, at, NoticeId);
+		        if (result * result2 > 0) {
+			        JDBCTemplate.commit(conn);
+			    } else {
+			        JDBCTemplate.rollback(conn);
+			    }
+		    }
+		    
+		   
+		    
+		    JDBCTemplate.close(conn);
+		    
+		    return result * result2;
+		}
 	//조회수 증가
 	public int increaseCount(int nno) {
 		Connection conn = JDBCTemplate.getConnection();
@@ -113,11 +119,12 @@ public class NoticeService {
 		return at;
 	}
 	//게시글 수정
-	public int updateNotice(Notice notice, Attachment at) {
+	public int updateNotice(Notice n, Attachment at) {
 		Connection conn = JDBCTemplate.getConnection();
 		
-		 
-		int result = new NoticeDao().updateNotice(conn,notice);
+		int NoticeId = new NoticeDao().selectNoticeNo(conn); 
+		
+		int result = new NoticeDao().updateNotice(conn,n);
 		
 		int result2 = 1; 
 	
@@ -126,7 +133,7 @@ public class NoticeService {
 			if(at.getFileNo()!=0) {  
 				result2 = new NoticeDao().updateAttachment(conn,at);
 			}else { 
-				result2 = new NoticeDao().insertAttachment(conn, at);
+				result2 = new NoticeDao().insertAttachment(conn, at, NoticeId);
 			}
 		}
 		if(result*result2>0) { 

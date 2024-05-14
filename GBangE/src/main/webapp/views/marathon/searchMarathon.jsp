@@ -188,7 +188,7 @@
 					<c:forEach var="mar" items="${marathonArr}">
 						<div class="packages-item">
                 	<div class="packages-img" onclick="window.open('${mar.marathonSite }')">
-                    	<img src="views/marathon/img/${mar.marathonNo }.jpg" class="img-fluid w-100 rounded-top" style="width:400px;height:300px;">
+                    	<img src="views/marathon/img/${mar.imageNo }.jpg" class="img-fluid w-100 rounded-top" style="width:400px;height:300px;">
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>${mar.region }</small>
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>${mar.marathonDate }</small>

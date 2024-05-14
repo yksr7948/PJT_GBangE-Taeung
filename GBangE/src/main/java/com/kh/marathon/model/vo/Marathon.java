@@ -13,7 +13,7 @@ public class Marathon {
 	private String organizerPhone;
 	private String marathonSite;
 	private String status;
-	private String marathonCourse;
+	private int imageNo;
 	public int getMarathonNo() {
 		return marathonNo;
 	}
@@ -31,6 +31,12 @@ public class Marathon {
 	}
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	public String getRegion() {
+		return region;
+	}
+	public void setRegion(String region) {
+		this.region = region;
 	}
 	public String getMarathonDate() {
 		return marathonDate;
@@ -80,18 +86,11 @@ public class Marathon {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getMarathonCourse() {
-		return marathonCourse;
+	public int getImageNo() {
+		return imageNo;
 	}
-	public void setMarathonCourse(String marathonCourse) {
-		this.marathonCourse = marathonCourse;
-	}
-	
-	public String getRegion() {
-		return region;
-	}
-	public void setRegion(String region) {
-		this.region = region;
+	public void setImageNo(int imageNo) {
+		this.imageNo = imageNo;
 	}
 	@Override
 	public String toString() {
@@ -99,11 +98,11 @@ public class Marathon {
 				+ ", region=" + region + ", marathonDate=" + marathonDate + ", applicationDate=" + applicationDate
 				+ ", otherIntroduction=" + otherIntroduction + ", organizer=" + organizer + ", organizerHost="
 				+ organizerHost + ", organizerPhone=" + organizerPhone + ", marathonSite=" + marathonSite + ", status="
-				+ status + ", marathonCourse=" + marathonCourse + "]";
+				+ status + ", imageNo=" + imageNo + "]";
 	}
 	public Marathon(int marathonNo, String marathonName, String location, String region, String marathonDate,
 			String applicationDate, String otherIntroduction, String organizer, String organizerHost,
-			String organizerPhone, String marathonSite, String status, String marathonCourse) {
+			String organizerPhone, String marathonSite, String status, int imageNo) {
 		super();
 		this.marathonNo = marathonNo;
 		this.marathonName = marathonName;
@@ -117,7 +116,7 @@ public class Marathon {
 		this.organizerPhone = organizerPhone;
 		this.marathonSite = marathonSite;
 		this.status = status;
-		this.marathonCourse = marathonCourse;
+		this.imageNo = imageNo;
 	}
 	public Marathon() {
 		super();

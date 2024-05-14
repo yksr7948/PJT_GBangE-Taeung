@@ -26,7 +26,7 @@
 					<c:forEach var="mar" items="${marathonArr}">
 						<div class="packages-item">
                 	<div class="packages-img" onclick="window.open('${mar.marathonSite }')">
-                    	<img src="views/marathon/img/${mar.marathonNo }.jpg" class="img-fluid w-100 rounded-top" style="width:400px;height:300px;">
+                    	<img src="views/marathon/img/${mar.imageNo }.jpg" class="img-fluid w-100 rounded-top" style="width:400px;height:300px;">
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>${mar.region }</small>
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>${mar.marathonDate }</small>
@@ -104,7 +104,11 @@
                     <div class="adminMenu">
                     <c:if test="${loginUser.memberId eq 'admin'}">                    
                     <br>                 
-                    	<button onclick='location.href="${contextPath }/insert.ma"' class="btn btn-outline-primary">대회정보 초기화</button>                    		
+                    	<button onclick='checkResetMarathon();' id="marathonResetBtn" class="btn btn-outline-primary">대회정보 초기화</button>
+                    	<button class="btn btn-primary" id="loadingBtn" type="button" style="display:none;" disabled>
+						<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+						  Loading...
+						</button>                    		
                     	<button onclick='checkRestore();' class="btn btn-outline-primary">대회정보 복구</button>					
                     </c:if>
 					</div>
@@ -133,6 +137,17 @@
 <script src="views/marathon/lib/owlcarousel/owl.carousel.min.js"></script>
 <script src="views/marathon/js/main.js"></script>
 <script type="text/javascript">
+$(function(){
+	$("#marathonResetBtn").css("display","");
+	$("#loadingBtn").css("display","none");
+});
+function checkResetMarathon(){
+	if(confirm("전체 대회정보를 초기화합니다. 진행하시겠습니까?")){
+		$("#marathonResetBtn").css("display","none");
+		$("#loadingBtn").css("display","");
+		location.href="${contextPath }/insert.ma"
+	}
+}
 function checkParticipate(e){
 	if('${loginUser.memberNo}'==""){
 		if(confirm("로그인이 필요한 서비스입니다. 로그인페이지로 이동하시겠습니까?")){
