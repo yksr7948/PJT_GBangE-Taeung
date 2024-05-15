@@ -161,7 +161,8 @@ public class TrainingDao {
 
 			while (rset.next()) {
 				list.add(new Training(rset.getInt("TRAINING_NO"), rset.getString("TRAINING_TITLE"),
-						rset.getString("MEMBER_NAME"), rset.getDate("RECORD_DATE"), rset.getInt("COUNT"),rset.getString("OCSTATUS")));
+						rset.getString("MEMBER_NAME"), rset.getDate("RECORD_DATE"), rset.getInt("COUNT"),
+						rset.getString("OCSTATUS")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -306,7 +307,7 @@ public class TrainingDao {
 			pstmt.setString(9, t.getTrainingContent());
 			pstmt.setString(10, t.getoCStatus());
 			pstmt.setInt(11, t.getTrainingNo());
-			result=pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -327,7 +328,7 @@ public class TrainingDao {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
@@ -343,7 +344,7 @@ public class TrainingDao {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
@@ -358,10 +359,10 @@ public class TrainingDao {
 			pstmt.setString(1, r.getreplyContent());
 			pstmt.setInt(2, r.getRefTno());
 			pstmt.setString(3, r.getreplyWriter());
-			result=pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
@@ -370,18 +371,15 @@ public class TrainingDao {
 	public ArrayList<Reply> selectReplyList(Connection conn, int refTno) {
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
-		ArrayList<Reply>list = new ArrayList<>();
+		ArrayList<Reply> list = new ArrayList<>();
 		String sql = prop.getProperty("selectReplyList");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, refTno);
 			rset = pstmt.executeQuery();
-			while(rset.next()) {
-				list.add(new Reply(
-						rset.getString("REPLY_CONTENT")
-						,rset.getString("MEMBER_NAME")
-						,rset.getString("CREATE_DATE")
-						));
+			while (rset.next()) {
+				list.add(new Reply(rset.getString("REPLY_CONTENT"), rset.getString("MEMBER_NAME"),
+						rset.getString("CREATE_DATE")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -400,7 +398,7 @@ public class TrainingDao {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
@@ -420,7 +418,7 @@ public class TrainingDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
@@ -437,7 +435,7 @@ public class TrainingDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
@@ -452,12 +450,12 @@ public class TrainingDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, tno);
 			rset = pstmt.executeQuery();
-			if(rset.next()) {
+			if (rset.next()) {
 				likes = rset.getInt("LIKES");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return likes;
@@ -471,17 +469,13 @@ public class TrainingDao {
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(sql);
-			while(rset.next()) {
-				sList.add(new Shoes(
-						rset.getInt("SHOES_NO")
-						,rset.getString("SHOES_NAME")
-						,rset.getString("STATUS")
-						));
+			while (rset.next()) {
+				sList.add(new Shoes(rset.getInt("SHOES_NO"), rset.getString("SHOES_NAME"), rset.getString("STATUS")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(stmt);
 		}
 		return sList;
@@ -496,20 +490,109 @@ public class TrainingDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, tno);
 			rset = pstmt.executeQuery();
-			while(rset.next()) {
-				s = new Shoes(
-						rset.getInt("SHOES_NO")
-						,rset.getString("SHOES_NAME")
-						);
+			while (rset.next()) {
+				s = new Shoes(rset.getInt("SHOES_NO"), rset.getString("SHOES_NAME"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
 		}
 		return s;
 	}
 
+	public ArrayList<Training> searchByTitle(Connection conn, PageInfo pi, String keyword) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		ArrayList<Training> searchList = new ArrayList<>();
+		String sql = prop.getProperty("searchByTitle");
+
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + keyword + "%");
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				searchList.add(new Training(rset.getInt("TRAINING_NO"), rset.getString("TRAINING_TITLE"),
+						rset.getString("MEMBER_NAME"), rset.getDate("RECORD_DATE"), rset.getInt("COUNT"),
+						rset.getString("OCSTATUS")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return searchList;
+	}
+
+	public ArrayList<Training> searchByCategory(Connection conn, PageInfo pi, String keyword) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		ArrayList<Training> searchList = new ArrayList<>();
+		String sql = prop.getProperty("searchByCategory");
+
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + keyword + "%");
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				searchList.add(new Training(rset.getInt("TRAINING_NO"), rset.getString("TRAINING_TITLE"),
+						rset.getString("MEMBER_NAME"), rset.getDate("RECORD_DATE"), rset.getInt("COUNT"),
+						rset.getString("OCSTATUS")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return searchList;
+	}
+
+	public ArrayList<Training> searchByContent(Connection conn, PageInfo pi, String keyword) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		ArrayList<Training> searchList = new ArrayList<>();
+		String sql = prop.getProperty("searchByContent");
+
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + keyword + "%");
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				searchList.add(new Training(rset.getInt("TRAINING_NO"), rset.getString("TRAINING_TITLE"),
+						rset.getString("MEMBER_NAME"), rset.getDate("RECORD_DATE"), rset.getInt("COUNT"),
+						rset.getString("OCSTATUS")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return searchList;
+	}
 
 }
