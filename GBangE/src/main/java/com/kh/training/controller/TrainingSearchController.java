@@ -64,6 +64,7 @@ public class TrainingSearchController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage);
 		//페이징 처리 끝
+		
 		ArrayList<Training> searchList = new ArrayList<>();
 		String searchType = request.getParameter("searchType");
 		String keyword = request.getParameter("keyword");
@@ -79,7 +80,9 @@ public class TrainingSearchController extends HttpServlet {
 			break;
 		}
 		request.setAttribute("pi", pi);
+		request.setAttribute("keyword", keyword);
 		request.setAttribute("searchList", searchList);
+		
 		request.getRequestDispatcher("/views/training/searchResult.jsp").forward(request, response);
 	}
 

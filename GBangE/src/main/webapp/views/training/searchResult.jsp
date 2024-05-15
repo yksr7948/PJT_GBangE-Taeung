@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>러닝일지 페이지</title>
+<title>'${keyword}' (으)로 검색한 결과</title>
 
 <style>
 /*기본 설정*/
@@ -171,7 +171,7 @@ a {
 	<div class="board_wrap">
 		<div class="board_title">
 			<h1>러닝일지</h1>
-			<p>러닝일지 페이지입니다.</p>
+			<p>'${keyword}' (으)로 검색한 결과입니다.</p>
 		</div>
 		<div class="board_list_wrap">
 			<div class="board_list">
