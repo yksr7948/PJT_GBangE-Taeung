@@ -1,3 +1,7 @@
+<%@ page import="java.sql.Connection" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@page import="com.kh.notice.model.vo.Notice"%>
+<%@page import="com.kh.notice.model.dao.NoticeDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -87,17 +91,48 @@
 }
 
  /* 공유 아이콘 스타일 */
-        .social-share {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
+ .social-share {
+    position: absolute;
+    top: 160px; /* Adjust this value to move the icons slightly up */
+    right: 20px;
+}
 
-        .social-share img {
-            width: 30px;
-            height: 30px;
-            margin-left: 10px;
-        }
+.social-share img {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.link-icon { 
+    display: inline-block; 
+    width: auto; 
+    font-size: 14px; 
+    font-weight: 500; 
+    color: #333; 
+    margin-right: 10px; 
+}
+
+.link-icon.twitter { 
+    background-image: url(./img/icon-twitter.png); 
+    background-repeat: no-repeat; 
+}
+
+.link-icon.facebook { 
+    background-image: url(./img/icon-facebook.png); 
+    background-repeat: no-repeat; 
+} 
+
+.link-icon.kakao { 
+    background-image: url(./img/icon-kakao.png); 
+    background-repeat: no-repeat; 
+}
+
+.zbange {
+    width: 100px; 
+    position: relative;
+    top: -80px;
+    left: 150px;
+}
 </style>
 </head>
 <body>
@@ -105,6 +140,7 @@
 	  <div class="board_wrap">
         <div class="board_title">
             <h1>공지사항</h1>
+            <a href="${contextPath}"> <img src="/gbange/views/notice/img/image_360-removebg-preview.png" alt="지방이" class="zbange"></a>
             <p>공지사항 페이지입니다.</p>
         </div>
         
@@ -129,22 +165,92 @@
                         <dd>${notice.count}</dd>
                     </dl>
                 </div>
+               
                 <div class="cont">
-                    ${notice.noticeContent}
-                </div>
-            </div>
+			    <!-- 이미지를 글보다 먼저 표시합니다. -->
+			    <div>
+			        <img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile" style="max-width: 50%; max-height: 50%; cursor:pointer;">
+			    </div>
+			    
+			    <div>
+			        ${notice.noticeContent}
+			    </div>
+			    
+			    <div class="social-share">
+			        <a id="btnTwitter" class="link-icon twitter" href="javascript:shareTwitter();">트위터</a>
+			        <a id="btnFacebook" class="link-icon facebook" href="javascript:shareFacebook();">페이스북</a>
+			        <a id="btnKakao" class="link-icon kakao" href="javascript:shareKakao();">카카오톡</a>
+			    </div>
+			</div>
             <br>
-            <div class="bt_wrap">
-                <a href="" class="btn btn-outline-secondary" onclick="goToNoticeListView()">목록</a>
-                <a href="#" class="btn btn-success">수정</a>
-            </div>
-        </div>
-    </div>
+            <div class="bt_wrap" style="display: flex; justify-content: space-between;">
+    <div>
+      	<a href="${contextPath}/list.no?currentPage=1" class="btn btn-outline-secondary">목록</a>
+
+        <% 
+            int[] noticeNext = (int[])request.getAttribute("NoticeNext");
+            if (noticeNext[0] != 0) { 
+        %>
+            <a href="${contextPath}/detail.no?nno=<%= noticeNext[0] %>" class="btn btn-outline-secondary">이전글</a>
+        <% } %>
     
+        <% 
+            if (noticeNext[1] != 0) { 
+        %>
+            <a href="${contextPath}/detail.no?nno=<%= noticeNext[1] %>" class="btn btn-outline-secondary">다음글</a>
+        <% } %>
+    </div>
+    <% if(loginUser != null && loginUser.getMemberId().equals("admin")) { %>
+    <div>
+        <a href="${contextPath}/update.no?nno=${notice.noticeId}" class="btn btn-success">수정</a>
+        <a href="${contextPath}/delete.no?nno=${notice.noticeId}" class="btn btn-danger" onclick="return confirmDelete()">삭제</a>
+    </div>
+    <% } %>
+</div>
+            
+   
    <script>
-    function goToNoticeListView() {
-        window.location.href = 'views/notice/noticeListView.jsp';
+    function confirmDelete() {
+        var confirmDelete = confirm("정말 삭제하시겠습니까?");
+        if (confirmDelete) {
+            // 삭제 처리하는 코드
+            window.location.href = "${contextPath}/delete.no?nno=${notice.noticeId}";
+        } else {
+            // 삭제 취소할 때 처리할 코드
+            return false;
+        }
     }
+    
+    
+     function shareKakao() {
+
+    	  // 사용할 앱의 JavaScript 키 설정
+    	  Kakao.init('7b2f63182410e1f62d8617d11a6a95ad');
+
+    	  // 카카오링크 버튼 생성
+    	  Kakao.Link.createDefaultButton({
+    	    container: '#btnKakao', // 카카오공유버튼ID
+    	    objectType: 'content',
+    	    content: {
+    	      title: "공지사항", // 보여질 제목
+    	      description: "지방이 공지사항", // 보여질 설명
+    	      imageUrl: "gbangE/", // 콘텐츠 URL
+    	      link: {
+    	         mobileWebUrl: "gbangE/",
+    	         webUrl: "gbangE/"
+    	      }
+    	    }
+    	  });
+    	}   
 </script>
+
+<script>
+    // ...
+    // 이미지 클릭 시 이미지 확대 표시
+    $("#uploadFile").click(function() {
+        window.open(this.src, '_blank');
+    });
+</script>
+   
 </body>
 </html>

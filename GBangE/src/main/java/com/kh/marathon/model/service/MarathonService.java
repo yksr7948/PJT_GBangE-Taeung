@@ -3,6 +3,7 @@ package com.kh.marathon.model.service;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.Date;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -52,18 +53,18 @@ public class MarathonService {
         // 
         int num =Integer.parseInt(doc.select("font[color=red]").first().text());
         Document doc2=null;
+        int count =1;
         for(int i=0;i<num;i++) {
             try {
                 String href = doc.select("td[width=29%] a").eq(i).attr("href");
                 if (href.isEmpty()) {
-                    System.out.println("종료");
+                    System.out.println("초기화"+new Date());
                     break;
                 }
                 String subHref = href.substring(href.indexOf(",") + 3, href.indexOf(",", href.indexOf(",") + 1) - 1);
                 String URL2 = "http://www.roadrun.co.kr/schedule/" + subHref;
 
                 //가져온 주소로 새로 크롤링
-
                 doc2 = Jsoup.parse(new URL(URL2).openStream(), "euc-kr", URL2);
                 String marathonName = doc2.select("td[width=430]").eq(0).text();
                 String location = doc2.select("td[width=430]").eq(7).text();
@@ -76,6 +77,7 @@ public class MarathonService {
                 String region = doc2.select("td[width=430]").eq(6).text();
                 String marathonSite = doc2.select("td[width=430]").eq(10).text();
                 String otherIntroduction = doc2.select("td[width=430]").eq(11).text();
+                
                 JSONObject jObj = new JSONObject();
                 jObj.put("marathonName",marathonName);
                 jObj.put("location",location);
@@ -88,6 +90,7 @@ public class MarathonService {
                 jObj.put("region",region);
                 jObj.put("marathonSite",marathonSite);
                 jObj.put("otherIntroduction",otherIntroduction);
+                jObj.put("imageNo", count++);
                 jArr.add(jObj);
                 } catch (IOException e) {
                 e.printStackTrace();

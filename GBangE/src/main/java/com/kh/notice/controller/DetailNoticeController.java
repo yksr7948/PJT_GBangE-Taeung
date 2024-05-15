@@ -1,6 +1,8 @@
 package com.kh.notice.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,7 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.notice.model.service.NoticeService;
+import com.kh.notice.model.vo.Attachment;
 import com.kh.notice.model.vo.Notice;
+
+
 
 /**
  * Servlet implementation class DetailNoticeController
@@ -32,14 +37,24 @@ public class DetailNoticeController extends HttpServlet {
 		int nno = Integer.parseInt(request.getParameter("nno"));
 		int result = new NoticeService().increaseCount(nno);
 		
-		 Notice notice = new NoticeService().selectNotice(nno);
-	        
-	      
-	        request.setAttribute("notice", notice);
-	        
-
-	        request.getRequestDispatcher("/views/notice/noticeDetailView.jsp").forward(request, response);
+		 
+		 if (result>0) {
+				Notice n = new NoticeService().selectNotice(nno);
+				Attachment at = new NoticeService().selectAttachment(nno);
+				int[] NextNotice = new NoticeService().getPrevAndNextNoticeId(nno);
+				
+				request.setAttribute("notice", n);
+				request.setAttribute("attachment", at);
+				request.setAttribute("NoticeNext",NextNotice);
 		
+				request.getRequestDispatcher("views/notice/noticeDetailView.jsp").forward(request, response);
+				
+			}else {
+				request.getSession().setAttribute("alertMsg", "조회 실패");
+				response.sendRedirect(request.getHeader("referer"));
+			}   
+	      
+	       
 		
 		
 	}

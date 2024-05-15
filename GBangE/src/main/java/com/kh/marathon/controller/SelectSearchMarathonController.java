@@ -34,8 +34,12 @@ public class SelectSearchMarathonController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String searchName = request.getParameter("searchName");
 		JSONArray searchArr = new MarathonService().selectSearch(searchName);
+		int contentCount= searchArr.size();
+
 		request.setAttribute("marathonArr", searchArr);
-		request.getRequestDispatcher("views/marathon/marathonMain.jsp").forward(request, response);
+		request.setAttribute("contentCount", contentCount);
+		request.setAttribute("searchName", searchName);
+		request.getRequestDispatcher("views/marathon/searchMarathon.jsp").forward(request, response);
 	}
 
 	/**

@@ -21,6 +21,18 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.btn-cancel').click(function() {
+            if (confirm('정말 취소하시겠습니까?')) {
+                window.location.href = "<%= request.getContextPath() %>/list.no?currentPage=1";
+            }
+        });
+        $('#enroll-form').submit(function() {
+            return confirm('정말 등록하시겠습니까?');
+        });
+    });
+</script>
 <style>
 .board_wrap {
 	margin: 30px;
@@ -109,9 +121,10 @@
 	<div class="board_wrap">
 		<div class="board_title">
 			<h1>공지사항</h1>
-			<p>공지사항 페이지입니다.</p>
+			<p>공지사항 작성 페이지입니다.</p>
 		</div>
-		<form action="${contextPath}/insert.no" method="post" id="enroll-form">
+		<form action="${contextPath}/insert.no" method="post" id="enroll-form" enctype="multipart/form-data">
+		<input type="hidden" name="memberNo" value="${loginUser.memberNo }">
 			<div class="board_write_wrap">
 				<div class="board_write">
 					<div class="title">
@@ -125,8 +138,10 @@
 					<div class="info">
 						
 						<dl>
-							<dt></dt>
-							<dd></dd>
+							<dt>첨부파일</dt>
+						<dd>
+							<input type="file" name="uploadFile" class="btn btn-outline-secondary">
+						</dd>
 						</dl>
 					</div>
 					<div class="cont">
@@ -135,11 +150,12 @@
 				</div>
 				<br>
 				<div class="bt_wrap">
-					<button type="submit" class="btn btn-success">등록</button> <button type="reset"
-						class="btn btn-outline-secondary">취소</button>
+					<button type="submit" class="btn btn-success">등록</button> 
+						<button type="button" class="btn btn-outline-secondary btn-cancel">취소</button>
 				</div>
 			</div>
 		</form>
+		
 	</div>
 </body>
 </html>

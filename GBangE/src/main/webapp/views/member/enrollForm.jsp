@@ -187,6 +187,10 @@
 	border: 1px solid gray;
 	border-radius: 10px;
 }
+#hidden-shoseArea{
+	display:none;
+	margin-top: -20px;
+}
 </style>
 </head>
 <body>
@@ -229,7 +233,7 @@
 						<div style="font-weight:700">* 주민등록번호</div>
 						<input type="text" name="userPno1" id="userPno1" /> 
 						<font style="font-size: 30px">-</font> 
-						<input type="text"name="userPno2" id="userPno2" />
+						<input type="password"name="userPno2" id="userPno2" />
 					</div>
 					<div id="hidden-pnoArea" style="display: none; margin-top:10px;"></div>
 					
@@ -248,11 +252,16 @@
 					</div>
 
 					<div class="user-info-shoes" style="font-weight:700">
-						러닝화 <select name="shoes">
-							<option value="기타">기타</option>
-							<option value="맨발">맨발</option>
-							<option value="운동화">운동화</option>
-							<option value="스니커즈">스니커즈</option>
+						러닝화 
+						<select name="shoes" id="shose">
+							<option value="0">알파플라이3</option>
+							<option value="1">알파플라이2</option>
+							<option value="2">베이퍼플라이3</option>
+							<option value="3">베이퍼플라이2</option>
+							<option value="4">서코니트라이엄프21</option>
+							<option value="5">호카클리프톤9</option>
+							<option value="6">아디오스프로3</option>
+							<option value="7">기타</option>
 						</select>
 					</div>
 				</div>
@@ -260,11 +269,12 @@
 					<br><br>
 					
 				<div class="gender">			
-					<input type="radio" name="gender" id="women" value="W" />
+					<input type="radio" name="gender" id="men"value="0" />
+					<label for="men" style="font-weight:700">남성</label>
+					
+					<input type="radio" name="gender" id="women" value="1" />
 					<label for="women" style="font-weight:700">여성</label> 
 					
-					<input type="radio" name="gender" id="men"value="M" />
-					<label for="men" style="font-weight:700">남성</label>
 				</div>
 				<div class="btn">
 					<button type="submit" id="enroll-btn" onclick="return enroll();"
@@ -333,6 +343,7 @@
 	</script>
 
 	<script>
+		
 		//회원가입 정규표현식
 		function enroll() {
 			var id = $("#userId");
@@ -377,7 +388,7 @@
 				});
 				pwd.focus();
 				return false;
-				//비밀번호 형식 비교
+			//비밀번호 형식 비교
 			} else if (!regPwd.test(pwd.val())) {
 				$("#hidden-pwdArea").html("*4~15자 영문 대소문자, 숫자, 특수기호만 입력하세요.")
 						.show();

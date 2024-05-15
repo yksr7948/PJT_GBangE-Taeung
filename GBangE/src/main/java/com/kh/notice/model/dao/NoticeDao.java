@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.kh.common.JDBCTemplate;
+import com.kh.common.model.vo.PageInfo;
+import com.kh.notice.model.vo.Attachment;
 import com.kh.notice.model.vo.Notice;
 
 
@@ -33,16 +35,21 @@ public class NoticeDao {
 	}
 
 	//글목록
-	public ArrayList<Notice> selectNoticeList(Connection conn) {
+	public ArrayList<Notice> selectNoticeList(Connection conn, PageInfo pi) {
 		
 		ArrayList<Notice> list = new ArrayList<>();
 		ResultSet rset =null;
-		Statement stmt =null;
+		PreparedStatement pstmt = null;
 		String sql =prop.getProperty("selectNoticeList");
 		
+		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit()+1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+		
 		try {
-			stmt =conn.createStatement();
-			rset =stmt.executeQuery(sql);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset =pstmt.executeQuery();
 			
 			while(rset.next()){
 				list.add(new Notice(rset.getInt("NOTICE_ID")
@@ -57,37 +64,39 @@ public class NoticeDao {
 			e.printStackTrace();
 		}finally {
 			JDBCTemplate.close(rset);
-			JDBCTemplate.close(stmt);
+			JDBCTemplate.close(pstmt);
 		}
 		
 		return list;
 	}
-	//글 작성
+	//글 작성 
 	public int insertNotice(Connection conn, Notice n) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("insertNotice");
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,n.getNoticeTitle());
-			pstmt.setString(2,n.getMemberName());
-			pstmt.setString(3,n.getNoticeContent());
-			
-			result = pstmt.executeUpdate();
-			
-			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			JDBCTemplate.close(pstmt);
+		 int result = 0;
+		    PreparedStatement pstmt = null;
+		    ResultSet rset = null;
+		    String sql = prop.getProperty("insertNotice");
+
+		    try {
+//		   
+
+		        // 공지사항을 먼저 삽입
+		        pstmt = conn.prepareStatement(sql);
+		        pstmt.setInt(1,n.getNoticeId());
+		        pstmt.setString(2, n.getNoticeTitle());
+		        pstmt.setInt(3, n.getMemberNo()); // 회원 번호 추가
+		        pstmt.setString(4, n.getNoticeContent());
+		        
+		        result = pstmt.executeUpdate();
+		        
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        JDBCTemplate.close(rset);
+		        JDBCTemplate.close(pstmt);
+		    }
+		    return result;
 		}
 		
-		
-		
-		return result;
-	}
 
 	//조회수 증가
 	public int increaseCount(Connection conn, int nno) {
@@ -267,6 +276,184 @@ public class NoticeDao {
 		    return list;
 	
 }
+	
+	//첨부파일 추가
+	public int insertAttachment(Connection conn, Attachment at,int NoticeId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, NoticeId);
+			pstmt.setString(2, at.getOriginName());
+			pstmt.setString(3, at.getChangeName());
+			pstmt.setString(4, at.getFilePath());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	public Attachment selectAttachment(Connection conn, int nno) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectAttachment");
+		Attachment at = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, nno);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				at = new Attachment(
+						rset.getInt("FILE_NO")
+						,rset.getString("ORIGIN_NAME")
+						,rset.getString("CHANGE_NAME")
+						,rset.getString("FILE_PATH")
+						);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return at;
+	}
+
+	public int updateNotice(Connection conn, Notice notice) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateNotice");
+		
+		try {
+			
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, notice.getNoticeTitle());
+	        pstmt.setString(2, notice.getNoticeContent());
+	        pstmt.setInt(3, notice.getNoticeId());
+	        
+	        
+	        
+	        result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateAttachment(Connection conn, Attachment at) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, at.getOriginName());
+			pstmt.setString(2, at.getChangeName());
+			pstmt.setString(3, at.getFilePath());
+			pstmt.setInt(4, at.getFileNo());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteNotice(Connection conn, int noticeId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteNotice");
+		
+		try {
+			pstmt =conn.prepareStatement(sql);
+			pstmt.setInt(1,noticeId);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			
+		}
+		
+		return result;
+	}
+	
+	//이전글 , 다음글 메소드
+	public int[] getPrevAndNextNoticeId(Connection conn, int currentNoticeId) {
+	    int[] prevAndNextNoticeId = new int[2];
+	    ResultSet rset = null;
+	    PreparedStatement pstmt = null;
+	    String sql = prop.getProperty("nextNotice");
+
+	    try {
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, currentNoticeId);
+	        rset = pstmt.executeQuery();
+
+	        if (rset.next()) {
+	            prevAndNextNoticeId[0] = rset.getInt("PREV"); // 이전 글의 ID
+	            prevAndNextNoticeId[1] = rset.getInt("NEXT"); // 다음 글의 ID
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        JDBCTemplate.close(rset);
+	        JDBCTemplate.close(pstmt);
+	    }
+
+	    return prevAndNextNoticeId;
+	}
+
+	public int selectNoticeNo(Connection conn) {
+		int noticeId = 0;
+		ResultSet rset = null;
+		Statement stmt = null;
+		
+		String sql = prop.getProperty("selectNoticeId");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				noticeId = rset.getInt("NNO");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(stmt);
+		}
+		
+		return noticeId;
+		
+	}
+	
+	
+
+
+	
 
 }
 

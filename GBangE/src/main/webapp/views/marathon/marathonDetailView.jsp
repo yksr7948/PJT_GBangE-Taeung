@@ -87,10 +87,61 @@
 </div>
 <!-- 관리자기능 -->
 <div class="admindiv" style="margin-left:300px">
-<%-- <c:if test="${memberNo==1}"> --%>
-<button onclick='checkdelete();' class="btn btn-outline-primary">대회정보 삭제</button>
-<button onclick='location.href="${contextPath }/update.ma?marathonNo=${mar.marathonNo }"' class="btn btn-outline-primary">대회정보 변경</button>
-<%-- </c:if> --%>
+<c:if test="${loginUser.memberId eq 'admin'}">
+	<button onclick='checkdelete();' class="btn btn-outline-primary">대회정보 삭제</button>
+	<button onclick='location.href="${contextPath }/update.ma?marathonNo=${mar.marathonNo }"' class="btn btn-outline-primary">대회정보 변경</button>
+</c:if>
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">신청자 정보</button>
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">신청자 정보</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <table class="marathonclass" style="font-size: 12px">
+                    <thead align="center">
+						<tr>
+							<th width="7%">번호</th>
+							<th width="14%">참가자 이름</th>
+							<th width="33%">마라톤 이름</th>
+							<th width="8%">지역</th>
+							<th width="19%">마라톤 날짜</th>
+							<th width="19%">전화 번호</th>
+						</tr>
+					</thead>
+					<tbody align="center">
+                      <c:choose>
+						<c:when test="${empty participateList }">
+						<tr>
+							<td colspan="5">조회된 신청자가 없습니다.</td>
+						</tr>
+						</c:when>
+						<c:otherwise>
+						<c:forEach var="p" items="${participateList}">
+							<tr class="participateInfo">
+								<td>${p.getParticipateNo()}</td>
+								<td>${p.getName()}</td>
+								<td>${p.getMarathonName() }</td>
+								<td>${p.getRegionName() }</td>
+								<td>${p.getParticipateDate() }</td>
+								<td>010-****-****</td>
+							</tr>
+						</c:forEach>	
+					</c:otherwise>
+					</c:choose>
+					</tbody>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a1b4846e472c7771e5d7f51cf184db58&libraries=services"></script>
 <script>

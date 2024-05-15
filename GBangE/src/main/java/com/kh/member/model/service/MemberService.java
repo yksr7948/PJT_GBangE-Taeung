@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import com.kh.common.JDBCTemplate;
 import com.kh.member.model.dao.MemberDao;
+
 import com.kh.member.model.vo.Member;
 
 public class MemberService {
@@ -46,16 +47,83 @@ public class MemberService {
 		return flag;
 	}
 
-	public Member findId(String userName, String userPno) {
+	public String findId(String userName, String userPno) {
 
 		Connection conn = JDBCTemplate.getConnection();
 		
-		Member m =new MemberDao().findId(conn,userName,userPno);
+		String userId =new MemberDao().findId(conn,userName,userPno);
 		
 		JDBCTemplate.close(conn);
 		
-		return m;
+		return userId;
 	}
+
+	public boolean findPwd(String userId, String userName, String userPno) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		
+		boolean flag = new MemberDao().findPwd(conn,userId,userName,userPno);
+		
+		JDBCTemplate.close(conn);
+		
+		return flag;
+	}
+
+	public int changePwd(String userId, String userPwd) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new MemberDao().changePwd(conn,userId,userPwd);
+		
+		if(result > 0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public Member updateMember(Member m) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new MemberDao().updateMember(conn, m);
+		
+		Member updateMem = null;
+		
+		if(result > 0) {
+			JDBCTemplate.commit(conn);
+			updateMem = new MemberDao().selectMember(conn, m.getMemberId());
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return updateMem;
+	}
+
+	public int updateProfile(Member m) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new MemberDao().updateProfile(conn, m);
+		
+		if(result > 0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		return result;
+	}
+
+	
+
+	
 
 	
 }

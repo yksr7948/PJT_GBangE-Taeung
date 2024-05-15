@@ -45,10 +45,9 @@ public class IdFindController extends HttpServlet {
 		
 		String userPno = userPno1+"-"+userPno2;
 		
-		Member m = new MemberService().findId(userName,userPno);
+		String userId = new MemberService().findId(userName,userPno);
 		
-		System.out.println(m.getMemberId());
-		
+		response.getWriter().print(userId);
 	}
 
 }

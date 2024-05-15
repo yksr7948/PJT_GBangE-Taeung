@@ -9,10 +9,9 @@
 <body>
 <%@include file="/views/common/menubar.jsp"%>
 <div class="container-fluid packages py-5">
-
 	<div class="searchArea">			
-			<input type="text" name="searchName" id="searchName">
-			<span onclick="selectSearch();" cursor="pointer";>
+			<input type="search" name="searchName" id="searchName">
+			<span onclick="selectSearch();">
         	<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
   			<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
 			</span>
@@ -27,7 +26,7 @@
 					<c:forEach var="mar" items="${marathonArr}">
 						<div class="packages-item">
                 	<div class="packages-img" onclick="window.open('${mar.marathonSite }')">
-                    	<img src="views/marathon/img/${mar.marathonNo }.jpg" class="img-fluid w-100 rounded-top" style="width:400px;height:300px;">
+                    	<img src="views/marathon/img/${mar.imageNo }.jpg" class="img-fluid w-100 rounded-top" style="width:400px;height:300px;">
                     <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>${mar.region }</small>
                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>${mar.marathonDate }</small>
@@ -59,7 +58,7 @@
         <button type="button" id="carouselplaybtn" class="btn btn-outline-primary" style="float: right; display: none;">시작</button>
         <button type="button" id="carouselstopbtn" class="btn btn-outline-primary" style="float: right;">중지</button>
         <div>           
-            <button type="button" id="btn-infor" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">전체 대회정보</button>
+            <button type="button" id="btn-infor" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">대회 전체 정보</button>
             <!-- modal영역 -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
@@ -103,12 +102,15 @@
                     </div>
                     <!-- 관리자전용 기능 -->
                     <div class="adminMenu">
-<%--                     	<c:if test="'${loginUser.memberId}'=='admin'"> --%>
-                    <br>
-                    <p> * 관리자용 메뉴</p>                   
-                    		<button onclick='location.href="${contextPath }/insert.ma"' class="btn btn-outline-primary">대회정보 초기화</button>                    		
-                    		<button onclick='checkRestore();' class="btn btn-outline-primary">대회정보 복구</button>
-<%--                     	</c:if> --%>
+                    <c:if test="${loginUser.memberId eq 'admin'}">                    
+                    <br>                 
+                    	<button onclick='checkResetMarathon();' id="marathonResetBtn" class="btn btn-outline-primary">대회정보 초기화</button>
+                    	<button class="btn btn-primary" id="loadingBtn" type="button" style="display:none;" disabled>
+						<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+						  Loading...
+						</button>                    		
+                    	<button onclick='checkRestore();' class="btn btn-outline-primary">대회정보 복구</button>					
+                    </c:if>
 					</div>
 					<div class="modal-footer">
                       <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">종료</button>
@@ -135,6 +137,17 @@
 <script src="views/marathon/lib/owlcarousel/owl.carousel.min.js"></script>
 <script src="views/marathon/js/main.js"></script>
 <script type="text/javascript">
+$(function(){
+	$("#marathonResetBtn").css("display","");
+	$("#loadingBtn").css("display","none");
+});
+function checkResetMarathon(){
+	if(confirm("전체 대회정보를 초기화합니다. 진행하시겠습니까?")){
+		$("#marathonResetBtn").css("display","none");
+		$("#loadingBtn").css("display","");
+		location.href="${contextPath }/insert.ma"
+	}
+}
 function checkParticipate(e){
 	if('${loginUser.memberNo}'==""){
 		if(confirm("로그인이 필요한 서비스입니다. 로그인페이지로 이동하시겠습니까?")){

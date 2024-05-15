@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <title>게시판 글쓰기 페이지</title>
 <style>
 .board_wrap {
@@ -132,19 +133,14 @@ label {
 }
 
 .bt_wrap {
-	margin-top: 30px;
-	text-align: center;
+	/* margin-top: 30px; */
+	margin: 10px;
+	text-align: left;
 	font-size: 0;
 }
 
-.bt_wrap a {
-	display: inline-block;
-	min-width: 100px;
-	margin-left: 10px;
-	padding: 10px;
-	border-radius: 2px;
-	font-size: 1.4rem;
-	text-decoration: none;
+.bt_wrap button {
+	margin: 5px;
 }
 </style>
 </head>
@@ -156,8 +152,9 @@ label {
 			<h1>러닝일지</h1>
 			<p>러닝일지 페이지입니다.</p>
 		</div>
-		<form action="/gbange/insert.tr" method="post" id="training-area" enctype="multipart/form-data">
-			<!-- <input type="hidden" name="memberNo" value=""> 나중에 로그인 기능 구현되면 가져올 것 -->
+		<form action="/gbange/insert.tr" method="post" id="training-area"
+			enctype="multipart/form-data">
+			<input type="hidden" name="memberNo" value="${loginUser.memberNo}">
 			<div class="board_write_wrap">
 				<div class="board_write">
 					<div class="title">
@@ -183,7 +180,9 @@ label {
 								</select></td>
 								<th>착용신발</th>
 								<td><select name="shoes">
-										<!-- shoes 조회 기능 구현되면 가져올 것 -->
+										<c:forEach items="${sList}" var="s">
+											<option value="${s.shoesNo }">${s.shoesName }</option>
+										</c:forEach>
 								</select></td>
 							</tr>
 							<tr>
@@ -191,13 +190,14 @@ label {
 								<td><input type="text" name="trainingPlace" required></td>
 								<th>운동거리(km)</th>
 								<td><input type="number" step="0.01" min="1" max="100"
-									name="trainingDistance">km</td>
+									name="trainingDistance" id="trainingDistance">km</td>
 							</tr>
 							<tr>
 								<th>운동시간</th>
-								<td><input type="number" step="0.1" name="trainingTime"></td>
+								<td><input type="number" step="0.1" name="trainingTime"
+									id="trainingTime">분</td>
 								<th>평균페이스</th>
-								<td><input type="number" readonly value="">/km</td>
+								<td><input type="number" id="avgPace" readonly value="">/km</td>
 							</tr>
 							<tr>
 								<th>목표</th>
@@ -223,13 +223,24 @@ label {
 					</div>
 					<div class="cont">
 						<textarea name="trainingContent"
-							placeholder="달릴 때 심박은 어땠나요?&#13;&#10;함께 달리는 사람이 있었나요?&#13;&#10;그냥 달릴 때의 기분, 생각 등을 자유롭게 작성해보세요 :)"></textarea>
+							placeholder="달릴 때 심박은 어땠나요?&#13;&#10;함께 달리는 사람이 있었나요?&#13;&#10;그냥 달릴 때의 기분, 생각 등을 자유롭게 작성해보세요 :)"
+							style="resize: none;"></textarea>
 					</div>
+					<script>
+						$(function() {
+							$("#trainingTime").keyup(function() {
+								var distance = $("#trainingDistance").val();
+								var time = $("#trainingTime").val();
+								var avgPace = (time / distance).toFixed(2);
+								$("#avgPace").val(avgPace);
+							});
+						});
+					</script>
 				</div>
 				<br>
 				<div class="bt_wrap">
-					<button type="submit" class="btn btn-success">등록</button>
-					<button href="" class="btn btn-outline-secondary">취소</button>
+					<button type="submit" class="btn btn-info">등록</button>
+					<button onclick="history.back(1);" class="btn btn-secondary">취소</button>
 				</div>
 			</div>
 		</form>

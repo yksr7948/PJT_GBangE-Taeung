@@ -13,6 +13,8 @@ import java.util.Properties;
 import com.kh.common.JDBCTemplate;
 import com.kh.common.model.vo.PageInfo;
 import com.kh.training.model.vo.Attachment;
+import com.kh.training.model.vo.Reply;
+import com.kh.training.model.vo.Shoes;
 import com.kh.training.model.vo.Training;
 import com.kh.training.model.vo.TrainingCategory;
 
@@ -52,7 +54,7 @@ public class TrainingDao {
 		return tCList;
 	}
 
-	public int insertTraining(Connection conn, Training t) {
+	public int insertTraining(Connection conn, Training t, int memberNo) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertTraining");
@@ -75,16 +77,18 @@ public class TrainingDao {
 //			OCSTATUS
 //			STATUS
 			pstmt.setInt(1, t.getTrainingNo());
-			pstmt.setString(2, t.getTrainingTitle());
-			pstmt.setString(3, t.getTrainingKey());
-			pstmt.setString(4, t.getTrainingDate());
-			pstmt.setString(5, t.getTrainingPlace());
-			pstmt.setDouble(6, t.getTrainingTime());
-			pstmt.setString(7, t.getTrainingGoal());
-			pstmt.setDouble(8, t.getTrainingDistance());
-			pstmt.setDouble(9, t.getWeight());
-			pstmt.setString(10, t.getTrainingContent());
-			pstmt.setString(11, t.getoCStatus());
+			pstmt.setInt(2, memberNo);
+			pstmt.setString(3, t.getTrainingTitle());
+			pstmt.setString(4, t.getTrainingKey());
+			pstmt.setInt(5, t.getShoesNo());
+			pstmt.setString(6, t.getTrainingDate());
+			pstmt.setString(7, t.getTrainingPlace());
+			pstmt.setDouble(8, t.getTrainingTime());
+			pstmt.setString(9, t.getTrainingGoal());
+			pstmt.setDouble(10, t.getTrainingDistance());
+			pstmt.setDouble(11, t.getWeight());
+			pstmt.setString(12, t.getTrainingContent());
+			pstmt.setString(13, t.getoCStatus());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -157,7 +161,7 @@ public class TrainingDao {
 
 			while (rset.next()) {
 				list.add(new Training(rset.getInt("TRAINING_NO"), rset.getString("TRAINING_TITLE"),
-						rset.getString("MEMBER_NAME"), rset.getDate("RECORD_DATE"), rset.getInt("COUNT")));
+						rset.getString("MEMBER_NAME"), rset.getDate("RECORD_DATE"), rset.getInt("COUNT"),rset.getString("OCSTATUS")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -250,6 +254,8 @@ public class TrainingDao {
 				t.setWeight(rset.getDouble("WEIGHT"));
 //				TRAINING_CONTENT
 				t.setTrainingContent(rset.getString("TRAINING_CONTENT"));
+//				OCSTATUS
+				t.setoCStatus(rset.getString("OCSTATUS"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -325,6 +331,184 @@ public class TrainingDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
+	}
+
+	public int deleteTraining(Connection conn, int tno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteTraining");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tno);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertReply(Connection conn, Reply r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertReply");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, r.getreplyContent());
+			pstmt.setInt(2, r.getRefTno());
+			pstmt.setString(3, r.getreplyWriter());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public ArrayList<Reply> selectReplyList(Connection conn, int refTno) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		ArrayList<Reply>list = new ArrayList<>();
+		String sql = prop.getProperty("selectReplyList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, refTno);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Reply(
+						rset.getString("REPLY_CONTENT")
+						,rset.getString("MEMBER_NAME")
+						,rset.getString("CREATE_DATE")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public int deleteReply(Connection conn, Reply r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteReply");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, r.getreplyContent());
+			pstmt.setString(2, r.getreplyWriter());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateReply(Connection conn, String originReply, String changeReply, int refTno, String replyWriter) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateReply");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, changeReply);
+			pstmt.setString(2, originReply);
+			pstmt.setInt(3, refTno);
+			pstmt.setString(4, replyWriter);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateLikes(Connection conn, int tno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateLikes");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tno);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int selectLikes(Connection conn, int tno) {
+		ResultSet rset = null;
+		int likes = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectLikes");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tno);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				likes = rset.getInt("LIKES");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return likes;
+	}
+
+	public ArrayList<Shoes> selectShoesList(Connection conn) {
+		ResultSet rset = null;
+		Statement stmt = null;
+		ArrayList<Shoes> sList = new ArrayList<>();
+		String sql = prop.getProperty("selectShoesList");
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(sql);
+			while(rset.next()) {
+				sList.add(new Shoes(
+						rset.getInt("SHOES_NO")
+						,rset.getString("SHOES_NAME")
+						,rset.getString("STATUS")
+						));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(stmt);
+		}
+		return sList;
+	}
+
+	public Shoes selectShoes(Connection conn, int tno) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		Shoes s = null;
+		String sql = prop.getProperty("selectShoes");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tno);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				s = new Shoes(
+						rset.getInt("SHOES_NO")
+						,rset.getString("SHOES_NAME")
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return s;
 	}
 
 

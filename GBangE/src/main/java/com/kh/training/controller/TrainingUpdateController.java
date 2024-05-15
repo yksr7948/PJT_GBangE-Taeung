@@ -1,9 +1,9 @@
 package com.kh.training.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.naming.spi.DirStateFactory.Result;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +15,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.kh.training.model.service.TrainingService;
 import com.kh.training.model.vo.Attachment;
+import com.kh.training.model.vo.Shoes;
 import com.kh.training.model.vo.Training;
 import com.kh.training.model.vo.TrainingCategory;
 import com.kh.training.model.vo.TrainingImgNamePolicy;
@@ -48,12 +49,14 @@ public class TrainingUpdateController extends HttpServlet {
 		Training t = ts.selectTraining(tno);
 
 		ArrayList<TrainingCategory> tCList = ts.selectCategoryList();
-
 		Attachment at = ts.selectAttachment(tno);
+		ArrayList<Shoes> sList = ts.selectShoesList();
+		Shoes s = ts.selectShoes(tno);
 		request.setAttribute("training", t);
 		request.setAttribute("tCList", tCList);
 		request.setAttribute("attachment", at);
-
+		request.setAttribute("sList", sList);
+		request.setAttribute("shoes", s);
 		request.getRequestDispatcher("views/training/trainingUpdateView.jsp").forward(request, response);
 
 	}
@@ -120,6 +123,9 @@ public class TrainingUpdateController extends HttpServlet {
 			if(result>0) {
 				session.setAttribute("alertMsg", "게시글 수정완료");
 				response.sendRedirect(request.getContextPath()+"/detail.tr?tno="+trainingNo);
+				if(at!=null && at.getFileNo()!=0) {
+					new File(savePath+multiRequest.getParameter("originFileName")).delete();
+				}
 			}else {
 				session.setAttribute("alertMsg", "게시글 수정실패ㅠㅠ");
 				response.sendRedirect(request.getContextPath()+"/detail.tr?tno="+trainingNo);

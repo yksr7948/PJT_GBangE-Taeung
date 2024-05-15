@@ -55,7 +55,10 @@ public class MemberDao {
 							   rset.getString("SHOES"),
 							   rset.getDouble("WEIGHT"),
 							   rset.getDate("ENROLL_DATE"),
-							   rset.getString("STATUS"));
+							   rset.getString("STATUS"),
+							   rset.getString("PROFILE_IMAGE"),
+							   rset.getString("FILE_PATH"),
+							   rset.getString("CHANGE_NAME"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -124,9 +127,9 @@ public class MemberDao {
 		
 	}
 
-	public Member findId(Connection conn, String userName, String userPno) {
+	public String findId(Connection conn, String userName, String userPno) {
 
-		Member m = null;
+		String userId = null;
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
 		
@@ -140,8 +143,128 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Member(rset.getString("MEMBER_ID"),
-							   rset.getString("MEMBER_PNO"));	
+				userId = rset.getString("MEMBER_ID");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return userId;
+	}
+
+	public boolean findPwd(Connection conn, String userId, String userName, String userPno) {
+
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		boolean flag = false;
+		
+		String sql = prop.getProperty("findPwd");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userName);
+			pstmt.setString(3, userPno);
+			
+			rset = pstmt.executeQuery();
+			
+			flag = rset.next();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return flag;
+				
+	}
+
+	public int changePwd(Connection conn, String userId, String userPwd) {
+
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String sql = prop.getProperty("changePwd");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userPwd);
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateMember(Connection conn, Member m) {
+
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String sql = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m.getMemberName());
+			pstmt.setString(2, m.getGender());
+			pstmt.setString(3, m.getAddress());
+			pstmt.setString(4, m.getShoes());
+			pstmt.setDouble(5, m.getWeight());
+			pstmt.setString(6, m.getMemberId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Member selectMember(Connection conn, String memberId) {
+
+		Member m = null;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("selectMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getInt("MEMBER_NO"),
+							   rset.getString("MEMBER_NAME"),
+							   rset.getString("MEMBER_ID"),
+							   rset.getString("MEMBER_PWD"),
+							   rset.getString("GENDER"),
+							   rset.getString("ADDRESS"),
+							   rset.getString("MEMBER_PNO"),
+							   rset.getDouble("MILEAGE"),
+							   rset.getString("SHOES"),
+							   rset.getDouble("WEIGHT"),
+							   rset.getDate("ENROLL_DATE"),
+							   rset.getString("STATUS"),
+							   rset.getString("PROFILE_IMAGE"),
+							   rset.getString("FILE_PATH"),
+							   rset.getString("CHANGE_NAME"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -153,4 +276,30 @@ public class MemberDao {
 		
 		return m;
 	}
+
+	public int updateProfile(Connection conn, Member m) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateProfile");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m.getProfileImage());
+			pstmt.setString(2, m.getFilePath());
+			pstmt.setString(3, m.getChangeName());
+			pstmt.setString(4, m.getMemberId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+	
 }

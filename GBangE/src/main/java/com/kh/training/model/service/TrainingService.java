@@ -10,6 +10,8 @@ import com.kh.common.JDBCTemplate;
 import com.kh.common.model.vo.PageInfo;
 import com.kh.training.model.dao.TrainingDao;
 import com.kh.training.model.vo.Attachment;
+import com.kh.training.model.vo.Reply;
+import com.kh.training.model.vo.Shoes;
 import com.kh.training.model.vo.Training;
 import com.kh.training.model.vo.TrainingCategory;
 
@@ -23,24 +25,19 @@ public class TrainingService {
 		return tCList;
 	}
 
-	public int insertTraining(Training t, Attachment at) {
+	public int insertTraining(Training t, Attachment at, int memberNo) {
 		Connection conn = JDBCTemplate.getConnection();
 
 		int trainingNo = new TrainingDao().selectTrainingNo(conn);
 
 		t.setTrainingNo(trainingNo);
-		int resultTr = new TrainingDao().insertTraining(conn, t);
-		System.out.println(resultTr);
-		System.out.println("게시글 작성할 때의 게시글 번호" + trainingNo);
+		int resultTr = new TrainingDao().insertTraining(conn, t, memberNo);
 		int resultAt = new TrainingDao().insertAttachment(conn, at, trainingNo);
-		System.out.println(resultAt);
-		System.out.println("사진 첨부할 때의 게시글 번호" + trainingNo);
 		if (resultTr * resultAt > 0) {
 			JDBCTemplate.commit(conn);
 		} else {
 			JDBCTemplate.rollback(conn);
 		}
-		System.out.println("모두 첨부 완료했을 때의 게시글 번호" + trainingNo);
 		JDBCTemplate.close(conn);
 
 		return resultTr * resultAt;
@@ -92,7 +89,6 @@ public class TrainingService {
 
 	public int updateTraining(Training t, Attachment at) {
 		Connection conn = JDBCTemplate.getConnection();
-		System.out.println("서비스로 넘어온 첨부파일"+at);
 		int resultTr = new TrainingDao().updateTraining(conn, t);
 
 		int resultAt = 1;
@@ -113,6 +109,94 @@ public class TrainingService {
 		JDBCTemplate.close(conn);
 
 		return resultTr * resultAt;
+	}
+
+	public int deleteTraining(int tno) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new TrainingDao().deleteTraining(conn,tno);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int insertReply(Reply r) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new TrainingDao().insertReply(conn,r);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public ArrayList<Reply> selectReplyList(int refTno) {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Reply> list = new TrainingDao().selectReplyList(conn,refTno);
+			JDBCTemplate.close(conn);
+		return list;
+	}
+
+	public int deleteReply(Reply r) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new TrainingDao().deleteReply(conn,r);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int updateReply(String originReply, String changeReply, String replyWriter, int refTno) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new TrainingDao().updateReply(conn, originReply, changeReply, refTno,replyWriter);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int updateLikes(int tno) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new TrainingDao().updateLikes(conn,tno);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int selectLikes(int tno) {
+		Connection conn = JDBCTemplate.getConnection();
+		int likes = new TrainingDao().selectLikes(conn, tno);
+		JDBCTemplate.close(conn);
+		return likes;
+	}
+
+	public ArrayList<Shoes> selectShoesList() {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Shoes> sList = new TrainingDao().selectShoesList(conn);
+		JDBCTemplate.close(conn);
+		return sList;
+	}
+
+	public Shoes selectShoes(int tno) {
+		Connection conn = JDBCTemplate.getConnection();
+		Shoes s = new TrainingDao().selectShoes(conn, tno);
+		JDBCTemplate.close(conn);
+		return s;
 	}
 
 }

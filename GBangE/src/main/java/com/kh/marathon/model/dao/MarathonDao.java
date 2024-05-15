@@ -43,7 +43,8 @@ public class MarathonDao{
             pstmt.setString(7, (String) jobj.get("organizer"));
             pstmt.setString(8, (String) jobj.get("organizerHost"));
             pstmt.setString(9, (String) jobj.get("organizerPhone"));            
-            pstmt.setString(10, (String) jobj.get("marathonSite"));            
+            pstmt.setString(10, (String) jobj.get("marathonSite"));
+            pstmt.setInt(11, (Integer) jobj.get("imageNo"));
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,6 +87,7 @@ public class MarathonDao{
 					otherIntroduction = otherIntroduction.substring(0,50);
 				}
 				jobj.put("otherIntroduction", otherIntroduction);
+				jobj.put("imageNo", rset.getInt("IMAGE_NO"));
 				MarathonArr.add(jobj);
 			}
 		} catch (SQLException e) {
@@ -118,7 +120,7 @@ public class MarathonDao{
 											,rset.getString("ORGANIZER_PHONE")
 											,rset.getString("MARATHON_SITE")
 											,rset.getString("STATUS")
-											,rset.getString("MARATHON_COURSE"));
+											,rset.getInt("IMAGE_NO"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -246,6 +248,8 @@ public class MarathonDao{
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+searchName+"%");
+			pstmt.setString(2, "%"+searchName+"%");
+			pstmt.setString(3, "%"+searchName+"%");
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				JSONObject jobj = new JSONObject();
@@ -261,6 +265,7 @@ public class MarathonDao{
 					otherIntroduction = otherIntroduction.substring(0,50);
 				}
 				jobj.put("otherIntroduction", otherIntroduction);
+				jobj.put("imageNo", rset.getInt("IMAGE_NO"));
 				searchArr.add(jobj);
 			}
 		} catch (SQLException e) {

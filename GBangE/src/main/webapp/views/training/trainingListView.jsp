@@ -195,11 +195,11 @@ a {
 					<c:otherwise>
 						<c:forEach var="t" items="${list}">
 							<div>
-								<div class="num body">${t.trainingNo }</div>
+								<div class="num">${t.trainingNo }</div>
 								<div class="title body">${t.trainingTitle }</div>
-								<div class="writer body">${t.trainingWriter }</div>
-								<div class="date body">${t.recordDate }</div>
-								<div class="count body">${t.count }</div>
+								<div class="writer">${t.trainingWriter }</div>
+								<div class="date">${t.recordDate }</div>
+								<div class="count">${t.count }</div>
 							</div>
 						</c:forEach>
 					</c:otherwise>
@@ -210,6 +210,9 @@ a {
 				$(".body").click(function() {
 					var tno = $(this).prev().html();
 					location.href="detail.tr?tno="+tno;
+				});
+				$(".body").mouseenter(function(){
+					$(this).css("cursor","pointer");
 				});
 			});
 			</script>
@@ -239,7 +242,6 @@ a {
 			</div>
 			<div class="bt_wrap">
 				<a href="${contextPath}/insert.tr" class="on">글쓰기</a> 
-				<a href="" style="background: gray;">수정</a>
 			</div>
 		</div>
 	</div>

@@ -16,10 +16,14 @@ public class Member {
 	private double weight;
 	private Date enrollDate;
 	private String status;
+	private String profileImage;
+	private String filePath;
+	private String changeName;
 	
 
 	public Member(int memberNo, String memberName, String memberId, String memberPwd, String gender, String address,
-			String memberPno, double mileage, String shoes, double weight, Date enrollDate, String status) {
+			String memberPno, double mileage, String shoes, double weight, Date enrollDate, String status, 
+			String profileImage, String filePath, String changeName) {
 		super();
 		this.memberNo = memberNo;
 		this.memberName = memberName;
@@ -33,6 +37,9 @@ public class Member {
 		this.weight = weight;
 		this.enrollDate = enrollDate;
 		this.status = status;
+		this.profileImage = profileImage;
+		this.filePath = filePath;
+		this.changeName = changeName;
 	}
 
 	public Member(String memberName, String memberId, String memberPwd, String gender, String address, String memberPno,
@@ -47,11 +54,27 @@ public class Member {
 		this.shoes = shoes;
 		this.weight = weight;
 	}
+	
+	
+
+	public Member(String memberId, String memberName, String gender, String address, String shoes, double weight) {
+		super();
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.gender = gender;
+		this.address = address;
+		this.shoes = shoes;
+		this.weight = weight;
+	}
 
 	public Member(String memberId, String memberPno) {
 		super();
 		this.memberId = memberId;
 		this.memberPno = memberPno;
+	}
+
+	public Member() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getMemberNo() {
@@ -150,12 +173,37 @@ public class Member {
 		this.status = status;
 	}
 
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public String getChangeName() {
+		return changeName;
+	}
+
+	public void setChangeName(String changeName) {
+		this.changeName = changeName;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberName=" + memberName + ", memberId=" + memberId + ", memberPwd="
 				+ memberPwd + ", gender=" + gender + ", address=" + address + ", memberPno=" + memberPno + ", mileage="
 				+ mileage + ", shoes=" + shoes + ", weight=" + weight + ", enrollDate=" + enrollDate + ", status="
-				+ status + "]";
+				+ status + ", profileImage=" + profileImage + ", filePath=" + filePath + ", changeName=" + changeName
+				+ "]";
 	}
 	
 	
