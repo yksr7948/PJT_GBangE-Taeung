@@ -535,6 +535,9 @@ public class FeedDao {
 			if(searchType.equals("content")) {
 				pstmt.setString(1, "%" + keyword + "%");
 				pstmt.setString(2, "%" + keyword + "%");
+	        } else {
+	            pstmt.setString(1, "%" + keyword + "%");
+	        	
 	        }
 			rset = pstmt.executeQuery();
 			
