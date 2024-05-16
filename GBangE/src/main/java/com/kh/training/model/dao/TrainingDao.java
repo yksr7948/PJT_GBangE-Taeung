@@ -378,7 +378,7 @@ public class TrainingDao {
 			pstmt.setInt(1, refTno);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
-				list.add(new Reply(rset.getString("REPLY_CONTENT"), rset.getString("MEMBER_NAME"),
+				list.add(new Reply(rset.getInt("REPLY_NO"),rset.getString("REPLY_CONTENT"), rset.getString("MEMBER_NAME"),
 						rset.getString("CREATE_DATE")));
 			}
 		} catch (SQLException e) {
@@ -393,8 +393,7 @@ public class TrainingDao {
 		String sql = prop.getProperty("deleteReply");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, r.getreplyContent());
-			pstmt.setString(2, r.getreplyWriter());
+			pstmt.setInt(1, r.getreplyNo());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

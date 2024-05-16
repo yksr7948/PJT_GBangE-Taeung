@@ -37,13 +37,9 @@ public class DeleteReplyController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String writer = request.getParameter("replyWriter");
-		String content = request.getParameter("replyContent");
-		String date = request.getParameter("replyDate");
+		int replyNo = Integer.parseInt(request.getParameter("replyNo"));
 		Reply r = new Reply();
-		r.setreplyWriter(writer);
-		r.setreplyContent(content);
-		r.setCreateDate(date);
+		r.setreplyNo(replyNo);
 		int result = new TrainingService().deleteReply(r);
 		response.getWriter().print(result);
 	}

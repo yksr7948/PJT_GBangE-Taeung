@@ -33,8 +33,9 @@ public class Reply {
 
 	
 	
-	public Reply(String replyContent, String replyWriter, String createDate) {
+	public Reply(int replyNo,String replyContent, String replyWriter, String createDate) {
 		super();
+		this.replyNo = replyNo;
 		this.replyContent = replyContent;
 		this.replyWriter = replyWriter;
 		this.createDate = createDate;
