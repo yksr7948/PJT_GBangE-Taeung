@@ -57,6 +57,10 @@
     	<td><input type="text" class="form-control" name="region" value="${mar.region }"></td>
     </tr>
     <tr>
+    	<th>코스 정보</th>
+    	<td><input type="text" class="form-control" name="marathonCourse" value="${mar.marathonCourse }"></td>
+    </tr>
+    <tr>
     	<th>마라톤 장소</th>
     	<td><input type="text" class="form-control" name="location" value="${mar.location }"></td>
     </tr>

@@ -36,8 +36,10 @@ public class InsertParticipateController extends HttpServlet {
 		int marathonNo = Integer.parseInt(request.getParameter("marathonNo"));
 		Marathon m = new MarathonService().marathonDetail(marathonNo);		
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		String[] courseList = m.getMarathonCourse().split(",");
 		request.setAttribute("marathonName", m.getMarathonName());
 		request.setAttribute("marathonNo", m.getMarathonNo());
+		request.setAttribute("courseList", courseList);
 		request.setAttribute("memberNo", memberNo);
 		request.getRequestDispatcher("views/marathon/insertParticipateView.jsp").forward(request, response);
 	}
@@ -53,6 +55,7 @@ public class InsertParticipateController extends HttpServlet {
 		int regionId = new RegionService().selectRegionId(regionName);
 		
 		String Name = request.getParameter("participateName");
+		String participateCourse = request.getParameter("participateCourse");
 		String Pwd = request.getParameter("participatePwd");
 		String registerationNo = request.getParameter("registerationNo1")+"-"+request.getParameter("registerationNo2");
 		String gender = request.getParameter("gender");
@@ -69,6 +72,7 @@ public class InsertParticipateController extends HttpServlet {
 		p.setMarathonNo(marathonNo);
 		p.setRegionId(regionId);		
 		p.setName(Name);
+		p.setParticipateCourse(participateCourse);
 		p.setPassword(Pwd);
 		p.setRegisterationNo(registerationNo);
 		p.setGender(gender);

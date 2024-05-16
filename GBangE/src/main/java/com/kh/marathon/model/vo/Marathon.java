@@ -14,6 +14,8 @@ public class Marathon {
 	private String marathonSite;
 	private String status;
 	private int imageNo;
+	private String marathonCourse;
+	
 	public int getMarathonNo() {
 		return marathonNo;
 	}
@@ -92,17 +94,24 @@ public class Marathon {
 	public void setImageNo(int imageNo) {
 		this.imageNo = imageNo;
 	}
+	
+	public String getMarathonCourse() {
+		return marathonCourse;
+	}
+	public void setMarathonCourse(String marathonCourse) {
+		this.marathonCourse = marathonCourse;
+	}
 	@Override
 	public String toString() {
 		return "Marathon [marathonNo=" + marathonNo + ", marathonName=" + marathonName + ", location=" + location
 				+ ", region=" + region + ", marathonDate=" + marathonDate + ", applicationDate=" + applicationDate
 				+ ", otherIntroduction=" + otherIntroduction + ", organizer=" + organizer + ", organizerHost="
 				+ organizerHost + ", organizerPhone=" + organizerPhone + ", marathonSite=" + marathonSite + ", status="
-				+ status + ", imageNo=" + imageNo + "]";
+				+ status + ", imageNo=" + imageNo + ", marathonCourse=" + marathonCourse + "]";
 	}
 	public Marathon(int marathonNo, String marathonName, String location, String region, String marathonDate,
 			String applicationDate, String otherIntroduction, String organizer, String organizerHost,
-			String organizerPhone, String marathonSite, String status, int imageNo) {
+			String organizerPhone, String marathonSite, String status, int imageNo, String marathonCourse) {
 		super();
 		this.marathonNo = marathonNo;
 		this.marathonName = marathonName;
@@ -117,10 +126,11 @@ public class Marathon {
 		this.marathonSite = marathonSite;
 		this.status = status;
 		this.imageNo = imageNo;
+		this.marathonCourse = marathonCourse;
 	}
 	public Marathon() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+		
 }
