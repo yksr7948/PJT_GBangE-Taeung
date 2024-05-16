@@ -381,8 +381,8 @@ public class NoticeDao {
 	        rset = pstmt.executeQuery();
 
 	        if (rset.next()) {
-	            prevAndNextNoticeId[0] = rset.getInt("PREV"); // 이전 글의 ID
-	            prevAndNextNoticeId[1] = rset.getInt("NEXT"); // 다음 글의 ID
+	            prevAndNextNoticeId[0] = rset.getInt("PREV"); 
+	            prevAndNextNoticeId[1] = rset.getInt("NEXT"); 
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
