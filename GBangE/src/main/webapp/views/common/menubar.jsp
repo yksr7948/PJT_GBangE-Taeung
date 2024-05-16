@@ -40,6 +40,7 @@ nav{
   font-weight: 900px;
   line-height: 80px;
   padding: 0 30px;
+  margin-top: 5px;
 }
 #nav2>ul {
   float: right;
@@ -47,9 +48,10 @@ nav{
 #nav2>ul li {
   float: left;
   padding: 0 30px;
+  font-weight: 900;
   line-height: 80px;
   margin: auto;
-  margin-top: -18px;
+  margin-top: -10px;
 }
 #top-nav ul li {
     display: inline-block;
@@ -86,8 +88,8 @@ alert(msg);
     			<li><input type="button" onclick="myPage();" value="<%=loginUser.getMemberId() %>" class="btn btn-info"></li>
     		</c:otherwise>
     	</c:choose>
-        <li><a href="#">로고</a></li>
-        <li><a href="#">로고</a></li>
+        <li><a href="https://www.instagram.com/"><img style="width:32px; height:32px;" id="user-profile" src="views/common/resources/img/free-icon-instagram-733558.png"></a> </li>
+        <li><a href="https://www.facebook.com/?locale=ko_KR"><img style="width:32px; height:32px;" id="user-profile" src="views/common/resources/img/free-icon-facebook-220200.png"></a></li>
     </ul>
 </nav>
 <nav id="nav2">

@@ -301,5 +301,32 @@ public class MemberDao {
 		
 		return result;
 	}
+
+	public boolean checkPno(Connection conn, String pno) {
+		
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("checkPno");
+		boolean flag = false;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pno);
+			
+			rset = pstmt.executeQuery();
+			
+			flag = rset.next();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return flag;
+		
+	}
 	
 }

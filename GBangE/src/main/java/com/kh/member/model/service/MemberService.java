@@ -121,6 +121,16 @@ public class MemberService {
 		return result;
 	}
 
+	public boolean checkPno(String pno) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		boolean flag = new MemberDao().checkPno(conn, pno);
+		
+		JDBCTemplate.close(conn);
+		
+		return flag;
+	}
 	
 
 	
