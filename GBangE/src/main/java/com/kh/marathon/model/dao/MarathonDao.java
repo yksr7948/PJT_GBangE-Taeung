@@ -45,6 +45,7 @@ public class MarathonDao{
             pstmt.setString(9, (String) jobj.get("organizerPhone"));            
             pstmt.setString(10, (String) jobj.get("marathonSite"));
             pstmt.setInt(11, (Integer) jobj.get("imageNo"));
+            pstmt.setString(12, (String) jobj.get("marathonCourse"));
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -120,7 +121,8 @@ public class MarathonDao{
 											,rset.getString("ORGANIZER_PHONE")
 											,rset.getString("MARATHON_SITE")
 											,rset.getString("STATUS")
-											,rset.getInt("IMAGE_NO"));
+											,rset.getInt("IMAGE_NO")
+											,rset.getString("MARATHON_COURSE"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -140,14 +142,15 @@ public class MarathonDao{
 			pstmt.setString(1, m.getMarathonName());
 			pstmt.setString(2, m.getLocation());
 			pstmt.setString(3, m.getRegion());
-			pstmt.setString(4, m.getMarathonDate());
-			pstmt.setString(5, m.getApplicationDate());
-			pstmt.setString(6, m.getOtherIntroduction());
-			pstmt.setString(7, m.getOrganizer());
-			pstmt.setString(8, m.getOrganizerHost());
-			pstmt.setString(9, m.getOrganizerPhone());
-			pstmt.setString(10, m.getMarathonSite());
-			pstmt.setInt(11, m.getMarathonNo());
+			pstmt.setString(4, m.getMarathonCourse());
+			pstmt.setString(5, m.getMarathonDate());
+			pstmt.setString(6, m.getApplicationDate());
+			pstmt.setString(7, m.getOtherIntroduction());
+			pstmt.setString(8, m.getOrganizer());
+			pstmt.setString(9, m.getOrganizerHost());
+			pstmt.setString(10, m.getOrganizerPhone());
+			pstmt.setString(11, m.getMarathonSite());
+			pstmt.setInt(12, m.getMarathonNo());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

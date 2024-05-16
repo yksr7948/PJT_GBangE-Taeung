@@ -19,6 +19,7 @@ public class Participate {
 	
 	private String marathonName;
 	private String regionName;
+	private String participateCourse;
 	
 	
 	public int getParticipateNo() {
@@ -110,6 +111,13 @@ public class Participate {
 	}
 	public void setRegionName(String regionName) {
 		this.regionName = regionName;
+	}
+	
+	public String getParticipateCourse() {
+		return participateCourse;
+	}
+	public void setParticipateCourse(String participateCourse) {
+		this.participateCourse = participateCourse;
 	}
 	public Participate() {
 		super();

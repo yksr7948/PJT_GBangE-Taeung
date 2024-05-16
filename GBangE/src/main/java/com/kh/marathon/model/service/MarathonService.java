@@ -77,6 +77,7 @@ public class MarathonService {
                 String region = doc2.select("td[width=430]").eq(6).text();
                 String marathonSite = doc2.select("td[width=430]").eq(10).text();
                 String otherIntroduction = doc2.select("td[width=430]").eq(11).text();
+                String marathonCourse = doc2.select("td[width=430]").eq(5).text();
                 
                 JSONObject jObj = new JSONObject();
                 jObj.put("marathonName",marathonName);
@@ -91,6 +92,7 @@ public class MarathonService {
                 jObj.put("marathonSite",marathonSite);
                 jObj.put("otherIntroduction",otherIntroduction);
                 jObj.put("imageNo", count++);
+                jObj.put("marathonCourse",marathonCourse);
                 jArr.add(jObj);
                 } catch (IOException e) {
                 e.printStackTrace();

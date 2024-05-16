@@ -46,6 +46,10 @@
     	<td>${mar.region }</td>
     </tr>
     <tr>
+    	<th>코스 정보</th>
+    	<td>${mar.marathonCourse }</td>
+    </tr>
+    <tr>
     	<th>마라톤 장소</th>
     	<td>${mar.location }</td>
     </tr>
@@ -106,12 +110,13 @@
        <table class="marathonclass" style="font-size: 12px">
                     <thead align="center">
 						<tr>
-							<th width="7%">번호</th>
-							<th width="14%">참가자 이름</th>
-							<th width="33%">마라톤 이름</th>
+							<th width="6%">번호</th>
+							<th width="11%">참가자</th>
+							<th width="30%">마라톤 이름</th>
+							<th width="10%">코스</th>
 							<th width="8%">지역</th>
 							<th width="19%">마라톤 날짜</th>
-							<th width="19%">전화 번호</th>
+							<th width="16%">전화 번호</th>
 						</tr>
 					</thead>
 					<tbody align="center">
@@ -125,8 +130,9 @@
 						<c:forEach var="p" items="${participateList}">
 							<tr class="participateInfo">
 								<td>${p.getParticipateNo()}</td>
-								<td>${p.getName()}</td>
+								<td>${p.getName()}</td>								
 								<td>${p.getMarathonName() }</td>
+								<td>${p.getParticipateCourse()}</td>
 								<td>${p.getRegionName() }</td>
 								<td>${p.getParticipateDate() }</td>
 								<td>010-****-****</td>

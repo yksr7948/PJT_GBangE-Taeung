@@ -79,6 +79,14 @@ h3{
 		</div>
 		<input type="text" class="form-control" id="participateName" name="participateName" placeholder="이름을 입력하세요" required>
 		<div>
+			<label for="participateCourse">참가 코스</label>
+			<select name="participateCourse" id="participateCourse" class="form-select" aria-label="Default select example">
+				<c:forEach var="c" items="${courseList }">				
+				<option value="${c}">${c}</option>
+				</c:forEach>
+			</select>
+		</div>		
+		<div>
 			<label for="participatePwd">* 비밀번호</label>			
 		</div>
 		<input type="password" class="form-control" id="participatePwd" name="participatePwd" placeholder="비밀번호를 입력하세요" required>		

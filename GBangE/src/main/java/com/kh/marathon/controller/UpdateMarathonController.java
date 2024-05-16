@@ -47,6 +47,7 @@ public class UpdateMarathonController extends HttpServlet {
 		String marathonName = request.getParameter("marathonName");
 		String region = request.getParameter("region");
 		String location = request.getParameter("location");
+		String marathonCourse = request.getParameter("marathonCourse");
 		String marathonDate = request.getParameter("marathonDate");
 		String applicationDate = request.getParameter("applicationDate");
 		String organizer = request.getParameter("organizer");
@@ -56,8 +57,9 @@ public class UpdateMarathonController extends HttpServlet {
 		String otherIntroduction = request.getParameter("otherIntroduction");
 		m.setMarathonNo(marathonNo);
 		m.setMarathonName(marathonName);
-		m.setLocation(location);
 		m.setRegion(region);
+		m.setLocation(location);
+		m.setMarathonCourse(marathonCourse);
 		m.setMarathonDate(marathonDate);
 		m.setApplicationDate(applicationDate);
 		m.setOrganizer(organizer);
