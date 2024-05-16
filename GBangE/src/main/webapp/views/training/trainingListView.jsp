@@ -166,6 +166,14 @@ a {
     top: -80px;
     left: 150px;
 }
+.list-area {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.list-area:hover {
+    background-color: #add8e6;
+}
 </style>
 </head>
 
@@ -199,7 +207,7 @@ a {
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="t" items="${list}">
-							<div>
+							<div class="list-area">
 								<div class="num">${t.trainingNo }</div>
 								<div class="title body">${t.trainingTitle }</div>
 								<div class="writer">${t.trainingWriter }</div>
