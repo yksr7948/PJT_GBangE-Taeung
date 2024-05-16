@@ -167,12 +167,12 @@ a {
 .board_page a.frist {
 	border-left: 1px solid #ddd;
 }
- .list-area {
-      cursor: pointer;
-      transition: background-color 0.3s;
+.list-area {
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
-.list-area:hover{
-	background-color: #f0f0f0;
+.list-area:hover {
+    background-color: #ADD8E6;
 }
 </style>
 </head>

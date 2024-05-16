@@ -157,8 +157,8 @@
 				</div>
 				<br>
 				<div class="bt_wrap">
-					<button type="submit" class="btn btn-success">수정</button> <a href="${contextPath}/detail.fe?fno=${f.feedNo}"
-						class="btn btn-outline-secondary">취소</a>
+					<button type="submit" class="btn btn-success">수정</button> 
+					<button type="button" onclick="cancle()" class="btn btn-outline-secondary">취소</button>
 				</div>
 			</div>
 		</form>
@@ -184,6 +184,10 @@
 					}
 				});
 			});
+			
+			function cancle(){
+				location.href="${contextPath}/detail.fe?fno=${f.feedNo}"
+			}
 		</script>
 		
 		

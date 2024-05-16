@@ -55,7 +55,7 @@ pageEncoding="UTF-8"%>
 	    		<font style="font-size: 21px; font-weight:900">
 	    		<%=loginUser.getMemberId() %>님은 <%=loginUser.getMileage() %>KM만큼 달렸어요!!
 	    		</font><br>
-	    		<progress id="maile-bar" value="<%=loginUser.getMileage() %>" min="0" max="100"></progress>
+	    		<progress id="maile-bar" value="<%=loginUser.getMileage()%100 %>" min="0" max="100"></progress>
     		</div>
     	</div>
     </div>

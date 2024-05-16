@@ -203,7 +203,7 @@
                 <div class="cont">
 			    <!-- 이미지를 글보다 먼저 표시합니다. -->
 			    <div>
-			        <img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile" style="max-width: 500px; max-height: 500px; cursor:pointer;">
+			        <img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile" style="max-width: 1100px; max-height: 900px; cursor:pointer;">
 			    </div>
 			    
 			    <div>
