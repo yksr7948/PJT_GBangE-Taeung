@@ -141,9 +141,8 @@ INSERT INTO REPLY_FEED(REPLY_NO
 <entry key="deleteReply">
 	UPDATE REPLY_FEED
 	SET STATUS = 'N'
-	WHERE MEMBER_NO = ?
-	AND REPLY_CONTENT = ?
-	
+	WHERE REPLY_NO = ?
+	AND MEMBER_NO = ?
 </entry>
 
 <entry key="addLike">
@@ -166,7 +165,7 @@ FROM FEED
 WHERE FEED_NO = ?
 </entry>
 
-<entry key="searchFeed">
+<entry key="searchTitleContent">
 SELECT 
     FEED_NO,
     FEED_TITLE,
@@ -198,7 +197,7 @@ FROM
     FEED F
 JOIN MEMBER M USING (MEMBER_NO)
 WHERE 
-    (FEED_TITLE LIKE ? OR FEED_CONTENT LIKE ?)
+  	FEED_CONTENT LIKE ?
     AND F.STATUS = 'Y'
 ORDER BY FEED_NO DESC
 
@@ -217,7 +216,7 @@ FROM
     FEED F
 JOIN MEMBER M USING (MEMBER_NO)
 WHERE 
-    (FEED_TITLE LIKE ? OR FEED_CONTENT LIKE ?)
+    FEED_TITLE LIKE ?
     AND F.STATUS = 'Y'
 ORDER BY FEED_NO DESC
 

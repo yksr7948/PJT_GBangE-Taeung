@@ -21,9 +21,7 @@
 	padding: 0;
 }
 
-html {
-	font-size: 10px;
-}
+
 
 a {
 	text-decoration: none;
@@ -41,12 +39,12 @@ a {
 }
 
 .board_title h1 {
-	font-size: 3rem;
+	font-size: 2rem;
 }
 
 .board_title p {
 	margin-top: 5px;
-	font-size: 1.4rem;
+	font-size: 1.0rem;
 }
 
 /*버튼 설정*/
@@ -63,7 +61,7 @@ a {
 	padding: 10px;
 	border: 1px solid #000;
 	border-radius: 2px;
-	font-size: 1.4rem;
+	font-size: 1.0rem;
 }
 
 .bt_wrap a.on {
@@ -98,7 +96,7 @@ a {
 	display: inline-block;
 	vertical-align: middle;
 	padding: 15px 0;
-	font-size: 1.4rem;
+	font-size: 1.0rem;
 }
 
 .board_list>div.top>div {
@@ -151,13 +149,13 @@ a {
 
 .board_page a.btn {
 	padding-top: 7px;
-	font-size: 1.2rem;
+	font-size: 0.8rem;
 	letter-spacing: -3px;
 }
 
 .board_page a.num {
 	padding-top: 6px;
-	font-size: 1.4rem;
+	font-size: 1.0rem;
 }
 
 .board_page a.num.selected {
@@ -226,39 +224,42 @@ a {
 		<div class="paging-area" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
     <c:choose>
         <c:when test="${pi.currentPage eq 1}">
-            <button disabled style="font-size: 1.5rem; padding: 10px 20px;">이전</button>
+            <button disabled style="font-size: 0.9rem; padding: 10px 20px;">이전</button>
         </c:when>
         <c:otherwise>
-            <button onclick="location.href='list.fe?currentPage=${pi.currentPage-1}'" style="font-size: 1.5rem; padding: 10px 20px;">이전</button>
+            <button onclick="location.href='list.fe?currentPage=${pi.currentPage-1}'" style="font-size: 0.9rem; padding: 10px 20px;">이전</button>
         </c:otherwise>
     </c:choose>
 
     <c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">
-        <button onclick="location.href='list.fe?currentPage=${i}'" style="font-size: 1.5rem; padding: 10px 20px;">${i}</button>
+        <button onclick="location.href='list.fe?currentPage=${i}'" style="font-size: 0.9rem; padding: 10px 20px;">${i}</button>
     </c:forEach>
 
     <c:choose>
         <c:when test="${pi.currentPage eq pi.maxPage}">
-            <button disabled style="font-size: 1.5rem; padding: 10px 20px;">다음</button>
+            <button disabled style="font-size: 0.9rem; padding: 10px 20px;">다음</button>
         </c:when>
         <c:otherwise>
-            <button onclick="location.href='list.fe?currentPage=${pi.currentPage+1}'" style="font-size: 1.5rem; padding: 10px 20px;">다음</button>
+            <button onclick="location.href='list.fe?currentPage=${pi.currentPage+1}'" style="font-size: 0.9rem; padding: 10px 20px;">다음</button>
         </c:otherwise>
     </c:choose>
 	</div>
-		<div class="bt_wrap">
-				<a href="${contextPath}/insert.fe" class="on">글쓰기</a>
-			</div>
+		 
 			<br>
 			<div class="search_form" style="text-align: center; margin-bottom: 20px;">
             <form action="${contextPath}/search.fe" method="get">
-                <select name="searchType" style="font-size: 1.6rem; padding: 10px; margin: 5px;">
+                <select name="searchType" style="font-size: 1.1rem; padding: 10px; margin: 5px;">
                     <option value="title">제목</option>
                     <option value="content">내용</option>
                     <option value="titleContent">제목+내용</option>
                 </select>
-                <input type="text" name="keyword" placeholder="검색어를 입력하세요" style="font-size: 1.6rem; padding: 10px; margin: 5px;">
-                <button type="submit" style="font-size: 1.6rem; padding: 10px; margin: 5px;">검색</button>
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요" style="font-size: 1.1rem; padding: 10px; margin: 5px;">
+                <button type="submit" style="font-size: 1.1rem; padding: 10px; margin: 5px;">검색</button>
+                <%if((loginUser != null)){ %>
+		<div class="bt_wrap">
+				<a href="${contextPath}/insert.fe" class="on">글쓰기</a>
+		</div>
+				<%} %>
             </form>
 			</div>
 			<script>

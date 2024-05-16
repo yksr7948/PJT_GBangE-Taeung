@@ -142,6 +142,30 @@ a {
 .board_page a.frist {
     border-left: 1px solid #ddd;
 }
+.bt_wrap {
+	margin-top: 30px;
+	text-align: center;
+	font-size: 0;
+}
+
+.bt_wrap a {
+	display: inline-block;
+	min-width: 80px;
+	margin-left: 10px;
+	padding: 10px;
+	border: 1px solid #000;
+	border-radius: 2px;
+	font-size: 1.4rem;
+}
+
+.bt_wrap a.on {
+	background-color: #000;
+	color: #fff;
+}
+
+.bt_wrap a:nth-child(1) {
+	margin-left: 0;
+}
 </style>
 </head>
 

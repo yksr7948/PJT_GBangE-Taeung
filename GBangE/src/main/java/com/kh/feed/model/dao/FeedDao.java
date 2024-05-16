@@ -407,8 +407,9 @@ public class FeedDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, r.getMemberNo());
-			pstmt.setString(2, r.getReplyContent());
+			pstmt.setInt(1, r.getReplyNo());
+			pstmt.setString(2, r.getMemberNo());
+			
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -488,17 +489,13 @@ public class FeedDao {
 		ArrayList<Feed> list = new ArrayList<>();
 		 PreparedStatement pstmt = null;
 		 ResultSet rset = null;
-		 String sql = prop.getProperty("searchFeed"); 
+		 String sql = prop.getProperty("searchTitleContent"); 
 		 
 		 try {
-			pstmt = conn.prepareStatement(sql);
-			if(searchType.equals("titleContent")) {
+			 	pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, "%" + keyword + "%");
 				pstmt.setString(2, "%" + keyword + "%");
-	        } else {
-	            pstmt.setString(1, "%" + keyword + "%");
-	        	
-	        }
+	        
 			rset = pstmt.executeQuery();
 			
 			while (rset.next()) {
@@ -531,14 +528,9 @@ public class FeedDao {
 		 
 		 try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + keyword + "%");
 			
-			if(searchType.equals("content")) {
-				pstmt.setString(1, "%" + keyword + "%");
-				pstmt.setString(2, "%" + keyword + "%");
-	        } else {
-	            pstmt.setString(1, "%" + keyword + "%");
-	        	
-	        }
+	       
 			rset = pstmt.executeQuery();
 			
 			while (rset.next()) {
@@ -570,14 +562,10 @@ public class FeedDao {
 		 
 		 try {
 			pstmt = conn.prepareStatement(sql);
-			if(searchType.equals("title")) {
-				pstmt.setString(1, "%" + keyword + "%");
-				pstmt.setString(2, "%" + keyword + "%");
-	        } else {
-	            pstmt.setString(1, "%" + keyword + "%");
-	        	
-	        }
+			pstmt.setString(1, "%" + keyword + "%");
+		
 			rset = pstmt.executeQuery();
+			
 			while (rset.next()) {
 				Feed feed = new Feed();
 				feed.setFeedNo(rset.getInt("FEED_NO"));

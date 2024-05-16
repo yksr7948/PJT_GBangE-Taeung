@@ -40,14 +40,12 @@ public class deleteReplyController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		String memberId = request.getParameter("memberNo");
-		String content = request.getParameter("content");
+		int replyNo = Integer.parseInt(request.getParameter("replyNo"));
+		String memberNo = request.getParameter("memberNo");
 		
-		System.out.println(memberId);
-		System.out.println(content);
 		Reply r = new Reply();
-		r.setMemberNo(memberId);
-		r.setReplyContent(content);
+		r.setReplyNo(replyNo);
+		r.setMemberNo(memberNo);
 		int result = new FeedService().deleteReply(r);
 		
 		response.getWriter().print(result);
