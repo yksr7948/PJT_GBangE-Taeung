@@ -40,7 +40,7 @@ SELECT SEQ_FNO.NEXTVAL FNO
 </entry>
 
 <entry key="insertAttachment">
-INSERT INTO ATTACHMENT (FILE_NO
+INSERT INTO ATTACHMENT_FEED (FILE_NO
                         ,REF_BNO
                         ,ORIGIN_NAME
                         ,CHANGE_NAME
@@ -61,13 +61,14 @@ INSERT INTO ATTACHMENT (FILE_NO
 
 <entry key="selectFeed">
 SELECT FEED_NO
+       ,MEMBER_ID
+       ,CATEGORY_NAME
+       ,MARATHON_NAME
        ,FEED_TITLE
        ,FEED_CONTENT
-       ,CATEGORY_NAME
-       ,MEMBER_ID
-       ,MARATHON_NAME
        ,COUNT
        ,CREATE_DATE
+       ,LIKE_COUNT
        FROM FEED F
        JOIN CATEGORY USING(CATEGORY_NO)
        JOIN MEMBER M USING (MEMBER_NO)
@@ -81,13 +82,13 @@ SELECT FEED_NO
       		 ,ORIGIN_NAME
        		 ,CHANGE_NAME
        	     ,FILE_PATH
-	FROM ATTACHMENT
-	WHERE REF_BNO = ?
+	FROM ATTACHMENT_FEED
+	WHERE REF_BNO = ? 
 	AND STATUS = 'Y'
 </entry>
 
 <entry key="insertReply">
-INSERT INTO REPLY(REPLY_NO
+INSERT INTO REPLY_FEED(REPLY_NO
 				,REPLY_CONTENT
 				,REF_BNO
 				,MEMBER_NO
@@ -105,7 +106,7 @@ INSERT INTO REPLY(REPLY_NO
        ,REPLY_CONTENT
        ,MEMBER_ID
        ,CREATE_DATE
-	FROM REPLY R
+	FROM REPLY_FEED R
 	JOIN MEMBER M USING (MEMBER_NO)
 	WHERE R.STATUS = 'Y'
 	AND REF_BNO = ?
@@ -122,7 +123,7 @@ INSERT INTO REPLY(REPLY_NO
 </entry>
 
 <entry key="updateAttachment">
-		UPDATE ATTACHMENT
+		UPDATE ATTACHMENT_FEED
 		SET ORIGIN_NAME = ?
 			,CHANGE_NAME = ?
 			,FILE_PATH = ?
@@ -138,11 +139,87 @@ INSERT INTO REPLY(REPLY_NO
 </entry>
 
 <entry key="deleteReply">
-	UPDATE REPLY
+	UPDATE REPLY_FEED
 	SET STATUS = 'N'
 	WHERE MEMBER_NO = ?
 	AND REPLY_CONTENT = ?
 	
 </entry>
 
+<entry key="addLike">
+UPDATE FEED
+SET LIKE_COUNT = LIKE_COUNT + 1
+WHERE FEED_NO = ? 
+
+</entry>
+
+<entry key="removeLike">
+UPDATE FEED
+SET LIKE_COUNT = LIKE_COUNT - 1
+WHERE FEED_NO = ? 
+
+</entry>
+
+<entry key="selectLike">
+SELECT LIKE_COUNT
+FROM FEED
+WHERE FEED_NO = ?
+</entry>
+
+<entry key="searchFeed">
+SELECT 
+    FEED_NO,
+    FEED_TITLE,
+    FEED_CONTENT,
+    MEMBER_ID,
+    COUNT,
+    CREATE_DATE
+
+FROM 
+    FEED F
+JOIN MEMBER M USING (MEMBER_NO)
+WHERE 
+    (FEED_TITLE LIKE ? OR FEED_CONTENT LIKE ?)
+    AND F.STATUS = 'Y'
+ORDER BY FEED_NO DESC
+
+</entry>
+
+<entry key ="searchContent">
+SELECT 
+    FEED_NO,
+    FEED_TITLE,
+    FEED_CONTENT,
+    MEMBER_ID,
+    COUNT,
+    CREATE_DATE
+
+FROM 
+    FEED F
+JOIN MEMBER M USING (MEMBER_NO)
+WHERE 
+    (FEED_TITLE LIKE ? OR FEED_CONTENT LIKE ?)
+    AND F.STATUS = 'Y'
+ORDER BY FEED_NO DESC
+
+</entry>
+
+<entry key ="searchTitle">
+SELECT 
+    FEED_NO,
+    FEED_TITLE,
+    FEED_CONTENT,
+    MEMBER_ID,
+    COUNT,
+    CREATE_DATE
+
+FROM 
+    FEED F
+JOIN MEMBER M USING (MEMBER_NO)
+WHERE 
+    (FEED_TITLE LIKE ? OR FEED_CONTENT LIKE ?)
+    AND F.STATUS = 'Y'
+ORDER BY FEED_NO DESC
+
+</entry>
 </properties>
