@@ -4,194 +4,7 @@
 <html lang="ko">
 <head>
 <title>회원가입</title>
-
-<style>
-* {
-	box-sizing: border-box;
-	font-family: "Noto Sans CJK KR";
-	font-style: normal;
-}
-
-#container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 670px;
-	height: 1800px;
-	margin: auto;
-	margin-top: 60px;
-	margin-bottom: 60px;
-	border: 1px solid #aacdff;
-	box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
-	border-radius: 20px;
-}
-
-.member-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 470px;
-	height: 1018px;
-	margin-top: 72px;
-	margin-bottom: 70px;
-}
-
-#header {
-	width: 466px;
-	height: 94px;
-	font-weight: 700;
-	font-size: 32px;
-	line-height: 47px;
-	margin-bottom: 50px;
-	color: #0068ff;
-}
-
-.user-info {
-	margin-top: 39px;
-}
-
-.user-info div {
-	margin-top: 40px;
-}
-
-.user-info input {
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 24px;
-	color: #797979;
-	border: none;
-	border-bottom: 1px solid #0068ff;
-	width: 466px;
-	height: 40px;
-	margin-top: 21px;
-	outline: none;
-}
-
-.user-info select{
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 24px;
-	color: #797979;
-	border: none;
-	border-bottom: 1px solid #0068ff;
-	width: 466px;
-	height: 40px;
-	margin-top: 21px;
-	outline: none;
-}
-
-#userPno1, #userPno2 {
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 24px;
-	color: #797979;
-	border: none;
-	border-bottom: 1px solid #0068ff;
-	width: 220px;
-	height: 40px;
-	margin-top: 21px;
-}
-
-.user-info-id {
-	position: relative;
-}
-
-.user-info-id>button {
-	position: absolute;
-	width: 90px;
-	height: 40px;
-	top: 0;
-	bottom: 0;
-	right: 5px;
-	margin: auto;
-	margin-bottom: 0px;
-	margin-right: -5px;
-	color: #0068ff;
-	border: 1px solid #0068ff;;
-	border-radius: 3px;
-}
-
-.user-info-address{
-	position: relative;
-}
-.user-info-address>button{
-	position: absolute;
-	width: 90px;
-	height: 40px;
-	top: 0;
-	bottom: 0;
-	right: 5px;
-	margin: auto;
-	margin-bottom: 0px;
-	margin-right: -5px;
-	color: #0068ff;
-	border: 1px solid #0068ff;;
-	border-radius: 3px;
-}
-#sample6_detailAddress, #sample6_extraAddress{
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 24px;
-	color: #797979;
-	border: none;
-	border-bottom: 1px solid #0068ff;
-	width: 232px;
-	height: 40px;
-	margin-top: 21px;
-}
-
-.gender {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	width: 140px;
-	height: 23.94px;
-	margin-top: 30px;
-	margin-bottom: 30px;
-}
-
-.gender input {
-	width: 20px;
-	height: 19.95px;
-	background: #ebebeb;
-	border: 1px solid #d2d2d2;
-}
-
-.gender label {
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 24px;
-}
-
-.agree-check {
-	width: 454px;
-	height: 21.06px;
-	margin-top: 52.05px;
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 21px;
-	color: #000000;
-}
-
-#enroll-btn {
-	width: 470px;
-	height: 75px;
-	font-weight: 400;
-	font-size: 18px;
-	line-height: 27px;
-	color: #ffffff;
-	background: #8990a0;
-	margin: auto;
-	margin-top: 30px;
-	display: block;
-	border: 1px solid gray;
-	border-radius: 10px;
-}
-#hidden-shoseArea{
-	display:none;
-	margin-top: -20px;
-}
-</style>
+<link rel="stylesheet" href="views/member/css/enroll-style.css">
 </head>
 <body>
 	<%@include file="/views/common/menubar.jsp"%>
@@ -233,7 +46,7 @@
 						<div style="font-weight:700">* 주민등록번호</div>
 						<input type="text" name="userPno1" id="userPno1" /> 
 						<font style="font-size: 30px">-</font> 
-						<input type="password"name="userPno2" id="userPno2" />
+						<input type="password"name="userPno2" id="userPno2" onfocusout="pnoCheck();"/>
 					</div>
 					<div id="hidden-pnoArea" style="display: none; margin-top:10px;"></div>
 					
@@ -521,6 +334,58 @@
 				}
 			});
 		}
+		
+		function pnoCheck(){
+            var pno1 = $("#userPno1");
+            var pno2 = $("#userPno2");
+			
+            var regBirth = /^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))$/;
+			var regPno = /^[1-4]\d{6}$/;
+			$.ajax({
+				url : "/gbange/pnoCheck.me",
+				data : {
+					pno1 : pno1.val(),
+                    pno2 : pno2.val()
+				},
+				success : function(result) {
+					//주민번호 null값 체크
+                    if (pno1.val() == "" && pno2.val() == "") {
+                        $("#hidden-pnoArea").html("*주민번호를 입력하세요.").show();
+                        $("#hidden-pnoArea").css({
+                            "color" : "red"
+                        });
+                        pno1.focus();
+                        return false;
+                    } else if (!regBirth.test(pno1.val())) {
+                        $("#hidden-pnoArea").html("*생년월일을 잘못입력했습니다.").show();
+                        $("#hidden-pnoArea").css({
+                            "color" : "red"
+                        });
+                        pno1.focus();
+                        return false;
+                    } else if (!regPno.test(pno2.val())) {
+                        $("#hidden-pnoArea").html("*주민등록번호를 잘못입력했습니다.").show();
+                        $("#hidden-pnoArea").css({
+                            "color" : "red"
+                        });
+                        pno2.focus();
+                        return false;
+                    }else if (result == "NNNNN") {
+						$("#hidden-pnoArea").html("*이미 존재하는 회원입니다.").show();
+						$("#hidden-pnoArea").css({
+							"color" : "red"
+						});
+						pno1.focus();
+
+					} else {
+                        $("#hidden-pnoArea").hide();
+					} 
+				},
+				error : function() {
+					console.log("오류");
+				}
+			});
+        }
 	</script>
 </body>
 </html>

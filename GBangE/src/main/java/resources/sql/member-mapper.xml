@@ -77,4 +77,10 @@
 		CHANGE_NAME = ?
 	WHERE MEMBER_ID = ?
 	</entry>
+	
+	<entry key="checkPno">
+	SELECT * 
+	FROM MEMBER 
+	WHERE MEMBER_PNO = ?
+	</entry>
 </properties>
