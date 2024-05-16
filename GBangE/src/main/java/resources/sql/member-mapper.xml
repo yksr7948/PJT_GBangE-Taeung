@@ -83,4 +83,10 @@
 	FROM MEMBER 
 	WHERE MEMBER_PNO = ?
 	</entry>
+	
+	<entry key= "mileagePlus">
+	UPDATE MEMBER
+	SET MILEAGE = MILEAGE + ?
+	WHERE MEMBER_ID = ?
+	</entry>
 </properties>
