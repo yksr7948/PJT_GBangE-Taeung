@@ -203,7 +203,7 @@
                 <div class="cont">
 			    <!-- 이미지를 글보다 먼저 표시합니다. -->
 			    <div>
-			        <img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile" style="max-width: 1000px; max-height: 1000px; cursor:pointer;">
+			        <img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile" style="max-width: 800px; max-height: 800px; cursor:pointer;">
 			    </div>
 			    <br>
 			    <div>
@@ -298,13 +298,13 @@
     	}   
      
      function shareTwitter() {
-    	    var sendText = "지방이 공지사항"; // 전달할 텍스트
-    	    var sendUrl = window.location.href; // 변경된 부분: 현재 페이지의 URL
+    	    var sendText = "지방이 공지사항"; 
+    	    var sendUrl = window.location.href; 
     	    window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
     	}
 
     	function shareFacebook() {
-    	    var sendUrl = window.location.href; // 변경된 부분: 현재 페이지의 URL
+    	    var sendUrl = window.location.href; 
     	    window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl);
     	}
 </script>
