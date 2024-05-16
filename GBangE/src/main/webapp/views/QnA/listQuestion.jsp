@@ -12,10 +12,6 @@
 	padding: 0;
 }
 
-html {
-	font-size: 10px;
-}
-
 a {
 	text-decoration: none;
 	color: inherit;
@@ -25,6 +21,7 @@ a {
 	width: 1000px;
 	margin: 100px auto;
 }
+
 
 /*제목, 부제목 설정*/
 .board_title {
@@ -37,7 +34,7 @@ a {
 
 .board_title p {
 	margin-top: 5px;
-	font-size: 1.4rem;
+	font-size: 1.0rem;
 }
 
 /*버튼 설정*/
@@ -54,7 +51,7 @@ a {
 	padding: 10px;
 	border: 1px solid #000;
 	border-radius: 2px;
-	font-size: 1.4rem;
+	font-size: 1.0rem;
 }
 
 .bt_wrap a.on {
@@ -89,7 +86,7 @@ a {
 	display: inline-block;
 	vertical-align: middle;
 	padding: 15px 0;
-	font-size: 1.4rem;
+	font-size: 1.0rem;
 }
 
 .board_list>div.top>div {
@@ -122,7 +119,7 @@ a {
 	display: none;
 }
 .question {
-	font-size: 3.0rem;
+	font-size: 1.0rem;
 	width:800px;
 	height:250px;
 	border-bottom: 3px solid #999;
@@ -146,7 +143,7 @@ a {
 	display: inline-block;
 	vertical-align: middle;
 	padding: 15px 0;
-	font-size: 1.4rem;
+	font-size: 1.0rem;
 }
 
 .answer>div.top>div {
@@ -171,16 +168,18 @@ a {
 }
 
 .answer .date {
-	width: 10%;
+	width: 20%;
 }
 .answerContent{
 	margin-top:30px;
 	height: 100px;
 	border-bottom: 1px solid #999;
 }
-div.deleteBtn{
-	margin-left:5px;
-	height:52px;
+div.deleteBtn {
+    margin-left: 5px;
+    margin-bottom: 20px;
+    height: 52px;
+    
 }
 </style>
 </head>
@@ -223,7 +222,7 @@ div.deleteBtn{
 						<textarea style="width:800px; height:200px;"></textarea>
 						<br>
 						<c:if test="${! empty loginUser.memberNo }">
-						<button type="button" class="btn btn-lg btn-dark">답변 작성하기</button>
+						<button type="button" class="btn btn-lg btn-dark" style="font-size:1.0rem;">답변 작성하기</button>
 						</c:if>
 					</div>
 				</div>
@@ -257,7 +256,7 @@ div.deleteBtn{
                         	tmp += "<div class='writer'>"+answerArr[i].memberName+"</div>";
                         	tmp += "<div class='date'>"+answerArr[i].createDate+"</div>";
                         	if(memNo == answerArr[i].memberNo){
-                        		tmp += "<div class='deleteBtn'><button type='button' class='btn btn-lg btn-dark' onclick='deleteAnswer("+answerArr[i].answerId+");'>삭제</button></div>";	
+                        		tmp += "<div class='deleteBtn'><button type='button' class='btn btn-lg btn-dark' style='font-size: 0.9rem;' onclick='deleteAnswer("+answerArr[i].answerId+");'>삭제</button></div>";	
                         	}                        	
                         	tmp += "</div>";
                         	tmp += "<div class='answerContent'>"+answerArr[i].answerContent+"</div>";
@@ -315,7 +314,7 @@ div.deleteBtn{
                     	tmp += "<div class='writer'>"+answerArr[i].memberName+"</div>";
                     	tmp += "<div class='date'>"+answerArr[i].createDate+"</div>";
                     	if(memNo == answerArr[i].memberNo){
-                    		tmp += "<div class='deleteBtn'><button type='button' class='btn btn-lg btn-dark' onclick='deleteAnswer("+answerArr[i].answerId+");'>삭제</button></div>";	
+                    		tmp += "<div class='deleteBtn'><button type='button' class='btn btn-lg btn-dark' style='font-size: 0.9rem;' onclick='deleteAnswer("+answerArr[i].answerId+");'>삭제</button></div>";	
                     	}
                     	tmp += "</div>";
                     	tmp += "<div class='answerContent'>"+answerArr[i].answerContent+"</div>";                    	

@@ -150,7 +150,7 @@
 
 #reply-table th, #reply-table td {
     border: 1px solid #ddd;
-    padding: 10px; /* 패딩을 10px로 조정 */
+    padding: 10px;
     text-align: left;
 }
 
@@ -201,6 +201,14 @@
 	
 }
 
+.modal-body input{
+margin-left: 10px;
+	margin-bottom: 10px;
+	border: none;
+	border-bottom: 1px solid;
+	outline: none;
+}
+
 </style>
 </head>
 <body>
@@ -244,11 +252,12 @@
                 
                   
  				
+                    <img alt="업로드이미지" src="${contextPath}${at.filePath}${at.changeName}" id="uploadFile" width="50%">
+                   <br>
                 <div class="cont">
-                    ${f.feedContent}
-                    <img alt="업로드이미지" src="${contextPath}${at.filePath}${at.changeName}" id="uploadFile">
-               
+                    ${f.feedContent}               
                 </div>
+                
             </div>
             <br><br>
             <div class="bt_wrap">
@@ -262,12 +271,46 @@
 				    <b id="heartIcon" class="far fa-heart" style="font-size: 30px; color: #ff5a5f;"></b>
 				    <span>좋아요</span><span id="likeCount">${f.likeCount}</span>
 				</button>
+				<br>
+				<c:if test="${loginUser.memberId eq 'admin'}">
+				<div align="center">
+					<button class="btn btn-primary" data-toggle="modal" data-target="#signForm">등록</button>
+				</div>
                
-			
+				</c:if>
             </div>
             
-          
-
+            <!-- 승인 모달 -->
+          <div class="modal" id="signForm">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	
+	      <!-- Modal Header -->
+	      <div class="modal-header" style="background-color:lightblue">
+	        <h4 class="modal-title">관리자 승인</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	      <div class="modal-body" align="center">
+	       	<form action="<%=contextPath%>/sign.fe" method="post">
+					<input type="hidden" name="userId" value="<%=loginUser.getMemberId() %>">
+					<input type="hidden" name="userPwd" value="<%=loginUser.getMemberPwd() %>">
+					<table>
+						<tr>
+							<td>달린거리</td>
+							<td><input type="number" name="mileage" required> </td>
+							</tr>
+					</table>		
+					<br>
+					<button type="submit" class="btn btn-danger" >확인</button>
+	       		</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
             <script>
 				
             	function deleteFeed(){

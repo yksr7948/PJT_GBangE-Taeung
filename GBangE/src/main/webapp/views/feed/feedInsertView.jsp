@@ -158,8 +158,8 @@
 				</div>
 				<br>
 				<div class="bt_wrap">
-					<button type="submit" class="btn btn-success" onclick="return btn();">등록</button> <a href=""
-						class="btn btn-outline-secondary">취소</a>
+					<button type="submit" class="btn btn-success" onclick="return btn();">등록</button>  
+					<button type="button" onclick="cancle()" class="btn btn-outline-secondary">취소</button>
 				</div>
 			</div>
 		</form>
@@ -177,6 +177,11 @@
 			
 		}
 	
+		function cancle(){
+			location.href="${contextPath}/list.fe?currentPage=1"
+		}
+			
+		
 	</script>
 </body>
 </html>

@@ -228,7 +228,7 @@
 				<div class="cont">
 					${training.trainingContent} <img alt="업로드이미지"
 						src="${contextPath}${attachment.filePath}${attachment.changeName}"
-						id="uploadImg" width="30%">
+						id="uploadImg" width="40%">
 
 				</div>
 			</div>
