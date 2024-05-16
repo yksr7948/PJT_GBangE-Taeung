@@ -347,7 +347,7 @@
 							+ "<dt>"+ list[i].replyWriter+"</dt>"
 							+ "<dd><div class='reply-info'><input type='text' id='replyContent' value='"+list[i].replyContent+"' readonly>"
 							+ "<input type='hidden' id='originReply' value='"+list[i].replyContent+"'></div>"
-							+ "<div class='reply-info'><button onclick='deleteReply();'>&ensp;삭제</button></div>"
+							+ "<div class='reply-info'><button onclick='deleteReply("+list[i].replyNo+");'>&ensp;삭제</button></div>"
 							+ "<div class='reply-info'><button onclick='updateReply();' id='update-btn'>&ensp;|&ensp;수정</button></div></dd>"
 							+ "<dd><input type='hidden' id='replyDate' value='"+list[i].createDate+"'"
 							+ list[i].createDate+"</dd>"
@@ -368,16 +368,12 @@
 				});
 		}
 
-		function deleteReply() {
-			let replyContent = $("#replyContent").val();
-			let replyDate = $("#replyDate").val();
+		function deleteReply(replyNo) {
 			$.ajax({
  					type: "post",
 					url : "dreply.tr",
 					data : {
-						replyWriter : ${loginUser.memberNo},
-						replyContent : replyContent,
-						replyDate : replyDate
+						replyNo : replyNo,
 					},
 					success : function(result) {
 						replyList();

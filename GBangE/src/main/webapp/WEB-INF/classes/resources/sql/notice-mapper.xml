@@ -107,7 +107,7 @@ ORDER BY NOTICE_ID DESC
 </entry>
 
 <entry key="insertAttachment">
-INSERT INTO ATTACHMENT (FILE_NO
+INSERT INTO NOTICE_ATTACHMENT (FILE_NO
                         ,REF_BNO
                         ,ORIGIN_NAME
                         ,CHANGE_NAME
@@ -121,7 +121,7 @@ INSERT INTO ATTACHMENT (FILE_NO
 
 <entry key="selectAttachment">
 SELECT FILE_NO,ORIGIN_NAME,CHANGE_NAME,FILE_PATH
-FROM ATTACHMENT WHERE REF_BNO = ?
+FROM NOTICE_ATTACHMENT WHERE REF_BNO = ?
 
 
 </entry>
@@ -139,7 +139,7 @@ FROM ATTACHMENT WHERE REF_BNO = ?
 
 
 	<entry key="updateAttachment">
-		UPDATE ATTACHMENT 
+		UPDATE NOTICE_ATTACHMENT 
 		SET ORIGIN_NAME = ?
 			,CHANGE_NAME = ?
 			,FILE_PATH = ?
