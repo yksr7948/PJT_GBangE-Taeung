@@ -78,7 +78,6 @@ public class NoticeService {
 		
 		return n;
 	}
-	//제목 + 내용, 제목, 내용 검색 기능
 	public ArrayList<Notice> searchNoticeList(String searchType, String keyword) {
 	    Connection conn = JDBCTemplate.getConnection();
 	    ArrayList<Notice> list = new ArrayList<>();
@@ -87,13 +86,13 @@ public class NoticeService {
 	        NoticeDao noticeDAO = new NoticeDao(); 
 	        switch (searchType) {
 	            case "titleContent":
-	                list = noticeDAO.searchTitleContent(conn, searchType, keyword);
+	                list = noticeDAO.searchTitleContent(conn, keyword);
 	                break;
 	            case "content":
-	                list = noticeDAO.searchContent(conn, searchType, keyword);
+	                list = noticeDAO.searchContent(conn, keyword);
 	                break;
 	            case "title":
-	                list = noticeDAO.searchTitle(conn, searchType, keyword);
+	                list = noticeDAO.searchTitle(conn, keyword);
 	                break;
 	            default:
 	                break;
