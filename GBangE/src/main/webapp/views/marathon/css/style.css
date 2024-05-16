@@ -123,10 +123,11 @@ body{
 }
 .modal-body tbody tr{
 	border-bottom: 1px solid #999;
+	cursor: pointer;
+    transition: background-color 0.3s;
 }
 .modal-body tbody tr:hover{
-	border: 3px solid red;
-	cursor:pointer;
+	background-color: #ADD8E6;
 }
 .searchArea {
 	position:relative;

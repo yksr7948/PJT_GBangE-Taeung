@@ -124,13 +124,6 @@
 .modal-body .marathonInfo td{
 	height: 40px;
 }
-.modal-body tbody tr{
-	border-bottom: 1px solid #999;
-}
-.modal-body tbody tr:hover{
-	border: 3px solid red;
-	cursor:pointer;
-}
 .searchArea {
 	position:relative;
 	align-self:center;
