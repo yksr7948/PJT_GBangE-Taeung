@@ -176,6 +176,14 @@ a {
     top: -80px;
     left: 150px;
 }
+.list-area {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.list-area:hover {
+    background-color: #add8e6; 
+}
 
 </style>
 </head>
