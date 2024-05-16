@@ -14,9 +14,7 @@
 	padding: 0;
 }
 
-html {
-	font-size: 10px;
-}
+
 
 a {
 	text-decoration: none;
@@ -34,12 +32,12 @@ a {
 }
 
 .board_title h1 {
-	font-size: 3rem;
+	font-size: 2rem;
 }
 
 .board_title p {
 	margin-top: 5px;
-	font-size: 1.4rem;
+	font-size: 1.0rem;
 }
 
 /*버튼 설정*/
@@ -55,7 +53,7 @@ a {
 	margin-left: 10px;
 	padding: 10px;
 	border-radius: 2px;
-	font-size: 1.4rem;
+	font-size: 1.0rem;
 }
 
 .bt_wrap a.on {
@@ -90,7 +88,7 @@ a {
 	display: inline-block;
 	vertical-align: middle;
 	padding: 15px 0;
-	font-size: 1.4rem;
+	font-size: 1.0rem;
 }
 
 .board_list>div.top>div {
@@ -143,14 +141,14 @@ a {
 
 .board_page a.btn {
 	padding-top: 7px;
-	font-size: 1.2rem;
+	font-size: 0.8rem;
 	letter-spacing: -3px;
 	color: black;
 }
 
 .board_page a.num {
 	padding-top: 6px;
-	font-size: 1.4rem;
+	font-size: 1.0rem;
 }
 
 .board_page a.num.selected {
@@ -243,13 +241,13 @@ a {
 			<div class="search_form" style="text-align: center; margin-bottom: 20px;">
             <form action="${contextPath}/search.tr" method="get">
                 <input type="hidden" name="currentPage" value="1">
-                <select name="searchType" style="font-size: 1.6rem; padding: 10px; margin: 5px;">
+                <select name="searchType" style="font-size: 1.1rem; padding: 10px; margin: 5px;">
                     <option value="title">제목</option>
                     <option value="trainingCategory">훈련종류</option>
                     <option value="titleContent">제목+내용</option>
                 </select>
-                <input type="text" name="keyword" placeholder="검색어를 입력하세요" style="font-size: 1.6rem; padding: 10px; margin: 5px;">
-                <button type="submit" style="font-size: 1.6rem; padding: 10px; margin: 5px;">검색</button>
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요" style="font-size: 1.1rem; padding: 10px; margin: 5px;">
+                <button type="submit" style="font-size: 1.1rem; padding: 10px; margin: 5px;">검색</button>
             </form>
 		</div>
 			<div class="bt_wrap">
