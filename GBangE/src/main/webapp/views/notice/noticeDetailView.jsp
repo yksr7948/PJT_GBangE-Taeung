@@ -95,7 +95,7 @@
  /* 공유 아이콘 스타일 */
  .social-share {
     position: absolute;
-    top: 160px; /* Adjust this value to move the icons slightly up */
+    top: 400px; /* Adjust this value to move the icons slightly up */
     right: 20px;
 }
 
@@ -106,28 +106,46 @@
 }
 
 .link-icon { 
+    display: block; /* 변경된 부분 */
+    width: 30px;
+    height: 30px;
+    margin-right: 10px; 
+    margin-bottom: 5px; /* 추가된 부분 */
+}
+
+.link-icon { 
     display: inline-block; 
-    width: auto; 
-    font-size: 14px; 
-    font-weight: 500; 
-    color: #333; 
+    width: 30px;
+    height: 30px;
     margin-right: 10px; 
 }
 
 .link-icon.twitter { 
-    background-image: url(./img/icon-twitter.png); 
+    background-image: url("/gbange/views/notice/img/icon-twitter.png"); 
     background-repeat: no-repeat; 
+    background-size: cover; 
 }
 
 .link-icon.facebook { 
-    background-image: url(./img/icon-facebook.png); 
+    background-image: url("/gbange/views/notice/img/icon-facebook.png"); 
     background-repeat: no-repeat; 
+    background-size: cover; 
 } 
 
 .link-icon.kakao { 
-    background-image: url(./img/icon-kakao.png); 
+    background-image: url("/gbange/views/notice/img/icon-kakao.png"); 
     background-repeat: no-repeat; 
+    background-size: cover; 
 }
+
+.link-text {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 14px; 
+    font-weight: 500; 
+    color: #333; 
+}
+
 
 .zbange {
     width: 100px; 
@@ -179,10 +197,19 @@
 			    </div>
 			    
 			    <div class="social-share">
-			        <a id="btnTwitter" class="link-icon twitter" href="javascript:shareTwitter();">트위터</a>
-			        <a id="btnFacebook" class="link-icon facebook" href="javascript:shareFacebook();">페이스북</a>
-			        <a id="btnKakao" class="link-icon kakao" href="javascript:shareKakao();">카카오톡</a>
-			    </div>
+				    <a id="btnTwitter" href="javascript:shareTwitter();">
+				        <span class="link-icon twitter"></span>
+				        <span class="link-text">트위터</span>
+				    </a>
+				    <a id="btnFacebook" href="javascript:shareFacebook();">
+				        <span class="link-icon facebook"></span>
+				        <span class="link-text">페이스북</span>
+				    </a>
+				    <a id="btnKakao" href="javascript:shareKakao();">
+				        <span class="link-icon kakao"></span>
+				        <span class="link-text">카카오톡</span>
+				    </a>
+				</div>
 			</div>
             <br>
             <div class="bt_wrap" style="display: flex; justify-content: space-between;">
@@ -247,7 +274,20 @@
     	    }
     	  });
     	}   
+     
+     function shareTwitter() {
+    	    var sendText = "지방이 공지사항"; // 전달할 텍스트
+    	    var sendUrl = window.location.href; // 변경된 부분: 현재 페이지의 URL
+    	    window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+    	}
+
+    	function shareFacebook() {
+    	    var sendUrl = window.location.href; // 변경된 부분: 현재 페이지의 URL
+    	    window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl);
+    	}
 </script>
+
+
 
 <script>
     // ...
