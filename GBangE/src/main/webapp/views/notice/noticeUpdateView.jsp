@@ -140,9 +140,9 @@
 			
 			<br>
 			<div class="bt_wrap">
-				    <button type="submit" class="btn btn-success btn-lg">등록</button>
-				    <a href="${contextPath}/list.no?currentPage=1" class="btn btn-secondary btn-lg">취소</a>
-				</div>
+    <a href="javascript:document.getElementById('enroll-form').submit();" class="btn btn-success btn-lg">등록</a>
+    <a href="${contextPath}/list.no?currentPage=1" class="btn btn-secondary btn-lg">취소</a>
+			</div>
 			</div>
 		</div>
 		<script>
