@@ -160,6 +160,12 @@ a {
 .board_page a.frist {
 	border-left: 1px solid #ddd;
 }
+.zbange {
+    width: 100px; 
+    position: relative;
+    top: -80px;
+    left: 150px;
+}
 </style>
 </head>
 
@@ -169,6 +175,7 @@ a {
 	<div class="board_wrap">
 		<div class="board_title">
 			<h1>러닝일지</h1>
+			<a href="${contextPath}/list.tr?currentPage=1"> <img src="/gbange/views/notice/img/image_360-removebg-preview.png" alt="지방이" class="zbange"></a>
 			<p>러닝일지 페이지입니다.</p>
 		</div>
 		<div class="board_list_wrap">
@@ -238,6 +245,7 @@ a {
 				</c:otherwise>
 				</c:choose>
 			</div>
+			<br>
 			<div class="search_form" style="text-align: center; margin-bottom: 20px;">
             <form action="${contextPath}/search.tr" method="get">
                 <input type="hidden" name="currentPage" value="1">
