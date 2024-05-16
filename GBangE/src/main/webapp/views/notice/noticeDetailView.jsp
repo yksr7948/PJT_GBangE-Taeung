@@ -153,6 +153,20 @@
     top: -80px;
     left: 150px;
 }
+.download-box {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.download-box a {
+    font-size: 1.2rem;
+    color: #333;
+}
 </style>
 </head>
 <body>
@@ -189,7 +203,7 @@
                 <div class="cont">
 			    <!-- 이미지를 글보다 먼저 표시합니다. -->
 			    <div>
-			        <img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile" style="max-width: 50%; max-height: 50%; cursor:pointer;">
+			        <img alt="${attachment.changeName}" src="${contextPath}${attachment.filePath}${attachment.changeName}" id="uploadFile" style="max-width: 500px; max-height: 500px; cursor:pointer;">
 			    </div>
 			    
 			    <div>
@@ -209,8 +223,16 @@
 				        <span class="link-icon kakao"></span>
 				        <span class="link-text">카카오톡</span>
 				    </a>
+				    
 				</div>
 			</div>
+			<div class="download-link">
+	   <c:if test="${attachment != null}">
+	    <div class="download-box">
+	        <a href="${contextPath}${attachment.filePath}${attachment.changeName}" download>첨부파일 다운로드</a>
+	    </div>
+	</c:if>
+</div>
             <br>
             <div class="bt_wrap" style="display: flex; justify-content: space-between;">
     <div>

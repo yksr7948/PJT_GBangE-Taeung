@@ -182,7 +182,7 @@ a {
 }
 
 .list-area:hover {
-    background-color: #add8e6; 
+    background-color: #add8e6;
 }
 
 </style>
