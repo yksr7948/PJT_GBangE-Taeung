@@ -229,15 +229,16 @@
                 <a href="#" class="btn btn-outline-secondary" onclick="goToFeedListView()">목록</a>
                 <a href="${contextPath}/update.fe?fno=${f.feedNo}" class="btn btn-success">수정</a>
                 <a href="${contextPath}/delete.fe?fno=${f.feedNo}" onclick="deleteFeed()" class="btn btn-danger">삭제</a>
-                 <button id="likeButton" onclick="like()">
+                 <button id="likeButton" onclick="like();">
 				    <b id="heartIcon" class="far fa-heart" style="font-size: 30px; color: #ff5a5f;"></b>
-				    <span>좋아요</span>
+				    <span>좋아요</span><span id="likeCount">${f.likeCount}</span>
 				</button>
             </div>
             
           
 
             <script>
+				console.log("${f.likeCount}");
             	function deleteFeed(){
             		var flag = confirm("삭제하면 마일리지가 날라가요~");
         
@@ -370,61 +371,49 @@
     	            });
     	        } 
     	}
+    	    </script>
+    	    <script>
+    	    var isLiked = false;
+
     	    function like() {
     	        var heartIcon = document.getElementById("heartIcon");
     	        if (heartIcon.classList.contains("far")) {
     	            heartIcon.classList.remove("far");
     	            heartIcon.classList.add("fas"); // 채워진 하트로 변경
+    	            var action = "add"; // 좋아요 추가를 요청함
     	        } else {
     	            heartIcon.classList.remove("fas");
     	            heartIcon.classList.add("far"); // 빈 하트로 변경
+    	            var action = "remove"; // 좋아요 제거를 요청함
     	        }
-    	    }
-    	    
-    	    function like() {
+    	        
     	        var feedNo = "${f.feedNo}";
-    	        var memberId = "${loginUser.memberId}";
+    	        var memberNo = "${loginUser.memberNo}";
+    	        
     	        
     	        $.ajax({
-    	        	$.ajax({
-    	        	    url: "like.fe",
-    	        	    type: "post",
-    	        	    data: {
-    	        	        memberId: memberId,
-    	        	        feedNo: feedNo,
-    	        	        action: "add" // 좋아요 추가를 요청함
-    	        	    },
-    	        	    success: function(result) {
-    	        	        // 성공적으로 추가되었을 때의 처리
-    	        	    },
-    	        	    error: function() {
-    	        	        // 오류 발생 시 처리
-    	        	    }
-    	        	});
-    	        	
-    	        	$.ajax({
-    	        	    url: "like.fe",
-    	        	    type: "post",
-    	        	    data: {
-    	        	        memberId: memberId,
-    	        	        feedNo: feedNo,
-    	        	        action: "remove" // 좋아요 제거를 요청함
-    	        	    },
-    	        	    success: function(result) {
-    	        	        // 성공적으로 제거되었을 때의 처리
-    	        	    },
-    	        	    error: function() {
-    	        	        // 오류 발생 시 처리
-    	        	    }
-    	        	});
-
-    	    $(function() {
-    	        // 좋아요 버튼 클릭 시 toggleLike 함수 호출
-    	        $("#likeButton").click(function() {
-    	            like();
+    	            url: "like.fe",
+    	            type: "post",
+    	            data: {
+    	                memberNo: memberNo,
+    	                feedNo: feedNo,
+    	                action: action
+    	               	
+    	            },
+    	            success: function(result) {
+    	            		$("#likeCount").html(result);
+    	            		
+    	            },
+    	            error: function() {
+    	                // 오류 발생 시 처리
+    	            }
     	        });
-    	    });
-    	
+    	    }
+    	    
+
+    	      
+    		
+    	    
     	$(function(){
     		replyList(); //댓글목록 조회
     	});

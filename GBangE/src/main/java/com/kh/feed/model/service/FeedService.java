@@ -10,6 +10,8 @@ import com.kh.feed.model.vo.Attachment;
 import com.kh.feed.model.vo.Category;
 import com.kh.feed.model.vo.Feed;
 import com.kh.feed.model.vo.Reply;
+import com.kh.notice.model.dao.NoticeDao;
+import com.kh.notice.model.vo.Notice;
 
 
 
@@ -188,24 +190,80 @@ public class FeedService {
 		return result;
 	}
 
-	public int addLike(int feedNo, String memberId) {
-		
+	public int addLike(int feedNo, int memberNo) {
 		Connection conn = JDBCTemplate.getConnection();
 		
-		int result = new FeedDao().addLike(conn,feedNo,memberId);
-		
+		int result = new FeedDao().addLike(conn,feedNo,memberNo);
+		System.out.println(result);
 		if(result>0) {
 			JDBCTemplate.commit(conn);
 		}else {
 			JDBCTemplate.rollback(conn);
 		}
 		JDBCTemplate.close(conn);
-		
 		return result;
 	}
+		
+
+
+	public int removeLike(int feedNo, int memberNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new FeedDao().removeLike(conn,feedNo,memberNo);
+	
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int selectLike(int feedNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new FeedDao().selectLike(conn,feedNo);
+	
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	
+	}
+	//검색 기능
+	public ArrayList<Feed> searchFeedList(String searchType, String keyword){
+		 Connection conn = JDBCTemplate.getConnection();
+		 ArrayList<Feed> list = new ArrayList<>();
+		
+		 try {
+		        FeedDao feedDAO = new FeedDao(); 
+		        switch (searchType) {
+		            case "titleContent":
+		                list = feedDAO.searchTitleContent(conn, searchType, keyword);
+		                break;
+		            case "content":
+		                list = feedDAO.searchContent(conn, searchType, keyword);
+		                break;
+		            case "title":
+		                list = feedDAO.searchTitle(conn, searchType, keyword);
+		                break;
+		            default:
+		                break;
+		        }
+		   
+		    } catch (Exception e) {
+		        e.printStackTrace(); 
+		    } finally {
+		        JDBCTemplate.close(conn); 
+		    }
+
+		    return list;
+		}
+}
 	
 
-}
 
 
 

@@ -232,13 +232,14 @@ public class FeedDao {
 				
 				if(rset.next()) {
 					f = new Feed(rset.getInt("FEED_NO")
+								,rset.getString("MEMBER_ID")
+								,rset.getString("CATEGORY_NAME")
+								,rset.getString("MARATHON_NAME")
 								,rset.getString("FEED_TITLE")
 								,rset.getString("FEED_CONTENT")
-								,rset.getString("CATEGORY_NAME")
-								,rset.getString("MEMBER_ID")
-								,rset.getString("MARATHON_NAME")
 								,rset.getInt("COUNT")
-								,rset.getDate("CREATE_DATE"));
+								,rset.getDate("CREATE_DATE")
+								,rset.getInt("LIKE_COUNT"));
 				}
 	
 			} catch (SQLException e) {
@@ -419,21 +420,185 @@ public class FeedDao {
 		return result;
 	}
 
-	public int addLike(Connection conn, int feedNo, String memberId) {
+	public int addLike(Connection conn, int feedNo, int memberNo) {
 		
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("addLike");
 		
 		try {
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, feedNo);
+	        
+	        result = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	    	JDBCTemplate.close(pstmt);
+	    }
+	    return result;
+	}
+
+	public int removeLike(Connection conn, int feedNo, int memberNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("removeLike");
+		
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, feedNo);
+				
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+		return result;
+	}
+
+	public int selectLike(Connection conn, int feedNo) {
+		
+		ResultSet rset = null; 
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectLike");
+		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, feedNo);
 			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt("LIKE_COUNT");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
 		}
-		return 0;
+		
+		return result;
+	}
+
+	public ArrayList<Feed> searchTitleContent(Connection conn, String searchType, String keyword) {
+		ArrayList<Feed> list = new ArrayList<>();
+		 PreparedStatement pstmt = null;
+		 ResultSet rset = null;
+		 String sql = prop.getProperty("searchFeed"); 
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);
+			if(searchType.equals("titleContent")) {
+				pstmt.setString(1, "%" + keyword + "%");
+				pstmt.setString(2, "%" + keyword + "%");
+	        } else {
+	            pstmt.setString(1, "%" + keyword + "%");
+	        	
+	        }
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				Feed feed = new Feed();
+				feed.setFeedNo(rset.getInt("FEED_NO"));
+				feed.setFeedTitle(rset.getString("FEED_TITLE"));
+				feed.setFeedContent(rset.getString("FEED_CONTENT"));
+				feed.setMemberNo(rset.getString("MEMBER_ID"));
+				feed.setCount(rset.getInt("COUNT"));
+				feed.setCreateDate(rset.getDate("CREATE_DATE"));
+				list.add(feed);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		 
+		return list;
+	}
+
+	public ArrayList<Feed> searchContent(Connection conn, String searchType, String keyword) {
+		ArrayList<Feed> list = new ArrayList<>();
+		 PreparedStatement pstmt = null;
+		 ResultSet rset = null;
+		 String sql = prop.getProperty("searchContent"); 
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);
+			
+			if(searchType.equals("content")) {
+				pstmt.setString(1, "%" + keyword + "%");
+				pstmt.setString(2, "%" + keyword + "%");
+	        } else {
+	            pstmt.setString(1, "%" + keyword + "%");
+	        	
+	        }
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				Feed feed = new Feed();
+				feed.setFeedNo(rset.getInt("FEED_NO"));
+				feed.setFeedTitle(rset.getString("FEED_TITLE"));
+				feed.setFeedContent(rset.getString("FEED_CONTENT"));
+				feed.setMemberNo(rset.getString("MEMBER_ID"));
+				feed.setCount(rset.getInt("COUNT"));
+				feed.setCreateDate(rset.getDate("CREATE_DATE"));
+				list.add(feed);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {			
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		 
+		return list;
+	}
+
+	public ArrayList<Feed> searchTitle(Connection conn, String searchType, String keyword) {
+		ArrayList<Feed> list = new ArrayList<>();
+		 PreparedStatement pstmt = null;
+		 ResultSet rset = null;
+		 String sql = prop.getProperty("searchTitle"); 
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);
+			if(searchType.equals("title")) {
+				pstmt.setString(1, "%" + keyword + "%");
+				pstmt.setString(2, "%" + keyword + "%");
+	        } else {
+	            pstmt.setString(1, "%" + keyword + "%");
+	        	
+	        }
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				Feed feed = new Feed();
+				feed.setFeedNo(rset.getInt("FEED_NO"));
+				feed.setFeedTitle(rset.getString("FEED_TITLE"));
+				feed.setFeedContent(rset.getString("FEED_CONTENT"));
+				feed.setMemberNo(rset.getString("MEMBER_ID"));
+				feed.setCount(rset.getInt("COUNT"));
+				feed.setCreateDate(rset.getDate("CREATE_DATE"));
+				list.add(feed);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+	        JDBCTemplate.close(pstmt);
+		}
+		 
+		return list;
 	}
 
 
+	
 }

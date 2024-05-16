@@ -37,29 +37,38 @@ public class LikeUpdateController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		
-//	        String memberId = request.getParameter("memberId");
-//	        int feedNo = Integer.parseInt(request.getParameter("feedNo"));
-//	        String action = request.getParameter("action");
-//
-//	        FeedService feedService = new FeedService();
-//	        int result = 0;
-//
-//	        if (action.equals("add")) {
-//	            result = feedService.addLike(feedNo, memberId);
-//	        } else if (action.equals("remove")) {
-//	            result = feedService.removeLike(feedNo, memberId);
-//	        }
-//
-//	        // 결과를 JSON 형식으로 응답
-//	        response.setContentType("application/json");
-//	        response.setCharacterEncoding("UTF-8");
-//	        PrintWriter out = response.getWriter();
-//	        out.print(result);
-//	        out.flush();
-//	    }
-	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	        int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+	        int feedNo = Integer.parseInt(request.getParameter("feedNo"));
+	        String action = request.getParameter("action");
+	        
+
+	        
+	        FeedService feedService = new FeedService();
+	        int result = 0;
+
+	        if (action.equals("add")) {
+	            result = feedService.addLike(feedNo, memberNo);
+	        } else if (action.equals("remove")) {
+	            result = feedService.removeLike(feedNo, memberNo);
+	            
+	        }
+	        result = feedService.selectLike(feedNo);
+	        
+	        // 결과를 JSON 형식으로 응답
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        PrintWriter out = response.getWriter();
+	        out.print(result);
+	        out.flush();
+	        
+	        
+	       
+	    }
+	   }
+	
+	
 
 
 

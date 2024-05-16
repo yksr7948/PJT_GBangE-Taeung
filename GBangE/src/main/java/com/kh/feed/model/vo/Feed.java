@@ -12,13 +12,14 @@ public class Feed {
 	private int count;
 	private Date createDate;
 	private int boardId;
+	private int likeCount;
 	private String status;
 	public Feed() {
 		super();
 	
 	}
 	public Feed(int feedNo, String memberNo, String category, String competition, String feedTitle, String feedContent,
-			int count, Date createDate, int boardId, String status) {
+			int count, Date createDate, int boardId, int likeCount ,String status) {
 		super();
 		this.feedNo = feedNo;
 		this.memberNo = memberNo;
@@ -29,10 +30,34 @@ public class Feed {
 		this.count = count;
 		this.createDate = createDate;
 		this.boardId = boardId;
+		this.likeCount = likeCount; 
 		this.status = status;
 	}
 	
 	
+	
+	
+	public Feed(int feedNo, String memberNo, String category, String competition, String feedTitle, String feedContent,
+			int count, Date createDate, int likeCount) {
+		super();
+		this.feedNo = feedNo;
+		this.memberNo = memberNo;
+		this.category = category;
+		this.competition = competition;
+		this.feedTitle = feedTitle;
+		this.feedContent = feedContent;
+		this.count = count;
+		this.createDate = createDate;
+		this.likeCount = likeCount;
+	}
+	public int getLikeCount() {
+		return likeCount;
+	}
+	
+	
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
 	public Feed(int feedNo, String memberNo, String feedTitle, int count, Date createDate) {
 		super();
 		this.feedNo = feedNo;
@@ -116,9 +141,10 @@ public class Feed {
 	}
 	@Override
 	public String toString() {
-		return "Feed [feedNo=" + feedNo + ", memberNo=" + memberNo + ", categoryNo=" + category + ", competition="
+		return "Feed [feedNo=" + feedNo + ", memberNo=" + memberNo + ", category=" + category + ", competition="
 				+ competition + ", feedTitle=" + feedTitle + ", feedContent=" + feedContent + ", count=" + count
-				+ ", createDate=" + createDate + ", boardId=" + boardId + ", status=" + status + "]";
+				+ ", createDate=" + createDate + ", boardId=" + boardId + ", likeCount=" + likeCount + ", status="
+				+ status + "]";
 	}
 	
 	
