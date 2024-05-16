@@ -139,24 +139,44 @@
 							</dd>
 						<dt>첨부파일</dt>
 						<dd>
-							<input type="file" name="uploadFile" class="btn btn-outline-secondary">
+							<input type="file" id="uploadFile" name="uploadFile" class="btn btn-outline-secondary">
+							<div style="display: none; color: red" id="hidden-file">
+							
+						</div>
 						</dd>
+							
+							
 						</dl>
+						
 						
 					</div>
 					<div class="info">
 					</div>
 					<div class="cont">
-						<textarea placeholder="내용 입력" name="content"></textarea>
+						<textarea placeholder="내용 입력" name="content" required></textarea>
 					</div>
 				</div>
 				<br>
 				<div class="bt_wrap">
-					<button type="submit" class="btn btn-success">등록</button> <a href=""
+					<button type="submit" class="btn btn-success" onclick="return btn();">등록</button> <a href=""
 						class="btn btn-outline-secondary">취소</a>
 				</div>
 			</div>
 		</form>
 	</div>
+	<script type="text/javascript">
+	
+		function btn(){
+			var upload = $("#uploadFile");
+			var hidden = $("#hidden-file");
+			
+			if(upload.val() == ""){
+				 $("#hidden-file").html("첨부파일이 없으면 인증이 안 되세요;").show();
+				return false;
+			}
+			
+		}
+	
+	</script>
 </body>
 </html>

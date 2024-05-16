@@ -143,19 +143,44 @@
 
 /* 댓글 목록 테이블 스타일 */
 #reply-table {
-    width: 100%;
+    width: 1800px;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 #reply-table th, #reply-table td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px; /* 패딩을 10px로 조정 */
     text-align: left;
 }
 
 #reply-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+#reply-table td {
+    background-color: #ffffff;
+}
+
+#reply-table tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+
+#reply-table th:last-child,
+#reply-table td:last-child {
+    border-right: none;
+}
+
+/* 삭제 버튼 스타일 */
+.reply-delete-btn {
+    background-color: green; /* 배경색을 초록색으로 변경 */
+    color: #fff; /* 글꼴 색상을 흰색으로 변경 */
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 #likeButton {
     background-color: transparent;
@@ -172,7 +197,9 @@
     outline: none; /* 클릭 시 포커스 표시 제거 */
 }
 
-
+#reply-area>tbody>td{
+	
+}
 
 </style>
 </head>
@@ -225,20 +252,24 @@
             </div>
             <br><br>
             <div class="bt_wrap">
-          		  	
                 <a href="#" class="btn btn-outline-secondary" onclick="goToFeedListView()">목록</a>
+                <c:if test="${loginUser.memberId eq f.memberNo }">
                 <a href="${contextPath}/update.fe?fno=${f.feedNo}" class="btn btn-success">수정</a>
                 <a href="${contextPath}/delete.fe?fno=${f.feedNo}" onclick="deleteFeed()" class="btn btn-danger">삭제</a>
-                 <button id="likeButton" onclick="like();">
+                </c:if>
+
+                 <button id="likeButton" onclick="return like();">
 				    <b id="heartIcon" class="far fa-heart" style="font-size: 30px; color: #ff5a5f;"></b>
 				    <span>좋아요</span><span id="likeCount">${f.likeCount}</span>
 				</button>
+               
+			
             </div>
             
           
 
             <script>
-				console.log("${f.likeCount}");
+				
             	function deleteFeed(){
             		var flag = confirm("삭제하면 마일리지가 날라가요~");
         
@@ -256,9 +287,9 @@
             	 <span><button type="button" class="btns" onclick="insertReply();" id="replyButton">등 록</button> 
             	 <i id="counter">0/300자</i></span>
             	 <br><br>
-            	<table id="reply-table">
+            	<table id="reply-table" >
 					<tr>            	
-            			<td>작성자</td>
+            			<td width="50">작성자</td>
             			<td>내용</td>
             			<td>작성일</td>
             			<td>삭제</td>
@@ -286,6 +317,7 @@
 		    } else {
 		        replyButton.disabled = false;
 		   		 }
+		    
 			}				 
     </script>
     <script>
@@ -310,7 +342,7 @@
     				 document.getElementById('counter').innerText = '0/300자';
     					replyList();
     				}else{
-    					alert("댓글 작성 실패");
+    					alert("로그인 후 이용해 주세요");
     				}
     			},
     			error : function(){
@@ -334,8 +366,7 @@
     					   +"<td>"+list[i].memberNo+"</td>"
     					   +"<td>"+list[i].replyContent +"</td>"
     					   +"<td>"+list[i].createDate+"</td>"
-    					   +"<td><div class='reply-info'><input type='hidden' id='reply' value='"+list[i].replyContent+"'></div></td>"
-    					   +"<td><button onclick='deleteReply()' class='reply-delete-btn'>삭제</button></td>";
+    					   +"<td><button onclick='deleteReply("+list[i].replyNo+")' class='reply-delete-btn'>삭제</button></td>";
     					   +"</tr>";
     				}
     				$("#reply-area tbody").html(tr);
@@ -346,15 +377,15 @@
     		});
     	}
     	
-    	    function deleteReply(memberNo) {
+    	    function deleteReply(replyNo) {
     	        var flag = confirm("정말로 삭제하시겠습니까?");
     	        if (flag) {
     	            $.ajax({
     	                url: "deleteReply.fe",
     	                type: "post",
     	                data: {
-    	                	content : $("#reply").val(),
-    	    				memberNo : "${loginUser.memberNo}"
+    	    				memberNo : "${loginUser.memberNo}",
+    	    				"replyNo" : replyNo
     	    	                },
     	                success: function (result) {
     	                    if (result > 0) {
@@ -376,6 +407,12 @@
     	    var isLiked = false;
 
     	    function like() {
+    	        var feedNo = "${f.feedNo}";
+    	        var memberNo = "${loginUser.memberNo}";
+    	        if(memberNo == ""){
+    	        	alert("로그인 해야지 공감 해줄 수 있음");
+    	        	return false;
+    	        }
     	        var heartIcon = document.getElementById("heartIcon");
     	        if (heartIcon.classList.contains("far")) {
     	            heartIcon.classList.remove("far");
@@ -387,8 +424,7 @@
     	            var action = "remove"; // 좋아요 제거를 요청함
     	        }
     	        
-    	        var feedNo = "${f.feedNo}";
-    	        var memberNo = "${loginUser.memberNo}";
+    	        console.log(memberNo);
     	        
     	        
     	        $.ajax({
