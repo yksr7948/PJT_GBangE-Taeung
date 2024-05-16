@@ -44,7 +44,7 @@ public class ListNoticeController extends HttpServlet {
 		int startPage; //페이지 하단에 보여질 페이징바의 시작수
 		int endPage; //페이지 하단에 보여질 페이징바의 끝수
 		
-		listCount = new FeedService().listCount();
+		listCount = new NoticeService().listCount();
 	  String currentPageStr = request.getParameter("currentPage");
 		  int currentPage = 1; // 기본값
 

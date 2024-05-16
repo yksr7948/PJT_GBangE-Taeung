@@ -419,13 +419,38 @@ public class NoticeDao {
 		return noticeId;
 		
 	}
+
+	public int listCount(Connection conn) {
+		ResultSet rset = null;
+		Statement stmt = null;
+		String sql = prop.getProperty("listCount");
+		
+		int listCount = 0;
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				listCount = rset.getInt("COUNT");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(stmt);
+		}
+		return listCount;
+	}
+	}
 	
 	
 
 
 	
 
-}
+
 
 	
 				

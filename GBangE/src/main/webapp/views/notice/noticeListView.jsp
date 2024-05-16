@@ -186,7 +186,7 @@ a {
     <div class="board_wrap">
         <div class="board_title">
             <h1>지방이 공지</h1>
-            <a href="${contextPath}"> <img src="/gbange/views/notice/img/image_360-removebg-preview.png" alt="지방이" class="zbange"></a>
+            <a href="${contextPath}/list.no?currentPage=1"> <img src="/gbange/views/notice/img/image_360-removebg-preview.png" alt="지방이" class="zbange"></a>
             <p>지방이 공지사항 페이지입니다.</p>
         </div>
         <div class="board_list_wrap">
