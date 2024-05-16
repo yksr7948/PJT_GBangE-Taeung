@@ -151,7 +151,7 @@ function checkResetMarathon(){
 function checkParticipate(e){
 	if('${loginUser.memberNo}'==""){
 		if(confirm("로그인이 필요한 서비스입니다. 로그인페이지로 이동하시겠습니까?")){
-			location.href="${contextPath}/views/member/loginForm.jsp"
+			location.href="${contextPath}/login.me"
 		}
 	}else{		
 		location.href="${contextPath}/insert.pa?marathonNo="+$(e).closest('.packages-content').find('span').text()+"&memberNo=${loginUser.memberNo}"	
