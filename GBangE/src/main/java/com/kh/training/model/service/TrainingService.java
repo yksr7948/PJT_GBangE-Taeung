@@ -199,4 +199,25 @@ public class TrainingService {
 		return s;
 	}
 
+	public ArrayList<Training> searchByTitle(PageInfo pi,String keyword) {
+		Connection conn = JDBCTemplate. getConnection();
+		ArrayList<Training> searchList = new TrainingDao().searchByTitle(conn,pi,keyword);
+		JDBCTemplate.close(conn);
+		return searchList;
+	}
+
+	public ArrayList<Training> searchByCategory(PageInfo pi,String keyword) {
+		Connection conn = JDBCTemplate. getConnection();
+		ArrayList<Training> searchList = new TrainingDao().searchByCategory(conn,pi,keyword);
+		JDBCTemplate.close(conn);
+		return searchList;
+	}
+
+	public ArrayList<Training> searchByContent(PageInfo pi,String keyword) {
+		Connection conn = JDBCTemplate. getConnection();
+		ArrayList<Training> searchList = new TrainingDao().searchByContent(conn,pi,keyword);
+		JDBCTemplate.close(conn);
+		return searchList;
+	}
+
 }

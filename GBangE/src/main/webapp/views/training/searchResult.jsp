@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>러닝일지 페이지</title>
+<title>'${keyword}' (으)로 검색한 결과</title>
 
 <style>
 /*기본 설정*/
@@ -171,7 +171,7 @@ a {
 	<div class="board_wrap">
 		<div class="board_title">
 			<h1>러닝일지</h1>
-			<p>러닝일지 페이지입니다.</p>
+			<p>'${keyword}' (으)로 검색한 결과입니다.</p>
 		</div>
 		<div class="board_list_wrap">
 			<div class="board_list">
@@ -183,7 +183,7 @@ a {
 					<div class="count">조회</div>
 				</div>
 				<c:choose>
-					<c:when test="${empty list }">
+					<c:when test="${empty searchList }">
 						<div>
 							<div class="num"></div>
 							<div class="title">조회된 게시글이 없습니다</div>
@@ -193,7 +193,7 @@ a {
 						</div>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="t" items="${list}">
+						<c:forEach var="t" items="${searchList}">
 							<div>
 								<div class="num">${t.trainingNo }</div>
 								<div class="title body">${t.trainingTitle }</div>
@@ -223,20 +223,20 @@ a {
 						<a class="btn prew"> &lt; </a>
 					</c:when>
 					<c:otherwise>
-						<a href="list.tr?currentPage=${pi.currentPage-1}" class="btn first"> &lt;&lt; </a>
-						<a href="list.tr?currentPage=${pi.currentPage-1}" class="btn prew"> &lt; </a>
+						<a href="search.tr?currentPage=${pi.currentPage-1}" class="btn first"> &lt;&lt; </a>
+						<a href="search.tr?currentPage=${pi.currentPage-1}" class="btn prew"> &lt; </a>
 					</c:otherwise>
 				</c:choose>
 				<c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">
-					<a href="list.tr?currentPage=${i}" class="num selected">${i}</a>
+					<a href="search.tr?currentPage=${i}" class="num selected">${i}</a>
 				</c:forEach>
 				<c:choose>
 				<c:when test="${pi.currentPage eq pi.maxPage}">
 				<a class="btn next">&gt;</a> <a class="btn last">&gt;&gt;</a>
 				</c:when>
 				<c:otherwise>
-				<a href="list.tr?currentPage=${pi.currentPage+1}"class="btn next">&gt;</a>
-				<a href="list.tr?currentPage=${pi.currentPage+1}" class="btn last">&gt;&gt;</a>
+				<a href="search.tr?currentPage=${pi.currentPage+1}"class="btn next">&gt;</a>
+				<a href="search.tr?currentPage=${pi.currentPage+1}" class="btn last">&gt;&gt;</a>
 				</c:otherwise>
 				</c:choose>
 			</div>
