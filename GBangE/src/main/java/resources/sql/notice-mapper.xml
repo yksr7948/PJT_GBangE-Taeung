@@ -171,6 +171,13 @@ FROM NOTICE_ATTACHMENT WHERE REF_BNO = ?
 	
 	
 	</entry>
+	
+	
+	<entry key="listCount">
+		SELECT COUNT(*) COUNT
+		FROM NOTICE
+		WHERE STATUS='Y'
+	</entry>
 
 
 </properties>

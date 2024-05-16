@@ -23,6 +23,8 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+	
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <title>공지사항</title>
 <style>
 .board_wrap {
@@ -140,7 +142,7 @@
 	  <div class="board_wrap">
         <div class="board_title">
             <h1>공지사항</h1>
-            <a href="${contextPath}"> <img src="/gbange/views/notice/img/image_360-removebg-preview.png" alt="지방이" class="zbange"></a>
+            <a href="${contextPath}/list.no?currentPage=1"> <img src="/gbange/views/notice/img/image_360-removebg-preview.png" alt="지방이" class="zbange"></a>
             <p>공지사항 페이지입니다.</p>
         </div>
         
@@ -222,6 +224,9 @@
     }
     
     
+    
+    
+    
      function shareKakao() {
 
     	  // 사용할 앱의 JavaScript 키 설정
@@ -229,7 +234,7 @@
 
     	  // 카카오링크 버튼 생성
     	  Kakao.Link.createDefaultButton({
-    	    container: '#btnKakao', // 카카오공유버튼ID
+    	    container: '1074352', // 카카오공유버튼ID
     	    objectType: 'content',
     	    content: {
     	      title: "공지사항", // 보여질 제목

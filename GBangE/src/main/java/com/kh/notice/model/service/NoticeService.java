@@ -8,7 +8,6 @@ import com.kh.common.model.vo.PageInfo;
 import com.kh.notice.model.dao.NoticeDao;
 import com.kh.notice.model.vo.Attachment;
 import com.kh.notice.model.vo.Notice;
-import com.kh.training.model.dao.TrainingDao;
 
 
 public class NoticeService {
@@ -169,6 +168,17 @@ public class NoticeService {
 	    return prevAndNextNoticeId;
 	}
 	
+	
+		public int listCount() {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int listCount = new NoticeDao().listCount(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return listCount;
+	}
 	
 	
 	
