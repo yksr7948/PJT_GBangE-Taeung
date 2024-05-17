@@ -44,6 +44,7 @@ pageEncoding="UTF-8"%>
     <div id="my-mileage">
     	<div class="my-title">
 	    	<font class="title">마일리지</font>
+	    	<font class="title">LV.<%=(int)(loginUser.getMileage()/100)+1%></font>
     	</div>
     	<div id="my-mileage-body"><br>
     		<div id="maile-body-title">

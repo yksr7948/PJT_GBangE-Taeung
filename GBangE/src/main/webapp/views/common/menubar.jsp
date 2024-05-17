@@ -88,8 +88,8 @@ alert(msg);
     			<li><input type="button" onclick="myPage();" value="<%=loginUser.getMemberId() %>" class="btn btn-info"></li>
     		</c:otherwise>
     	</c:choose>
-        <li><a href="https://www.instagram.com/"><img style="width:32px; height:32px;" id="user-profile" src="views/common/resources/img/free-icon-instagram-733558.png"></a> </li>
-        <li><a href="https://www.facebook.com/?locale=ko_KR"><img style="width:32px; height:32px;" id="user-profile" src="views/common/resources/img/free-icon-facebook-220200.png"></a></li>
+        <li><a href="https://www.instagram.com/gban_ge/?next=%2Faccounts%2Flogout%2F"><img style="width:32px; height:32px;" src="views/common/resources/img/free-icon-instagram-733558.png"></a> </li>
+        <li><a href="https://www.facebook.com/?locale=ko_KR"><img style="width:32px; height:32px;" src="views/common/resources/img/free-icon-facebook-220200.png"></a></li>
     </ul>
 </nav>
 <nav id="nav2">
