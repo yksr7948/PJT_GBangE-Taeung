@@ -25,5 +25,5 @@
   - 개발 언어 : Java (11)
   - 개발 환경 : Eclipse
   - Front-End : HTML5, CSS3, JavaScript, JQuery, Ajax
-  - Back-End : JAVA, Gradle, Spring-Data-JPA, Spring-Security
+  - Back-End : JAVA
   - DB : Oracle 11c
