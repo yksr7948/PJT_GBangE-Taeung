@@ -29,3 +29,6 @@
   - Back-End : JAVA, JSP&Servlet
   - DB : Oracle 11c
   - API : GoogleMap, Daum PostCode
+
+## ERD
+![GBANGE-ERD](https://github.com/user-attachments/assets/4263e8e5-7f14-4fea-a6fa-e28a73036e95)
