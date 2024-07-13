@@ -35,5 +35,7 @@
 
 ## 스크린샷
 
-  회원가입
+  ### 회원가입
+  ![enroll-gif](https://github.com/user-attachments/assets/959b6597-84de-4f52-94f3-4e78a45bda84)
+
   
