@@ -23,7 +23,8 @@
 
 ## 기술 스택
   - 개발 언어 : Java (11)
-  - 개발 환경 : Eclipse
+  - 개발 도구 : Eclipse, Visual Studio Code
   - Front-End : HTML5, CSS3, JavaScript, JQuery, Ajax
-  - Back-End : JAVA
+  - Back-End : JAVA, JSP&Servlet
   - DB : Oracle 11c
+  - API : GoogleMap, Daum PostCode
