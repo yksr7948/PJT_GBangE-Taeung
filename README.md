@@ -38,4 +38,6 @@
   ### 회원가입
   ![enroll-gif](https://github.com/user-attachments/assets/959b6597-84de-4f52-94f3-4e78a45bda84)
 
+  ### 아이디 비밀번호 찾기 & 로그인
+
   
