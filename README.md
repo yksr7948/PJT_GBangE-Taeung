@@ -42,6 +42,6 @@
   ![find-gif](https://github.com/user-attachments/assets/47043afc-59b5-4b42-ae61-c9edf120a485)
 
   ### 프로필 변경, 회원 정보 변경
-  
+  ![mypage-gif](https://github.com/user-attachments/assets/c008bcac-986a-45d4-9008-1342f6c48ef6)
 
   
