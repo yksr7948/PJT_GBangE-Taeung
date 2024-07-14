@@ -41,4 +41,7 @@
   ### 아이디 비밀번호 찾기 & 로그인
   ![find-gif](https://github.com/user-attachments/assets/47043afc-59b5-4b42-ae61-c9edf120a485)
 
+  ### 프로필 변경, 회원 정보 변경
+  
+
   
