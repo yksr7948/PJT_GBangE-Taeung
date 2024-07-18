@@ -36,12 +36,13 @@
 ## 스크린샷
 
   ### 회원가입
-  ![enroll-gif](https://github.com/user-attachments/assets/959b6597-84de-4f52-94f3-4e78a45bda84)
+  ![enroll-gif](https://github.com/user-attachments/assets/10a83335-a9d8-4cd4-9c71-0bd622cf9c81)
 
   ### 아이디 비밀번호 찾기 & 로그인
-  ![find-gif](https://github.com/user-attachments/assets/47043afc-59b5-4b42-ae61-c9edf120a485)
+  ![find-gif](https://github.com/user-attachments/assets/e50dd848-59bf-43bd-a758-8dd60ab653ae)
 
   ### 프로필 변경, 회원 정보 변경
-  ![mypage-gif](https://github.com/user-attachments/assets/c008bcac-986a-45d4-9008-1342f6c48ef6)
+  ![mypage-gif](https://github.com/user-attachments/assets/c4c6eb9b-f523-440d-b5c9-ddc9aae66b66)
+
 
   
