@@ -38,6 +38,11 @@
   ### 회원가입
   ![enroll-gif](https://github.com/user-attachments/assets/10a83335-a9d8-4cd4-9c71-0bd622cf9c81)
 
+  [회원가입 JS 코드로 이동](https://github.com/yksr7948/PJT_GBangE-Taeung/blob/develop/GBangE/src/main/webapp/views/member/enrollForm.jsp)
+
+  [회원가입 Controller 코드로 이동]
+  
+
   ### 아이디 비밀번호 찾기 & 로그인
   ![find-gif](https://github.com/user-attachments/assets/e50dd848-59bf-43bd-a758-8dd60ab653ae)
 
