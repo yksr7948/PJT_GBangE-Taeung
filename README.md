@@ -38,15 +38,18 @@
   ### 회원가입
   ![enroll-gif](https://github.com/user-attachments/assets/cdfaa4fc-55b9-440f-a393-f8b8ffee65c7)
 
-  
   입력한 정보 정규표현식으로 형식에 맞는 값인지 판별
 
   └ 만약 형식에 맞지 않은 정보이면 숨겨진 div가 나타남(맞으면 다시 숨겨주기)
 
   [회원가입 JS 코드로 이동](https://github.com/yksr7948/PJT_GBangE-Taeung/blob/0853076bdff8edd91f32d39a23998b0106b8ca7f/GBangE/src/main/webapp/views/member/enrollForm.jsp#L12)
-
+  
+  ---
+  
   ### 아이디 비밀번호 찾기 & 로그인
   ![find-gif](https://github.com/user-attachments/assets/e50dd848-59bf-43bd-a758-8dd60ab653ae)
+  
+  ---
 
   ### 프로필 변경, 회원 정보 변경
   ![mypage-gif](https://github.com/user-attachments/assets/c4c6eb9b-f523-440d-b5c9-ddc9aae66b66)
