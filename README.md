@@ -50,11 +50,35 @@
   
   ### 아이디 비밀번호 찾기 & 로그인
   ![find-gif](https://github.com/user-attachments/assets/e50dd848-59bf-43bd-a758-8dd60ab653ae)
+
+  - 로그인 시 쿠키 설정 및 세션에 담기
+  ![image](https://github.com/user-attachments/assets/2c94a8f4-734b-4723-8cd3-50b685493507)
   
   ---
 
   ### 프로필 변경, 회원 정보 변경
   ![mypage-gif](https://github.com/user-attachments/assets/c4c6eb9b-f523-440d-b5c9-ddc9aae66b66)
 
+  - 프로필 변경 기능
+    
+    ![image](https://github.com/user-attachments/assets/5ee50f63-be1f-4969-bd77-005661ec6ea2)
+
+    첨부파일에 사용자가 입력한 파일 이름이 들어가면 인식을 못 할수도 있으니 이름 변환 작업이 필요함
+    현재날짜 + 랜덤값 + 확장자를 붙여 changeName으로 바꿔주었음
+  
+    ![image](https://github.com/user-attachments/assets/5aa5a432-0762-4bb6-b608-926b25a2fb05)
+    MultipartRequest에 파일 저장경로, 최대크기, 인코딩, 파일 변환이름을 설정하고 member테이블을 update 해주었음
+
+  ---
+
+  ### 마일리지 추가
+  ![mileage-gif](https://github.com/user-attachments/assets/b93b0644-8130-4d8a-b74e-eb39ecaaa0f5)
+    
+
+    
+    
+
+
+  ---
 
   
