@@ -38,6 +38,8 @@
   ### 회원가입
   ![enroll-gif](https://github.com/user-attachments/assets/cdfaa4fc-55b9-440f-a393-f8b8ffee65c7)
 
+  아이디와 주민등록번호같은 경우에는 데이터베이스에 같은 값이 존재하면 false 반환
+
   입력한 정보 정규표현식으로 형식에 맞는 값인지 판별
 
   └ 만약 형식에 맞지 않은 정보이면 숨겨진 div가 나타남(맞으면 다시 숨겨주기)
